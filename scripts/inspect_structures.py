@@ -109,7 +109,7 @@ def main() -> None:
         report += "| " + " | ".join(str(row.get(column, "")) for column in columns) + " |\n"
     report += "\n"
     report += "Distances are geometric screening metrics, not evidence of binding affinity. "
-    report += "The current protocol removed crystallographic waters; water sensitivity must be assessed before production QM calculations.\n"
+    report += "The current protocol retains crystallographic waters within 5 Å of any ligand heavy atom; explicit no-water and expanded-water sensitivity models remain required before production QM calculations.\n"
     args.report.write_text(report)
     print(frame.to_string(index=False))
     print(f"\nSaved {args.csv} and {args.report}")

@@ -13,10 +13,10 @@ Audit date: 2026-07-15. Governing document: `DHFR_InQuanto_Master_Plan_2026-2027
 | Bioinformatics reproduction | Complete | three Manna headline results plus PlesaLab homolog-fitness and GOF summaries reproduced from pinned public data |
 | Variant panel freeze | Complete | 10-member phenotype-only panel frozen in `configs/variant_panel.yaml`; evidence table and numbering convention recorded |
 | Ligand identity evidence | Provisional pass | published identity, formula, charge, exact atom mapping and coordinate inheritance documented; human 2D sign-off remains |
-| Pose sensitivity | Not started | requires three 4-DTMP candidates and one frozen alternate |
-| Protonation sensitivity | Not started | primary pH 7.4 only |
-| Structure visual reports | Partial | interactive viewer exists; four one-page annotated reports absent |
-| Compact/expanded QM clusters | Not started | Gate B open; charge, multiplicity, caps, NADPH/embedding unresolved |
+| Pose sensitivity | Complete | inherited and ±30° local torsion candidates geometry-scored; primary and alternate frozen without energies |
+| Protonation sensitivity | Complete | N1-protonated primary and neutral sensitivity structures generated and QC-passed |
+| Structure visual reports | Complete | four one-page annotated PNG reports rendered and visually checked |
+| Compact/expanded QM clusters | Provisional pass | focused, neutral, hydrated, and 4.5 Å tiers exported with link atoms, charges, even electron counts, fragments, and frozen NADPH embedding |
 | Classical/AVAS/Hamiltonian/VQE | Not started | correctly gated behind Gate B |
 | Nexus execution | Prohibited | no credits until ideal and finite-shot validation pass |
 | Statistics/manuscript/archive | Not started | downstream gates |
@@ -29,4 +29,4 @@ Audit date: 2026-07-15. Governing document: `DHFR_InQuanto_Master_Plan_2026-2027
 
 ## Immediate authority
 
-Gate A passed. Resume at Gate B: ligand identity, pose/protonation sensitivity, one-page structure reports, and reproducible compact/expanded cluster definitions. Do not calculate or interpret the primary electronic endpoint until the cluster boundary, interaction-energy definition, and uncertainty plan are frozen.
+Gate A passed. Gate B has an automated provisional pass; independent human sign-off of ligand depictions and structural reports remains explicitly required. Resume at Gate C with resource estimates and a minimal classical pilot only. Do not interpret the primary endpoint until the counterpoise interaction-energy definition and uncertainty plan are frozen.

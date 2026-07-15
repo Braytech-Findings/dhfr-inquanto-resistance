@@ -1,0 +1,50 @@
+status: PROVISIONAL
+defined_on: 2026-07-15
+selection_basis: "prespecified catalytic/contact core plus a union-defined whole-residue sensitivity tier"
+tiers:
+  compact_primary:
+    protein_residue_numbers: [27, 28, 31, 94]
+    water_cutoff_angstrom: null
+    structure_suffix: protonatedN1
+    ligand_formal_charge: 1
+    role: primary_pilot
+  compact_neutral:
+    protein_residue_numbers: [27, 28, 31, 94]
+    water_cutoff_angstrom: null
+    structure_suffix: null
+    ligand_formal_charge: 0
+    role: protonation_sensitivity
+  expanded_primary:
+    protein_cutoff_angstrom: 4.5
+    water_cutoff_angstrom: null
+    structure_suffix: protonatedN1
+    ligand_formal_charge: 1
+    role: boundary_sensitivity
+  compact_hydrated:
+    protein_residue_numbers: [27, 28, 31, 94]
+    water_cutoff_angstrom: 3.5
+    structure_suffix: protonatedN1
+    ligand_formal_charge: 1
+    role: water_sensitivity
+excluded_oversized_tier:
+  protein_cutoff_angstrom: 6.0
+  observed_atom_range: [528, 536]
+  reason: "not resource-feasible for the planned laptop all-electron hierarchy; retained as a documented rejected model before energies"
+boundary:
+  method: hydrogen_link_atoms
+  n_link_length_angstrom: 1.01
+  c_link_length_angstrom: 1.09
+charge_model: "integer sum of standard ionized side chains (ARG/LYS +1, ASP/GLU -1) plus the tier's frozen ligand formal charge; water neutral"
+multiplicity: 1
+ligand_protonation:
+  primary: "N1-protonated (+1), applied to TMP and 4-DTMP"
+  sensitivity: "neutral, applied to TMP and 4-DTMP"
+  evidence: "TMP first protonates at pyrimidine N1; aqueous pKa approximately 7.12 and bound pKa is reported to increase"
+  geometry_rule: "all heavy-atom coordinates inherited; only N1 hydrogen is added"
+nadph:
+  status: FROZEN
+  deposited_minimum_ligand_distance_angstrom: {WT: 3.4903, L28R: 3.3285}
+  primary_model: "fixed deposited-heavy-atom CHARMM36 NDP point charges, hydrogen charges collapsed to bonded heavy atoms, net charge -3"
+  coordinate_files: {WT: data/processed/embedding/WT_nadph_charmm36.csv, L28R: data/processed/embedding/L28R_nadph_charmm36.csv}
+  sensitivity_model: "omit point-charge embedding"
+  geometry_note: "All 48 NADPH heavy atoms retain deposited coordinates. No uncertain hydrogen coordinates are invented; their template charges are collapsed onto bonded heavy atoms."

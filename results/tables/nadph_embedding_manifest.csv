@@ -1,0 +1,3 @@
+background,pdb,atoms,total_charge_e,charge_source
+WT,6XG5,48,-3.0,OpenMM charmm36.xml NDP template; H charges collapsed to bonded heavy atoms
+L28R,6XG4,48,-3.0,OpenMM charmm36.xml NDP template; H charges collapsed to bonded heavy atoms

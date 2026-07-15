@@ -12,5 +12,11 @@ variant_panel_evidence,TMP_mean_day21_percent,percent,mean exact-mutation freque
 variant_panel_evidence,V041_mean_day21_percent,percent,mean exact-mutation frequency at day 21 under 4-DTMP,larger means more frequent,blank means absent/unmeasured
 ligand_identity,formal_charge,e,whole-molecule formal charge,used to validate charge model,blank
 ligand_identity,retained_atom_rmsd_from_tmp_A,angstrom,direct coordinate RMSD over mapped retained heavy atoms before alignment,zero means coordinates exactly inherited,blank
+pose_ensemble_qc,clashes_lt_1_8A,count,ligand-protein heavy-atom pairs below 1.8 A,larger is worse,0 means none
+pose_ensemble_qc,polar_pairs_2_4_to_3_5A,count,ligand/protein heteroatom pairs in a broad polar-contact distance window,geometry screen only,0 means none
+water_model_manifest,retained_waters,count,crystallographic waters retained by the frozen cutoff,model-specific,0 is intentional for dry model
+qm_cluster_manifest,charge,e,formal charge used for the QM cluster,model-specific,blank
+qm_cluster_manifest,electron_count,electrons,total electrons implied by atoms and charge,must be even for multiplicity 1,blank
+nadph_embedding_manifest,total_charge_e,e,total fixed point charge of deposited NADPH embedding,-3 in the frozen CHARMM36 model,blank
 structure_qc,ligand_res28_min_A,angstrom,minimum heavy-atom distance between ligand and residue 28,smaller means closer contact,blank
 structure_qc,severe_clashes_lt_1_2A,count,protein-ligand heavy-atom distances below 1.2 A,larger is worse,0 means none

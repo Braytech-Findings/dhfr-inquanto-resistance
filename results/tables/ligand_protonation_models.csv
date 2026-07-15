@@ -1,0 +1,5 @@
+background,ligand,state,formal_charge,formula,canonical_smiles,coordinate_rule
+WT,TMP,N1-protonated,1,C14H19N4O3+,COc1cc(Cc2c[nH+]c(N)nc2N)cc(OC)c1OC,all heavy coordinates inherited
+WT,4DTMP,N1-protonated,1,C13H17N4O3+,COc1cc(Cc2c[nH+]c(N)nc2N)cc(OC)c1O,all heavy coordinates inherited
+L28R,TMP,N1-protonated,1,C14H19N4O3+,COc1cc(Cc2c[nH+]c(N)nc2N)cc(OC)c1OC,all heavy coordinates inherited
+L28R,4DTMP,N1-protonated,1,C13H17N4O3+,COc1cc(Cc2c[nH+]c(N)nc2N)cc(OC)c1O,all heavy coordinates inherited

@@ -24,6 +24,12 @@ sources:
     url: https://files.rcsb.org/download/6XG5.pdb
     accessed: 2026-07-14
     checksum_manifest: data/raw/pdbs/manifest.csv
+  - id: rcsb_ndp_component
+    url: https://files.rcsb.org/ligands/download/NDP_ideal.sdf
+    accessed: 2026-07-15
+    sha256: 2b4af16fee48f1f6e11b90858987ed25af22030868c9f9d71045a6cb116c1e08
+    local_path: data/raw/external/NDP_ideal.sdf
+    purpose: authoritative NADPH chemical-component identity reference
   - id: pdb_6xg4
     url: https://files.rcsb.org/download/6XG4.pdb
     accessed: 2026-07-14

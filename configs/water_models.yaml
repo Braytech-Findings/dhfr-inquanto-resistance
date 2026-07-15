@@ -1,0 +1,16 @@
+status: FROZEN
+frozen_on: '2026-07-15'
+selection_distance: minimum water-oxygen to ligand-heavy-atom distance
+models:
+  dry:
+    cutoff_angstrom: null
+    role: sensitivity
+  primary5A:
+    cutoff_angstrom: 5.0
+    role: primary
+  expanded6A:
+    cutoff_angstrom: 6.0
+    role: sensitivity
+preparation:
+  iterations: 50
+  restraint_k_kcal_mol_angstrom2: 10.0

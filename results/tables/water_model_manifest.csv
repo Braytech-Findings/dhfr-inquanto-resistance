@@ -1,0 +1,9 @@
+system,output,protein_atoms,total_atoms,retained_waters,water_cutoff_angstrom,iterations,initial_kj_mol,final_kj_mol
+WT_TMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_TMP_minimized_dry.pdb,2491,2530,0,,50,16886.062949861203,-7403.657676349593
+WT_TMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_TMP_minimized_expanded6A.pdb,2530,2569,13,6.0,50,17469.510418232556,-7528.471007091124
+WT_4DTMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_4DTMP_minimized_dry.pdb,2491,2527,0,,50,19671.51023225016,-5346.837354711093
+WT_4DTMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_4DTMP_minimized_expanded6A.pdb,2524,2560,11,6.0,50,17100.024820691324,-4402.59280103652
+L28R_TMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/L28R_TMP_minimized_dry.pdb,2496,2535,0,,50,278702.1437122468,-7470.461030331603
+L28R_TMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/L28R_TMP_minimized_expanded6A.pdb,2529,2568,11,6.0,50,362602.2312808435,-7297.398142021958
+L28R_4DTMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/L28R_4DTMP_minimized_dry.pdb,2496,2532,0,,50,200204.12449431556,-3257.877491730331
+L28R_4DTMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/L28R_4DTMP_minimized_expanded6A.pdb,2526,2562,10,6.0,50,463149.56828791375,-2096.6215493083746

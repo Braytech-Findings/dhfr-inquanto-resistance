@@ -7,4 +7,4 @@
 | L28R_TMP | PASS | 21 | A:ARG28 | 3.7041671128608655 | 2.8085207850397 | 0 |  |
 | L28R_4DTMP | PASS | 20 | A:ARG28 | 4.890850232832732 | 2.8020294431001287 | 0 |  |
 
-Distances are geometric screening metrics, not evidence of binding affinity. The current protocol removed crystallographic waters; water sensitivity must be assessed before production QM calculations.
+Distances are geometric screening metrics, not evidence of binding affinity. The current protocol retains crystallographic waters within 5 Å of any ligand heavy atom; explicit no-water and expanded-water sensitivity models remain required before production QM calculations.

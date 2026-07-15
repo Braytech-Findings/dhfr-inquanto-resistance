@@ -1,0 +1,7 @@
+background,model,torsion_offset_deg,min_protein_distance_A,clashes_lt_1_8A,polar_pairs_2_4_to_3_5A
+WT,inherited,0.0,2.715299738518752,0,12
+WT,torsion_minus30,-30.0,2.6406520775322817,0,12
+WT,torsion_plus30,30.0,2.2895360720962215,0,9
+L28R,inherited,0.0,2.49848886529438,0,6
+L28R,torsion_minus30,-30.0,2.567183785056723,0,8
+L28R,torsion_plus30,30.0,2.313017139558274,0,6

@@ -1,0 +1,12 @@
+status: FROZEN
+frozen_on: '2026-07-15'
+selection_basis: geometry-only; no classical or quantum energies
+models:
+  WT:
+    primary: inherited
+    alternate: torsion_minus30
+    alternate_rule: fewest <1.8 A clashes, then most 2.4-3.5 A polar pairs
+  L28R:
+    primary: inherited
+    alternate: torsion_minus30
+    alternate_rule: fewest <1.8 A clashes, then most 2.4-3.5 A polar pairs

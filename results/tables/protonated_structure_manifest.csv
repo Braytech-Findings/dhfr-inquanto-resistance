@@ -1,0 +1,5 @@
+system,output,protein_atoms,total_atoms,retained_waters,water_cutoff_angstrom,iterations,initial_kj_mol,final_kj_mol
+WT_TMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_TMP_minimized_protonatedN1.pdb,2521,2561,10,5.0,50,19107.137280539868,-4094.5948093953634
+WT_4DTMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_4DTMP_minimized_protonatedN1.pdb,2518,2555,9,5.0,50,16417.870112419158,-4831.526371805101
+L28R_TMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/L28R_TMP_minimized_protonatedN1.pdb,2520,2560,8,5.0,50,92455.02259037622,-119.1024046517424
+L28R_4DTMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/L28R_4DTMP_minimized_protonatedN1.pdb,2520,2557,8,5.0,50,323796.79745107965,-6927.269014249369

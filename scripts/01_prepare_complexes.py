@@ -45,11 +45,19 @@ def ligand_from_sdf(path: Path) -> tuple[Molecule, list]:
     return off, conformer
 
 
-def prepare(system_id: str, iterations: int, restraint_k: float, water_cutoff: float | None) -> dict:
+def prepare(
+    system_id: str,
+    iterations: int,
+    restraint_k: float,
+    water_cutoff: float | None,
+    model_label: str | None = None,
+    ligand_override: Path | None = None,
+) -> dict:
     pdb_id, sdf_name = SYSTEMS[system_id]
     raw = ROOT / "data/raw/pdbs" / f"{pdb_id}.pdb"
-    sdf = ROOT / "data/processed" / sdf_name
-    out = ROOT / "data/processed" / f"{system_id}_minimized.pdb"
+    sdf = ligand_override or ROOT / "data/processed" / sdf_name
+    suffix = f"_{model_label}" if model_label else ""
+    out = ROOT / "data/processed" / f"{system_id}_minimized{suffix}.pdb"
 
     print(f"[{system_id}] repairing protein", flush=True)
     fixer = PDBFixer(filename=str(raw))
@@ -144,12 +152,16 @@ def main() -> None:
     parser.add_argument("--restraint", type=float, default=10.0, help="kcal/mol/A^2")
     parser.add_argument("--water-cutoff", type=float, default=5.0, help="retain crystallographic water O atoms within this distance of any ligand heavy atom (A)")
     parser.add_argument("--no-waters", action="store_true")
+    parser.add_argument("--model-label", help="optional output label, e.g. dry or expanded6A")
+    parser.add_argument("--ligand-sdf", type=Path, help="override ligand input for a single-system sensitivity model")
     args = parser.parse_args()
     if not args.all and not args.system:
         parser.error("choose --all or --system")
+    if args.all and args.ligand_sdf:
+        parser.error("--ligand-sdf requires --system")
     for system_id in SYSTEMS if args.all else [args.system]:
         cutoff = None if args.no_waters else args.water_cutoff
-        print(json.dumps(prepare(system_id, args.iterations, args.restraint, cutoff), indent=2))
+        print(json.dumps(prepare(system_id, args.iterations, args.restraint, cutoff, args.model_label, args.ligand_sdf), indent=2))
 
 
 if __name__ == "__main__":
