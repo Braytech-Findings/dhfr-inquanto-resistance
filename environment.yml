@@ -1,0 +1,35 @@
+name: dhfr-qc
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - jupyterlab
+  - numpy
+  - pandas
+  - scipy
+  - scikit-learn
+  - statsmodels
+  - matplotlib
+  - seaborn
+  - biopython
+  - rdkit
+  - openmm
+  - pdbfixer
+  - openff-toolkit
+  - openff-forcefields
+  - openmmforcefields
+  - pyyaml
+  - h5py
+  - pytest
+  - ruff
+  - git
+  - git-lfs
+  - pip
+  - pip:
+      - pyscf
+      - qiskit>=1.0
+      - qnexus==0.46.0
+      # InQuanto packages use the private index shown in Nexus Documentation
+      - notebook
+      - nglview

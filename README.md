@@ -1,0 +1,107 @@
+# DHFR InQuanto Resistance
+
+Reproducible scaffold for testing whether mutation-specific electronic interaction signatures explain divergent resistance trajectories for trimethoprim (TMP) and 4′-desmethyltrimethoprim (4-DTMP).
+
+## Prespecified systems and endpoint
+
+| System | Protein | Ligand | Structural source |
+|---|---|---|---|
+| `WT_TMP` | WT | TMP | 6XG5 |
+| `WT_4DTMP` | WT | 4-DTMP | modeled from 6XG5 |
+| `L28R_TMP` | L28R | TMP | 6XG4 |
+| `L28R_4DTMP` | L28R | 4-DTMP | modeled from 6XG4 |
+
+The primary contrast is
+
+`D = [E(L28R, 4-DTMP) − E(WT, 4-DTMP)] − [E(L28R, TMP) − E(WT, TMP)]`.
+
+Do not interpret raw total energies from systems containing different atom counts as interaction energies. Use one consistent interaction-energy definition (for example, counterpoise-corrected cluster interaction energy) for all four systems.
+
+## Installation
+
+```bash
+conda env create -f environment.yml
+conda activate dhfr-qc
+python -m pytest
+```
+
+InQuanto, `inquanto-pyscf`, `inquanto-nexus`, and `qnexus` are licensed/separately distributed and intentionally absent from the public environment file. Install the versions provided through your Quantinuum organization into `dhfr-qc`. Never commit tokens.
+
+## Workflow
+
+Run commands from the repository root.
+
+1. Download and checksum the experimental structures:
+
+   ```bash
+   python scripts/download_pdbs.py
+   ```
+
+2. Extract TMP and construct a pose-preserving 4-DTMP starting geometry:
+
+   ```bash
+   python scripts/extract_ligand.py data/raw/pdbs/6XG5.pdb data/processed/WT_TMP.sdf --resname TOP
+   python scripts/model_4dtmp.py data/processed/WT_TMP.sdf data/processed/WT_4DTMP.sdf
+   python scripts/extract_ligand.py data/raw/pdbs/6XG4.pdb data/processed/L28R_TMP.sdf --resname TOP
+   python scripts/model_4dtmp.py data/processed/L28R_TMP.sdf data/processed/L28R_4DTMP.sdf
+   ```
+
+   Inspect atom mapping, protonation, stereochemistry, and the changed torsion visually. The transformation removes the para O-methyl group; it is not a validated bound-pose prediction.
+
+3. Repair and minimize protein-only structures:
+
+   ```bash
+   python scripts/prepare_structure.py data/raw/pdbs/6XG5.pdb data/processed/WT_protein.pdb
+   python scripts/prepare_structure.py data/raw/pdbs/6XG4.pdb data/processed/L28R_protein.pdb
+   ```
+
+   Before minimizing complexes, parameterize both ligands consistently with OpenFF or GAFF and validate protonation. The script refuses to imply that Amber protein parameters cover either ligand.
+
+4. Build charge-balanced QM cluster XYZ files containing the ligand and the same pocket residue definitions in all systems. Cap severed peptide bonds, document retained waters, and converge the radius. Then run classical references:
+
+   ```bash
+   python scripts/run_pyscf.py cluster.xyz --method HF --basis def2-SVP \
+     --output results/tables/WT_TMP_hf.json --save-orbitals results/WT_TMP_orbitals.npz \
+     --checkpoint results/WT_TMP.chk
+   ```
+
+   Repeat for isolated fragments in their complex geometries and compute `E_complex − E_protein_fragment − E_ligand_fragment`; use ghost atoms for counterpoise correction. A production result should also include at least one DFT method and basis/QM-region sensitivity analyses.
+
+5. Select an active space using chemically localized orbital diagnostics. `(6e,6o)` is a hypothesis, not a justified default. Generate and inspect cube files, track orbitals across all four systems, and retain the same chemical subspace. The supplied AVAS utility provides a first diagnostic:
+
+   ```bash
+   python scripts/select_active_space.py results/WT_TMP.chk \
+     --ao-label N --ao-label O --output results/tables/WT_TMP_active_space.json
+   ```
+
+6. Export active-space Hamiltonians with the licensed `inquanto-pyscf` extension, then run ideal VQE before any noisy backend:
+
+   ```bash
+   python scripts/run_inquanto_vqe.py system.h5 --output results/tables/WT_TMP_vqe.json
+   python scripts/check_nexus_backend.py --login --device H2-Emulator
+   ```
+
+   Use `H2-Emulator` for early remote tests. `H2-1E` consumes HQCs; submit only after checking circuit width/depth, shot count, queue status, and cost. The backend check does not submit a job.
+
+7. Assemble replicate interaction energies and compute the endpoint:
+
+   ```csv
+   system_id,replicate,interaction_energy_hartree
+   WT_TMP,1,-0.010
+   WT_4DTMP,1,-0.009
+   L28R_TMP,1,-0.008
+   L28R_4DTMP,1,-0.011
+   ```
+
+   ```bash
+   python scripts/analyze_endpoint.py results/tables/interaction_energies.csv
+   ```
+
+## Four-week decision gates
+
+- Week 1: immutable inputs, ligand identity/protonation, prepared structures, and pocket definition pass visual and chemical review.
+- Week 2: all four classical calculations converge; basis, cluster size, and orbital correspondence are documented.
+- Week 3: ideal VQE agrees with exact active-space diagonalization to the chosen tolerance; noisy-emulator resources are estimated before submission.
+- Week 4: prespecified contrast, uncertainty/sensitivity analyses, figures, and manuscript methods are generated from frozen tables.
+
+See [docs/methods.md](docs/methods.md) for reporting requirements and scientific caveats.

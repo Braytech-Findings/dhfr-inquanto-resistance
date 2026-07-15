@@ -1,0 +1,61 @@
+systems:
+  - id: WT_TMP
+    protein: WT
+    drug: TMP
+    pdb: 6XG5
+  - id: WT_4DTMP
+    protein: WT
+    drug: 4-DTMP
+    pdb: 6XG5
+    modeled: true
+  - id: L28R_TMP
+    protein: L28R
+    drug: TMP
+    pdb: 6XG4
+  - id: L28R_4DTMP
+    protein: L28R
+    drug: 4-DTMP
+    pdb: 6XG4
+    modeled: true
+
+ligand:
+  residue_names: [TOP]
+  # 4-DTMP removes one methyl from TMP's para methoxy group. Atom names are
+  # discovered from the PDB chemical component definition, not hard-coded.
+  ph: 7.4
+
+preparation:
+  protein_forcefield: amber14/protein.ff14SB.xml
+  ligand_forcefield: openff-2.0.0.offxml
+  ligand_charge_method: am1bcc
+  solvent: none
+  crystallographic_water_cutoff_angstrom: 5.0
+  restraint_k_kcal_mol_angstrom2: 10.0
+  minimize_max_iterations: 1000
+
+qm_region:
+  ligand_residue_names: [TOP, DTM]
+  protein_residues: [28]
+  cutoff_angstrom: 4.5
+  charge: 0
+  spin: 0
+
+classical:
+  method: HF
+  basis: def2-SVP
+  dft_xc: B3LYP
+  convergence_tolerance: 1.0e-9
+  max_memory_mb: 4000
+
+active_space:
+  electrons: 6
+  orbitals: 6
+  selection: avas
+  ao_labels: [N, O]
+
+endpoint:
+  name: D
+  formula: "(E_L28R_4DTMP - E_WT_4DTMP) - (E_L28R_TMP - E_WT_TMP)"
+  energy_field: interaction_energy_hartree
+  bootstrap_samples: 10000
+  random_seed: 2026

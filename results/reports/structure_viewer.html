@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DHFR Prepared Structures</title>
+  <script src="https://unpkg.com/ngl@2.0.0-dev.39/dist/ngl.js"></script>
+  <style>
+    html, body { margin: 0; height: 100%; background: #10151c; color: #eef3f8; font-family: system-ui, sans-serif; }
+    header { height: 52px; display: flex; align-items: center; gap: 14px; padding: 0 18px; background: #18212c; }
+    select, button { padding: 7px 10px; border-radius: 6px; border: 1px solid #526276; background: #202d3b; color: white; }
+    #viewport { width: 100%; height: calc(100% - 52px); }
+    .legend { margin-left: auto; font-size: 13px; }
+    .red { color: #ff5252; } .yellow { color: #ffd740; } .blue { color: #64b5f6; }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>DHFR structure QC</strong>
+    <select id="system">
+      <option>WT_TMP</option><option>WT_4DTMP</option>
+      <option>L28R_TMP</option><option>L28R_4DTMP</option>
+    </select>
+    <button id="pocket">Pocket view</button>
+    <button id="whole">Whole protein</button>
+    <span class="legend"><span class="red">● ligand</span> &nbsp; <span class="yellow">● residue 28</span> &nbsp; <span class="blue">● retained waters</span></span>
+  </header>
+  <div id="viewport"></div>
+  <script>
+    const stage = new NGL.Stage("viewport", {backgroundColor: "#10151c"});
+    let component;
+    async function loadSystem() {
+      stage.removeAllComponents();
+      const id = document.getElementById("system").value;
+      component = await stage.loadFile(`../../data/processed/${id}_minimized.pdb`);
+      component.addRepresentation("cartoon", {colorScheme: "chainname", opacity: 0.82});
+      component.addRepresentation("licorice", {sele: "TOP or DTM", color: "#ff5252", radiusScale: 1.25});
+      component.addRepresentation("licorice", {sele: "28 and protein", color: "#ffd740", radiusScale: 1.1});
+      component.addRepresentation("ball+stick", {sele: "water and within 5 of (TOP or DTM)", color: "#64b5f6", radiusScale: 0.65});
+      component.addRepresentation("contact", {sele: "TOP or DTM", maxDistance: 4.0});
+      pocketView();
+    }
+    function pocketView() { if (component) component.autoView("(TOP or DTM) or (28 and protein)", 800); }
+    function wholeView() { if (component) component.autoView(undefined, 800); }
+    document.getElementById("system").addEventListener("change", loadSystem);
+    document.getElementById("pocket").addEventListener("click", pocketView);
+    document.getElementById("whole").addEventListener("click", wholeView);
+    window.addEventListener("resize", () => stage.handleResize());
+    loadSystem();
+  </script>
+</body>
+</html>
