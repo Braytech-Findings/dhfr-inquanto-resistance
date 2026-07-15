@@ -1,0 +1,2 @@
+tier,method,basis,nadph_embedding,D_hartree,status
+compact_primary,HF,sto-3g,True,-0.06166348658007337,pilot_only

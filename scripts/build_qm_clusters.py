@@ -118,7 +118,8 @@ def build(
                 )
                 link_count += 1
 
-    charge = sum(SIDECHAIN_CHARGE.get(by_number[number].name, 0) for number in residues) + ligand_formal_charge
+    environment_charge = sum(SIDECHAIN_CHARGE.get(by_number[number].name, 0) for number in residues)
+    charge = environment_charge + ligand_formal_charge
     electron_count = sum(Element.getBySymbol(str(atom["element"])).atomic_number for atom in atoms) - charge
     if electron_count % 2:
         raise ValueError(f"{system}/{tier}: odd electron count {electron_count} is incompatible with multiplicity 1")
@@ -138,6 +139,7 @@ def build(
         "system": system, "tier": tier, "structure_suffix": structure_suffix or "neutral",
         "residue_numbers": residues, "atom_count": len(atoms),
         "link_atoms": link_count, "waters": retained_waters, "charge": charge,
+        "ligand_charge": ligand_formal_charge, "environment_charge": environment_charge,
         "electron_count": electron_count, "multiplicity": 1,
         "ligand_fragment_atoms": sum(atom["fragment"] == "ligand" for atom in atoms),
         "environment_fragment_atoms": sum(atom["fragment"] == "environment" for atom in atoms),

@@ -18,5 +18,7 @@ water_model_manifest,retained_waters,count,crystallographic waters retained by t
 qm_cluster_manifest,charge,e,formal charge used for the QM cluster,model-specific,blank
 qm_cluster_manifest,electron_count,electrons,total electrons implied by atoms and charge,must be even for multiplicity 1,blank
 nadph_embedding_manifest,total_charge_e,e,total fixed point charge of deposited NADPH embedding,-3 in the frozen CHARMM36 model,blank
+classical_interaction_energies,interaction_energy_hartree,hartree,Boys-Bernardi counterpoise cluster interaction proxy,more negative is more stabilizing within the same frozen model,blank
+classical_contrasts,D_hartree,hartree,prespecified difference-in-differences of interaction proxies,model-dependent sign and magnitude,blank
 structure_qc,ligand_res28_min_A,angstrom,minimum heavy-atom distance between ligand and residue 28,smaller means closer contact,blank
 structure_qc,severe_clashes_lt_1_2A,count,protein-ligand heavy-atom distances below 1.2 A,larger is worse,0 means none

@@ -1,0 +1,5 @@
+system_id,tier,method,basis,nadph_embedding,interaction_energy_hartree,converged,source_file
+L28R_4DTMP,compact_primary,HF,sto-3g,True,-0.0628689503721489,True,results/classical/L28R_4DTMP_compact_primary_HF_sto-3g.json
+L28R_TMP,compact_primary,HF,sto-3g,True,-0.004762368041838272,True,results/classical/L28R_TMP_compact_primary_HF_sto-3g.json
+WT_4DTMP,compact_primary,HF,sto-3g,True,-0.15255100571539515,True,results/classical/WT_4DTMP_compact_primary_HF_sto-3g.json
+WT_TMP,compact_primary,HF,sto-3g,True,-0.1561079099651579,True,results/classical/WT_TMP_compact_primary_HF_sto-3g.json

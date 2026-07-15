@@ -1,0 +1,32 @@
+status: FROZEN
+frozen_on: 2026-07-15
+endpoint_energy:
+  name: counterpoise_corrected_cluster_interaction_energy
+  formula: "E_AB^(AB basis,q) - E_A^(AB basis,q) - E_B^(AB basis,q)"
+  fragment_A: N1-protonated ligand
+  fragment_B: capped protein environment
+  geometry: frozen complex geometry
+  ghost_basis: Boys-Bernardi ghost functions on the absent fragment
+  external_field_q: frozen CHARMM36 NADPH heavy-atom point charges in all three terms
+primary_model:
+  cluster_tier: compact_primary
+  method: PBE0
+  basis: def2-SVP
+  density_fitting: true
+  scf_tolerance: 1.0e-9
+pilot:
+  method: HF
+  basis: STO-3G
+  purpose: convergence, runtime, charge, fragment, ghost-basis, and embedding validation only
+sensitivity:
+  methods: [HF, PBE0, RI-MP2]
+  bases: [3-21G, def2-SVP]
+  cluster_tiers: [compact_primary, expanded_primary]
+  ligand_protonation: [N1-protonated, neutral]
+  water: [dry, compact_hydrated]
+  nadph_embedding: [on, off]
+uncertainty:
+  rule: "Report the full prespecified sensitivity distribution and sign stability; do not bootstrap deterministic single geometries as if they were independent replicates."
+  numerical: "Require converged SCF and repeat primary calculations at tighter threshold."
+claims: "Electronic cluster interaction proxy only; not a binding energy or binding free energy."
+

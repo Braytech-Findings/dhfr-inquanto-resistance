@@ -1,0 +1,25 @@
+system,tier,basis,atoms,electrons,ao_functions,one_dense_matrix_mb,in_core_eri_tb,recommendation
+L28R_4DTMP,compact_primary,sto-3g,118,436,350,0.98,0.12005,direct/density-fitted SCF required
+L28R_4DTMP,compact_primary,3-21g,118,436,642,3.297312,1.359033303168,direct/density-fitted SCF required
+L28R_4DTMP,compact_primary,def2-svp,118,436,1112,9.892352,12.232328511488,direct/density-fitted SCF required
+L28R_4DTMP,expanded_primary,sto-3g,280,1004,804,5.171328,3.342829160448,direct/density-fitted SCF required
+L28R_4DTMP,expanded_primary,3-21g,280,1004,1474,17.381408,37.764168007808,direct/density-fitted SCF required
+L28R_4DTMP,expanded_primary,def2-svp,280,1004,2574,53.003808,351.175457812608,direct/density-fitted SCF required
+L28R_TMP,compact_primary,sto-3g,121,444,357,1.019592,0.129945980808,direct/density-fitted SCF required
+L28R_TMP,compact_primary,3-21g,121,444,655,3.4322,1.472499605,direct/density-fitted SCF required
+L28R_TMP,compact_primary,def2-svp,121,444,1136,10.323968,13.323039408128,direct/density-fitted SCF required
+L28R_TMP,expanded_primary,sto-3g,283,1012,811,5.261768,3.460775310728,direct/density-fitted SCF required
+L28R_TMP,expanded_primary,3-21g,283,1012,1487,17.689352,39.114146772488,direct/density-fitted SCF required
+L28R_TMP,expanded_primary,def2-svp,283,1012,2598,53.996832,364.457233254528,direct/density-fitted SCF required
+WT_4DTMP,compact_primary,sto-3g,113,414,333,0.887112,0.098370962568,direct/density-fitted SCF required
+WT_4DTMP,compact_primary,3-21g,113,414,611,2.986568,1.114948552328,direct/density-fitted SCF required
+WT_4DTMP,compact_primary,def2-svp,113,414,1060,8.9888,10.09981568,direct/density-fitted SCF required
+WT_4DTMP,expanded_primary,sto-3g,275,982,787,4.954952,3.068943665288,direct/density-fitted SCF required
+WT_4DTMP,expanded_primary,3-21g,275,982,1443,16.657992,34.686087184008,direct/density-fitted SCF required
+WT_4DTMP,expanded_primary,def2-svp,275,982,2522,50.883872,323.646053714048,direct/density-fitted SCF required
+WT_TMP,compact_primary,sto-3g,116,422,340,0.9248,0.10690688,direct/density-fitted SCF required
+WT_TMP,compact_primary,3-21g,116,422,624,3.115008,1.212909355008,direct/density-fitted SCF required
+WT_TMP,compact_primary,def2-svp,116,422,1084,9.400448,11.046052825088,direct/density-fitted SCF required
+WT_TMP,expanded_primary,sto-3g,278,990,794,5.043488,3.179596400768,direct/density-fitted SCF required
+WT_TMP,expanded_primary,3-21g,278,990,1456,16.959488,35.953029152768,direct/density-fitted SCF required
+WT_TMP,expanded_primary,def2-svp,278,990,2546,51.856928,336.142622699648,direct/density-fitted SCF required
