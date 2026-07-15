@@ -1,0 +1,30 @@
+sources:
+  - id: plesa_dhfr
+    url: https://github.com/PlesaLab/DHFR.git
+    commit: 5e35d28bfa37caac2db9463809efd17b18b45f78
+    accessed: 2026-07-15
+    local_path: data/raw/external/PlesaLab_DHFR
+    purpose: broad DHFR homolog and mutational-scanning source
+  - id: plesa_dhfr_processed
+    url: https://figshare.com/articles/dataset/DHFR_Fitness_Data_2025/30470525
+    doi: 10.6084/m9.figshare.30470525.v1
+    accessed: 2026-07-15
+    archive_name: DHFR_Fitness_Data_2025.zip
+    archive_size_bytes: 71413298
+    md5: 274dab61673488a545970c9497e7e7c0
+    local_path: data/raw/external/PlesaLab_processed
+    purpose: processed homolog and mutant fitness tables used for Gate A reproduction
+  - id: manna_2021
+    url: https://github.com/erdaltoprak-zz/NatureCommunication2021_Manna.git
+    commit: 3869a92642062847590203b8f536f85ea20aacaa
+    accessed: 2026-07-15
+    local_path: data/raw/external/NatureCommunication2021_Manna
+    purpose: TMP/4-DTMP phenotype and evolution source
+  - id: pdb_6xg5
+    url: https://files.rcsb.org/download/6XG5.pdb
+    accessed: 2026-07-14
+    checksum_manifest: data/raw/pdbs/manifest.csv
+  - id: pdb_6xg4
+    url: https://files.rcsb.org/download/6XG4.pdb
+    accessed: 2026-07-14
+    checksum_manifest: data/raw/pdbs/manifest.csv

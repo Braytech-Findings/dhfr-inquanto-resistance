@@ -1,0 +1,3 @@
+pdb_id,resolution_angstrom,chains,ligand,residue_28,nadph_residues,waters_total,waters_within_6A,ligand_res28_min_A,alternate_locations,missing_residue_records
+6XG5,1.9,A,TOP,LEU,1,135,13,3.814254973123847,"A,B",6
+6XG4,2.1,A,TOP,ARG,1,131,12,3.807126475440499,"A,B",6

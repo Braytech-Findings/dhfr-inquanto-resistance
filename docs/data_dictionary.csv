@@ -1,0 +1,12 @@
+table,column,unit,meaning,direction,missing_value
+manna_headline_results,metric,none,prespecified reproduced quantity,metric-specific,blank
+manna_headline_results,tmp_value,metric-specific,value under TMP condition,metric-specific,blank
+manna_headline_results,dtmp_value,metric-specific,value under 4-DTMP/V-041 condition,metric-specific,blank
+manna_headline_results,ratio_tmp_to_dtmp,fold,TMP value divided by 4-DTMP value,larger means stronger TMP enrichment,blank
+plesa_homolog_fitness_summary,median_logfc,log fold-change,median homolog fitness for the named condition,larger means greater relative abundance/fitness,blank
+plesa_homolog_fitness_summary,fraction_fit_ge_minus1,fraction,fraction of measured homologs at or above the source notebook threshold,larger means more variants pass threshold,blank
+plesa_gof_summary,value,count,count for the named prespecified GOF metric,metric-specific,blank
+plesa_single_mutant_gof_rescues,parent_fitness,log fold-change,complementation fitness of the unmutated parent,< -1 defines dropout,blank
+plesa_single_mutant_gof_rescues,mutant_fitness,log fold-change,complementation fitness of the measured one-AA mutant,>= -1 defines GOF rescue,blank
+structure_qc,ligand_res28_min_A,angstrom,minimum heavy-atom distance between ligand and residue 28,smaller means closer contact,blank
+structure_qc,severe_clashes_lt_1_2A,count,protein-ligand heavy-atom distances below 1.2 A,larger is worse,0 means none

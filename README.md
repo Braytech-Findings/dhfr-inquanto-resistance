@@ -2,6 +2,17 @@
 
 Reproducible scaffold for testing whether mutation-specific electronic interaction signatures explain divergent resistance trajectories for trimethoprim (TMP) and 4′-desmethyltrimethoprim (4-DTMP).
 
+## Research question
+
+Can mutation-specific electronic interaction signatures calculated with InQuanto explain, and help predict, why TMP and 4-DTMP steer bacterial DHFR resistance along different evolutionary paths?
+
+## Claims this project does not make
+
+- Cluster interaction energies are not binding free energies.
+- Emulator execution is not physical quantum-hardware execution.
+- The study does not claim clinical efficacy, resistance prevention, a new antibiotic, or quantum advantage.
+- Variant panels, active spaces, pose models, and optimizer settings must not be selected using favorable downstream quantum results.
+
 ## Prespecified systems and endpoint
 
 | System | Protein | Ligand | Structural source |

@@ -1,0 +1,8 @@
+{
+  "system": "H2",
+  "distance_angstrom": 0.74,
+  "method": "RHF",
+  "basis": "STO-3G",
+  "energy_hartree": -1.1167593073964248,
+  "converged": true
+}

@@ -1,0 +1,16 @@
+status: NOT_FROZEN
+rule_frozen_on: null
+warning: "Do not populate final selections after inspecting quantum outputs. Complete Gate A first."
+required_groups:
+  core: [WT, L28R]
+  near_site_resistance: 2-3
+  distinct_mechanism_resistance: 2-3
+  neutral_controls: 2
+candidate_examples: [P21L, A26T, W30G, W30R, I94L]
+score:
+  phenotype_quality: 0.30
+  biological_relevance: 0.25
+  structural_interpretability: 0.20
+  mutation_accessibility: 0.15
+  mechanism_diversity: 0.10
+

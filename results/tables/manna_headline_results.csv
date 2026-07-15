@@ -1,0 +1,4 @@
+metric,tmp_value,dtmp_value,ratio_tmp_to_dtmp,unit,source_figure
+L28R median IC95,2.5,0.092592593,26.9999998812,ug/mL,2b-2c
+L28R day-21 mutation frequency,81.83428571,12.2925,6.657253260931462,percent,4e
+Mean day-21 fitted IC50,1768.8132764338957,152.30776418798973,11.613415020987985,ug/mL,4a-4c

@@ -37,6 +37,7 @@ quantinuum_token.txt
 .DS_Store
 Thumbs.db
 *.tmp
+tmp/
 
 # Jupyter
 .ipynb_checkpoints/

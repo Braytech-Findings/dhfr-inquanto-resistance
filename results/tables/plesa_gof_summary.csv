@@ -1,0 +1,4 @@
+metric,value
+dropout parent homologs with measured single mutants,317
+unique single-mutant GOF rescues,476
+dropout parent homologs with >=1 GOF rescue,196
