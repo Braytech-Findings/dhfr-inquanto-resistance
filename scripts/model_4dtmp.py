@@ -7,7 +7,6 @@ import argparse
 from pathlib import Path
 
 from rdkit import Chem
-from rdkit.Chem import AllChem
 
 
 def find_para_methoxy_methyl(mol: Chem.Mol) -> tuple[int, int]:
@@ -44,8 +43,10 @@ def transform(mol: Chem.Mol) -> Chem.Mol:
         editable.RemoveAtom(atom_idx)
     product = editable.GetMol()
     Chem.SanitizeMol(product)
+    # Add only the new phenolic hydrogen. Retained heavy-atom coordinates are
+    # inherited exactly from the deposited TMP pose; isolated-ligand
+    # optimization would silently turn this into a different pose hypothesis.
     product = Chem.AddHs(product, addCoords=True)
-    AllChem.MMFFOptimizeMolecule(product, maxIters=200)
     return product
 
 

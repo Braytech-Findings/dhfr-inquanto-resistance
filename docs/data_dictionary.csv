@@ -8,5 +8,9 @@ plesa_homolog_fitness_summary,fraction_fit_ge_minus1,fraction,fraction of measur
 plesa_gof_summary,value,count,count for the named prespecified GOF metric,metric-specific,blank
 plesa_single_mutant_gof_rescues,parent_fitness,log fold-change,complementation fitness of the unmutated parent,< -1 defines dropout,blank
 plesa_single_mutant_gof_rescues,mutant_fitness,log fold-change,complementation fitness of the measured one-AA mutant,>= -1 defines GOF rescue,blank
+variant_panel_evidence,TMP_mean_day21_percent,percent,mean exact-mutation frequency at day 21 under TMP,larger means more frequent,blank means absent/unmeasured
+variant_panel_evidence,V041_mean_day21_percent,percent,mean exact-mutation frequency at day 21 under 4-DTMP,larger means more frequent,blank means absent/unmeasured
+ligand_identity,formal_charge,e,whole-molecule formal charge,used to validate charge model,blank
+ligand_identity,retained_atom_rmsd_from_tmp_A,angstrom,direct coordinate RMSD over mapped retained heavy atoms before alignment,zero means coordinates exactly inherited,blank
 structure_qc,ligand_res28_min_A,angstrom,minimum heavy-atom distance between ligand and residue 28,smaller means closer contact,blank
 structure_qc,severe_clashes_lt_1_2A,count,protein-ligand heavy-atom distances below 1.2 A,larger is worse,0 means none

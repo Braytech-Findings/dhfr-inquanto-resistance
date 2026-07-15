@@ -142,7 +142,7 @@ def main() -> None:
     parser.add_argument("--all", action="store_true")
     parser.add_argument("--iterations", type=int, default=1000)
     parser.add_argument("--restraint", type=float, default=10.0, help="kcal/mol/A^2")
-    parser.add_argument("--water-cutoff", type=float, default=5.0, help="retain crystallographic water O atoms within this ligand-centroid distance (A)")
+    parser.add_argument("--water-cutoff", type=float, default=5.0, help="retain crystallographic water O atoms within this distance of any ligand heavy atom (A)")
     parser.add_argument("--no-waters", action="store_true")
     args = parser.parse_args()
     if not args.all and not args.system:

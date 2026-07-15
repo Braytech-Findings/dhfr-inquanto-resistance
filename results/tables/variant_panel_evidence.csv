@@ -1,0 +1,11 @@
+variant,group,rationale,TMP_n_cultures,TMP_mean_day0_percent,TMP_mean_day21_percent,V041_n_cultures,V041_mean_day0_percent,V041_mean_day21_percent,grouped_day21_TMP_percent,grouped_day21_V041_percent
+WT,core_reference,wild-type reference,0,,,0,,,,
+L28R,core_resistance,strongest prespecified TMP-selective core mutation,6,,95.47687916082162,1,,98.34726516276912,81.83428571,12.2925
+P21L,near_site_resistance,evolved active-site-loop mutation,3,,15.495120078956347,5,,98.57309407957364,2.212857143,36.76
+A26T,near_site_resistance,recurrent evolved active-site-loop mutation,6,,97.54875162469651,4,,86.21389365011926,69.67571429,43.10375
+W30R,near_site_resistance,recurrent evolved active-site mutation,5,,73.8837650600681,4,,97.2584928531387,42.21571429,55.23
+I94L,distinct_mechanism_resistance,evolved non-loop core mutation,4,,50.15735619502079,3,,99.3437940166566,14.32857143,24.835
+R98P,distinct_mechanism_resistance,distal 4-DTMP-evolved mutation,0,,,2,,99.16888196284904,0.0,12.39625
+Y151S,distinct_mechanism_resistance,distal 4-DTMP-evolved mutation,0,,,1,,100.13005823068865,0.0,12.51
+T35P,neutral_control,time-course-stable under both drugs,7,7.204173021698302,6.824373964067685,8,7.204173021698301,6.8325158913520685,,
+H124Q,neutral_control,time-course-stable under both drugs,7,1.745169931832649,1.7754271024984376,8,1.745169931832649,1.8229839072272387,,

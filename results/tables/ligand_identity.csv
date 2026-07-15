@@ -1,0 +1,5 @@
+background,ligand,formula,formal_charge,heavy_atoms,canonical_smiles,retained_atom_rmsd_from_tmp_A
+WT,TMP,C14H18N4O3,0,21,COc1cc(Cc2cnc(N)nc2N)cc(OC)c1OC,0.0
+WT,4-DTMP,C13H16N4O3,0,20,COc1cc(Cc2cnc(N)nc2N)cc(OC)c1O,0.0
+L28R,TMP,C14H18N4O3,0,21,COc1cc(Cc2cnc(N)nc2N)cc(OC)c1OC,0.0
+L28R,4-DTMP,C13H16N4O3,0,20,COc1cc(Cc2cnc(N)nc2N)cc(OC)c1O,0.0

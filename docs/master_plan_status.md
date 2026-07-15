@@ -11,8 +11,8 @@ Audit date: 2026-07-15. Governing document: `DHFR_InQuanto_Master_Plan_2026-2027
 | Core four construction | Provisional pass | four restrained 50-step validation structures; Amber14SB/OpenFF Sage; retained waters |
 | Automated structure QC | Provisional pass | correct ligand counts, residue 28 contacts, no <1.2 A clashes |
 | Bioinformatics reproduction | Complete | three Manna headline results plus PlesaLab homolog-fitness and GOF summaries reproduced from pinned public data |
-| Variant panel freeze | In progress | resistance candidates are traceable; two defensible neutral protein controls still require prespecified selection |
-| Ligand identity evidence | Partial | transformation verified by heavy-atom count; published identity, formula, depiction, mapping and independent review absent |
+| Variant panel freeze | Complete | 10-member phenotype-only panel frozen in `configs/variant_panel.yaml`; evidence table and numbering convention recorded |
+| Ligand identity evidence | Provisional pass | published identity, formula, charge, exact atom mapping and coordinate inheritance documented; human 2D sign-off remains |
 | Pose sensitivity | Not started | requires three 4-DTMP candidates and one frozen alternate |
 | Protonation sensitivity | Not started | primary pH 7.4 only |
 | Structure visual reports | Partial | interactive viewer exists; four one-page annotated reports absent |
@@ -29,4 +29,4 @@ Audit date: 2026-07-15. Governing document: `DHFR_InQuanto_Master_Plan_2026-2027
 
 ## Immediate authority
 
-Finish Gate A by selecting two neutral protein controls without using quantum outputs, then freeze the panel and scoring table. Preserve the provisional structure artifacts. Do not calculate or interpret the primary electronic endpoint until the panel, cluster boundary, interaction-energy definition, and uncertainty plan are frozen.
+Gate A passed. Resume at Gate B: ligand identity, pose/protonation sensitivity, one-page structure reports, and reproducible compact/expanded cluster definitions. Do not calculate or interpret the primary electronic endpoint until the cluster boundary, interaction-energy definition, and uncertainty plan are frozen.
