@@ -1,0 +1,28 @@
+{
+  "system": "L28R_TMP",
+  "method": "DF-CASCI",
+  "active_electrons": 6,
+  "active_orbitals": 6,
+  "selected_canonical_orbitals": [
+    207,
+    214,
+    215,
+    225,
+    226,
+    229
+  ],
+  "selection_sha256": "5d4ddc09ce178e4cef87ef31a7f6b6618b4aad15fe696c5a1bafc8f6e035698b",
+  "energy_hartree": -2749.7527633605064,
+  "natural_occupations": [
+    1.9999998492146795,
+    1.9999982442355306,
+    1.9999880535593253,
+    1.0395863498642659e-05,
+    2.384660448182158e-06,
+    1.0724665046239898e-06
+  ],
+  "occupation_sum": 5.999999999999987,
+  "spin_square": 2.938735877055719e-39,
+  "multiplicity": 1.0,
+  "status": "pass"
+}

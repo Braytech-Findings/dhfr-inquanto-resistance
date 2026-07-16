@@ -75,13 +75,31 @@ def main() -> None:
     metadata = json.loads((CLUSTERS / f"{stem}.json").read_text())
     background = "L28R" if args.system.startswith("L28R") else "WT"
     embedding = None if args.no_embedding else pd.read_csv(EMBEDDING / f"{background}_nadph_charmm36.csv")
+    embedding_label = "noembed" if args.no_embedding else "embed"
+    output = args.output or ROOT / "results/classical" / f"{stem}_{args.method}_{args.basis.replace('*', 's')}_{embedding_label}.json"
+    partial = output.with_suffix(".partial.json")
+    signature = {
+        "system": args.system,
+        "tier": args.tier,
+        "method": args.method,
+        "basis": args.basis,
+        "nadph_embedding": not args.no_embedding,
+        "conv_tol": args.conv_tol,
+    }
     definitions = {
         "complex": (None, int(metadata["charge"])),
         "ligand": ("ligand", int(metadata["ligand_charge"])),
         "environment": ("environment", int(metadata["environment_charge"])),
     }
     components = {}
+    if partial.exists():
+        cached = json.loads(partial.read_text())
+        if cached.get("signature") == signature:
+            components = cached.get("components", {})
+            print(f"Resuming {len(components)} cached counterpoise component(s) from {partial}")
     for name, (fragment, charge) in definitions.items():
+        if name in components:
+            continue
         energy, converged, cycles, elapsed = run_scf(
             geometry(stem, fragment), charge, args.method, args.basis, args.memory,
             embedding, args.conv_tol,
@@ -89,6 +107,8 @@ def main() -> None:
         if not converged:
             raise RuntimeError(f"{name} SCF failed to converge")
         components[name] = {"energy_hartree": energy, "charge": charge, "cycles": cycles, "elapsed_seconds": elapsed}
+        partial.parent.mkdir(parents=True, exist_ok=True)
+        partial.write_text(json.dumps({"signature": signature, "components": components}, indent=2) + "\n")
     interaction = (
         components["complex"]["energy_hartree"]
         - components["ligand"]["energy_hartree"]
@@ -105,9 +125,9 @@ def main() -> None:
         "interaction_energy_hartree": interaction,
         "converged": True,
     }
-    output = args.output or ROOT / "results/classical" / f"{stem}_{args.method}_{args.basis.replace('*', 's')}.json"
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, indent=2) + "\n")
+    partial.unlink(missing_ok=True)
     print(json.dumps(result, indent=2))
 
 

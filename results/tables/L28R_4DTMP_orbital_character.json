@@ -1,0 +1,88 @@
+{
+  "checkpoint": "results/classical/L28R_4DTMP_compact_primary_HF_sto-3g.chk",
+  "ligand_atoms": [
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111
+  ],
+  "homo": 217,
+  "lumo": 218,
+  "selection_rule": "three highest ligand-population occupied and virtual canonical orbitals in fixed 16-orbital occupied and 12-orbital virtual frontier windows",
+  "candidate_orbitals": [
+    {
+      "orbital": 206,
+      "energy_hartree": -0.2622671510879906,
+      "occupation": 2.0,
+      "ligand_population": 0.9704907562654347
+    },
+    {
+      "orbital": 211,
+      "energy_hartree": -0.20427488142074665,
+      "occupation": 2.0,
+      "ligand_population": 0.9958175914547172
+    },
+    {
+      "orbital": 213,
+      "energy_hartree": -0.18653796615360263,
+      "occupation": 2.0,
+      "ligand_population": 0.9916069410293611
+    },
+    {
+      "orbital": 219,
+      "energy_hartree": 0.19596112155616785,
+      "occupation": 0.0,
+      "ligand_population": 0.9966420561248501
+    },
+    {
+      "orbital": 221,
+      "energy_hartree": 0.2509431938526856,
+      "occupation": 0.0,
+      "ligand_population": 0.8663328540941988
+    },
+    {
+      "orbital": 224,
+      "energy_hartree": 0.3085154149566331,
+      "occupation": 0.0,
+      "ligand_population": 0.998857030515365
+    }
+  ],
+  "candidate_active_space": {
+    "electrons": 6,
+    "orbitals": 6
+  },
+  "status": "candidate only; inspect orbitals and correspondence across all systems before freezing"
+}

@@ -1,0 +1,28 @@
+{
+  "system": "WT_4DTMP",
+  "method": "DF-CASCI",
+  "active_electrons": 6,
+  "active_orbitals": 6,
+  "selected_canonical_orbitals": [
+    192,
+    202,
+    203,
+    207,
+    212,
+    213
+  ],
+  "selection_sha256": "89ce5745525bdba70c5b7b5542fccbed935d63a1c915978ac8fafa5979347c3d",
+  "energy_hartree": -2548.645044504928,
+  "natural_occupations": [
+    1.9999995511997903,
+    1.9999968256171834,
+    1.003448522845336,
+    0.9965492968389591,
+    5.778972127009363e-06,
+    2.4526606202473368e-08
+  ],
+  "occupation_sum": 6.000000000000001,
+  "spin_square": 2.0122838282686985e-30,
+  "multiplicity": 1.0,
+  "status": "pass"
+}

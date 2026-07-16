@@ -1,0 +1,39 @@
+version: 1
+status: candidate_screened_panel_passed
+purpose: ideal_state_benchmarking_only
+
+model:
+  cluster_tier: compact_primary
+  ligand_protonation: N1_protonated
+  embedding: fixed_nadph_charmm36_point_charges
+  orbital_method: RHF
+  orbital_basis: STO-3G
+
+selection:
+  electrons: 6
+  orbitals: 6
+  rule: three highest ligand-Mulliken-population occupied and virtual orbitals in fixed 16-occupied and 12-virtual frontier windows
+  correspondence: system-specific explicit orbital indices; do not use a contiguous HOMO/LUMO block
+  excluded_alternative: broad_N_O_AVAS_protein_valence_manifold
+
+validation:
+  minimum_ligand_population_threshold: 0.65
+  occupation_trace_tolerance: 1.0e-6
+  method: density_fitted_CASCI
+  report: results/reports/active_space_validation.md
+
+systems:
+  WT_TMP:
+    canonical_orbitals: [195, 206, 207, 211, 215, 217]
+  WT_4DTMP:
+    canonical_orbitals: [192, 202, 203, 207, 212, 213]
+  L28R_TMP:
+    canonical_orbitals: [207, 214, 215, 225, 226, 229]
+  L28R_4DTMP:
+    canonical_orbitals: [206, 211, 213, 219, 221, 224]
+
+release_gate:
+  before_production_energy_claim:
+    - repeat_localization_check_at_production_classical_level
+    - review_orbital_shapes
+    - compare_neighboring_active_spaces

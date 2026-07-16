@@ -50,8 +50,12 @@ classical:
 active_space:
   electrons: 6
   orbitals: 6
-  selection: avas
-  ao_labels: [N, O]
+  selection: ligand_frontier_mulliken
+  status: candidate_screened_panel_passed
+  screening_orbitals: RHF/STO-3G with fixed NADPH embedding
+  screening_rule: three highest ligand-population occupied and virtual orbitals in fixed 16-occupied and 12-virtual frontier windows
+  correspondence: explicit system-specific orbital maps; never assume a contiguous HOMO/LUMO block
+  avas_note: broad N/O AVAS is excluded because it selects the whole protein valence manifold, not the ligand frontier space
 
 endpoint:
   name: D

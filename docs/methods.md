@@ -12,6 +12,16 @@ The primary quantity must be defined before calculation. For a cluster supermole
 
 For each system report orbital plots, occupation numbers, entanglement/selection diagnostic, active electrons and orbitals, frozen-core convention, qubit mapping, tapering, and exact diagonalization energy. Demonstrate orbital correspondence across the four systems. Report sensitivity to plausible neighboring active spaces.
 
+The initial broad N/O AVAS probe is not an active-space prescription for this
+protein cluster: it selects a large protein-valence manifold. The screening
+workflow therefore ranks the ligand Mulliken population of orbitals in fixed
+occupied and virtual frontier windows, records the explicit system-specific
+orbital indices, and checks the resulting CAS(6,6) by CASCI natural
+occupations. These indices must be mapped explicitly during Hamiltonian
+generation; a fixed count of orbitals around the HOMO/LUMO is not an adequate
+substitute. Recheck localization at the production electronic-structure level
+before making an energy claim.
+
 ## Quantum algorithm
 
 Report InQuanto/pytket/qnexus versions, ansatz/pool, optimizer, initialization, convergence criteria, random seeds, mapping, circuit compilation, two-qubit gate counts, shots, emulator, mitigation, and uncertainty. Compare HF, exact active-space, ideal VQE, and noisy-emulator energies.
@@ -27,4 +37,3 @@ The estimand is a difference-in-differences. Technical repeats from a determinis
 3. Results: model validation, classical references, active-space convergence, ideal/noisy comparison, and endpoint.
 4. Discussion: mechanistic interpretation, limits of four structures, force-field/QM-region uncertainty, and predictive validation needs.
 5. Data/code availability: immutable inputs, manifests, environment, seeds, and generated result tables.
-

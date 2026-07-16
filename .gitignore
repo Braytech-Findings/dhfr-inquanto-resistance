@@ -18,6 +18,7 @@ pip-delete-this-directory.txt
 *.h5
 *.chk
 *.log
+*.partial.json
 data/raw/
 data/processed/
 

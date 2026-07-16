@@ -1,2 +1,5 @@
 tier,method,basis,nadph_embedding,D_hartree,status
+compact_primary,HF,3-21g,True,-0.05552562762841262,sensitivity
+compact_primary,HF,def2-svp,True,-0.04688981911976953,sensitivity
+compact_primary,HF,sto-3g,False,-0.056114836774440846,sensitivity
 compact_primary,HF,sto-3g,True,-0.06166348658007337,pilot_only

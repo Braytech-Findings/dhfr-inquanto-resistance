@@ -17,7 +17,9 @@ Audit date: 2026-07-15. Governing document: `DHFR_InQuanto_Master_Plan_2026-2027
 | Protonation sensitivity | Complete | N1-protonated primary and neutral sensitivity structures generated and QC-passed |
 | Structure visual reports | Complete | four one-page annotated PNG reports rendered and visually checked |
 | Compact/expanded QM clusters | Provisional pass | focused, neutral, hydrated, and 4.5 Å tiers exported with link atoms, charges, even electron counts, fragments, and frozen NADPH embedding |
-| Classical/AVAS/Hamiltonian/VQE | Not started | correctly gated behind Gate B |
+| Classical interaction-energy screening | In progress | frozen counterpoise definition; all four HF compact-primary calculations converge at STO-3G, 3-21G, and def2-SVP with embedding and a STO-3G embedding sensitivity; PBE0/def2-SVP primary and structural sensitivities remain |
+| Active-space screening | Candidate pass | one fixed ligand-frontier map passes four-system localization, singlet, and occupation-trace checks; each CASCI output is checksum-linked to its exact selection file |
+| Hamiltonian/VQE | Not started | gated behind production-level orbital recheck and Hamiltonian export validation |
 | Nexus execution | Prohibited | no credits until ideal and finite-shot validation pass |
 | Statistics/manuscript/archive | Not started | downstream gates |
 
@@ -29,4 +31,4 @@ Audit date: 2026-07-15. Governing document: `DHFR_InQuanto_Master_Plan_2026-2027
 
 ## Immediate authority
 
-Gate A passed. Gate B has an automated provisional pass; independent human sign-off of ligand depictions and structural reports remains explicitly required. Resume at Gate C with resource estimates and a minimal classical pilot only. Do not interpret the primary endpoint until the counterpoise interaction-energy definition and uncertainty plan are frozen.
+Gate A passed. Gate B has an automated provisional pass; independent human sign-off of ligand depictions and structural reports remains explicitly required. The counterpoise interaction-energy definition is frozen. Continue Gate C with the PBE0/def2-SVP primary calculation and prespecified structural sensitivities. The active-space candidate is authorized only for ideal-state Hamiltonian benchmarking after its production-level orbital recheck; emulator execution remains prohibited.

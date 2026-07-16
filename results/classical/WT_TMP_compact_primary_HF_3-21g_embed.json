@@ -1,0 +1,30 @@
+{
+  "system": "WT_TMP",
+  "tier": "compact_primary",
+  "method": "HF",
+  "basis": "3-21g",
+  "counterpoise": "Boys-Bernardi full cluster basis with ghost functions",
+  "nadph_embedding": true,
+  "components": {
+    "complex": {
+      "energy_hartree": -2606.4428104640065,
+      "charge": 0,
+      "cycles": 12,
+      "elapsed_seconds": 241.29347787499864
+    },
+    "ligand": {
+      "energy_hartree": -978.0155895942198,
+      "charge": 1,
+      "cycles": 10,
+      "elapsed_seconds": 159.1893805419968
+    },
+    "environment": {
+      "energy_hartree": -1628.2767877036476,
+      "charge": -1,
+      "cycles": 12,
+      "elapsed_seconds": 193.13739050000004
+    }
+  },
+  "interaction_energy_hartree": -0.1504331661390097,
+  "converged": true
+}

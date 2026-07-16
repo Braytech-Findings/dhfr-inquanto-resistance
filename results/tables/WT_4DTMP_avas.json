@@ -1,0 +1,10 @@
+{
+  "method": "AVAS",
+  "ao_labels": [
+    "N",
+    "O"
+  ],
+  "active_orbitals": 92,
+  "active_electrons": 170,
+  "requested_model_space": "Review and reduce to (6e,6o) only after orbital inspection"
+}
