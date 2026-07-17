@@ -1,0 +1,2 @@
+Method,D_Hartree,CI_lower,CI_upper,Interpretation
+classical_HF,-0.0550484425,-0.0694200865,-0.0409273088,"L28R stabilizes 4-DTMP relative to TMP"

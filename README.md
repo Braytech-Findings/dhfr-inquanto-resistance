@@ -38,6 +38,22 @@ python -m pytest
 
 InQuanto, `inquanto-pyscf`, `inquanto-nexus`, and `qnexus` are licensed/separately distributed and intentionally absent from the public environment file. Install the versions provided through your Quantinuum organization into `dhfr-qc`. Never commit tokens.
 
+## Publication-ready files
+
+This repository now includes:
+
+- [LICENSE](LICENSE)
+- [CITATION.cff](CITATION.cff)
+- [data/README.md](data/README.md)
+- [notebooks/01_exploratory_analysis.ipynb](notebooks/01_exploratory_analysis.ipynb)
+- [results/tables/final_results.csv](results/tables/final_results.csv) and [results/tables/final_results.json](results/tables/final_results.json)
+- [results/reports/manuscript_draft.md](results/reports/manuscript_draft.md)
+- [analysis/figures.R](analysis/figures.R)
+
+## How to Cite
+
+If you use this repository or its generated results, cite the metadata in [CITATION.cff](CITATION.cff) and reference the DHFR InQuanto Resistance project repository at https://github.com/Braytech-Findings/dhfr-inquanto-resistance.
+
 ## Workflow
 
 Run commands from the repository root.

@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: If you use this software or its results, please cite the repository.
+title: "DHFR InQuanto Resistance: Bioinformatics-Guided Quantum Analysis of Evolution-Resilient DHFR Inhibition"
+authors:
+  - family-names: Aly
+    given-names: Abdellah
+    orcid: ""
+date-released: 2026-07-16
+version: 1.0.0
+repository: https://github.com/Braytech-Findings/dhfr-inquanto-resistance
+repository-code: https://github.com/Braytech-Findings/dhfr-inquanto-resistance
+license: MIT
