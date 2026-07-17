@@ -1,0 +1,16 @@
+{
+  "avas": [
+    {
+      "system": "WT_TMP",
+      "method": "HF/sto-3g",
+      "notes": "placeholder manifest"
+    }
+  ],
+  "vqe": [
+    {
+      "system": "WT_TMP",
+      "ansatz": "UCCSD",
+      "notes": "placeholder manifest"
+    }
+  ]
+}

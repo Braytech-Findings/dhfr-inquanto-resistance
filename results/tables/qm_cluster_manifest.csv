@@ -4,7 +4,7 @@ WT_4DTMP,compact_primary,protonatedN1,"[27, 28, 31, 94]",113,6,0,0,1,-1,414,1,37
 L28R_TMP,compact_primary,protonatedN1,"[27, 28, 31, 94]",121,6,0,1,1,0,444,1,40,81
 L28R_4DTMP,compact_primary,protonatedN1,"[27, 28, 31, 94]",118,6,0,1,1,0,436,1,37,81
 WT_TMP,compact_neutral,neutral,"[27, 28, 31, 94]",115,6,0,-1,0,-1,422,1,39,76
-WT_4DTMP,compact_neutral,neutral,"[27, 28, 31, 94]",112,6,0,-1,0,-1,414,1,36,76
+WT_4DTMP,compact_neutral,neutral,"[27, 28, 31, 94]",96,6,0,-1,0,-1,398,1,20,76
 L28R_TMP,compact_neutral,neutral,"[27, 28, 31, 94]",120,6,0,0,0,0,444,1,39,81
 L28R_4DTMP,compact_neutral,neutral,"[27, 28, 31, 94]",117,6,0,0,0,0,436,1,36,81
 WT_TMP,expanded_primary,protonatedN1,"[5, 6, 7, 19, 20, 27, 28, 31, 49, 50, 54, 94, 100, 113]",278,18,0,0,1,-1,990,1,40,238
