@@ -30,7 +30,7 @@ RESULTS = PROJECT_ROOT / "results" / "tables"
 PARAM_DIR = PROJECT_ROOT / "data" / "params"
 PARAM_DIR.mkdir(parents=True, exist_ok=True)
 
-def get_optimized_params(system_id: str, force_recompute: bool = False):
+def get_optimized_params(system_id: str, basis: str = "sto-3g", force_recompute: bool = False):
     """
     Load saved parameters from JSON, or run a quick local VQE if missing.
     Returns: (ansatz, params)
@@ -43,9 +43,9 @@ def get_optimized_params(system_id: str, force_recompute: bool = False):
 
     # 1. Run a quick PySCF RHF to get the number of occupied orbitals and total orbitals
     # so we can define the active space and frozen list.
-    mol = gto.M(atom=str(xyz_file), basis="def2-SVP", charge=0, spin=0)
+    mol = gto.M(atom=str(xyz_file), basis=basis, charge=0, spin=0)
     mf = scf.RHF(mol)
-    mf.conv_tol = 1e-6 # Speed up local optimization setup
+    mf.conv_tol = 1e-5 # Speed up local optimization setup
     mf.kernel()
     if not mf.converged:
         print("⚠️ Warning: PySCF RHF did not converge, proceeding anyway.")
@@ -58,9 +58,10 @@ def get_optimized_params(system_id: str, force_recompute: bool = False):
     # 2. Build the Chemistry Driver and get the system
     driver = ChemistryDriverPySCFMolecularRHF(
         geometry=str(xyz_file),
-        basis="def2-SVP",
+        basis=basis,
         charge=0,
-        frozen=frozen_indices
+        frozen=frozen_indices,
+        df=True # Enable density fitting for significant speedup
     )
     ham, space, state = driver.get_system()
     ansatz = FermionSpaceAnsatzUCCSD(space, state)
@@ -69,7 +70,7 @@ def get_optimized_params(system_id: str, force_recompute: bool = False):
     if not force_recompute and param_path.exists():
         with open(param_path, "r") as f:
             data = json.load(f)
-        symbol_map = {sym.name: sym for sym in ansatz.state_circuit.free_symbols}
+        symbol_map = {sym.name: sym for sym in ansatz.state_circuit.free_symbols()}
         params = {symbol_map[name]: value for name, value in data["params"].items() if name in symbol_map}
         print(f"✅ Loaded saved parameters for {system_id}")
         return ansatz, params
@@ -90,6 +91,7 @@ def get_optimized_params(system_id: str, force_recompute: bool = False):
 def main():
     parser = argparse.ArgumentParser(description="Submit VQE circuit to Quantinuum hardware")
     parser.add_argument("--system", default="WT_TMP", help="System ID (e.g., WT_TMP)")
+    parser.add_argument("--basis", default="sto-3g", help="Molecular basis set (e.g. sto-3g, def2-SVP)")
     parser.add_argument("--shots", type=int, default=10000, help="Number of shots")
     parser.add_argument("--backend", default="H2-1", help="Quantinuum backend (H2-1, H2-Emulator, etc.)")
     parser.add_argument("--dry-run", action="store_true", help="Only compile and estimate cost, do not submit")
@@ -104,7 +106,7 @@ def main():
     print(f"✅ Using project: {project.annotations.name} (ID: {project.id})")
 
     # 2. Load or compute optimized parameters
-    ansatz, params = get_optimized_params(args.system, force_recompute=args.force_recompute)
+    ansatz, params = get_optimized_params(args.system, basis=args.basis, force_recompute=args.force_recompute)
 
     # 3. Build the circuit and substitute the symbolic parameters
     circuit = ansatz.state_circuit.copy()
