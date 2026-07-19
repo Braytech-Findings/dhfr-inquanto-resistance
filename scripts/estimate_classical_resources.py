@@ -24,8 +24,12 @@ def main() -> None:
         xyz = metadata_path.with_suffix(".xyz")
         for basis in BASES:
             molecule = gto.M(
-                atom=str(xyz), basis=basis, charge=int(metadata["charge"]), spin=0,
-                unit="Angstrom", verbose=0,
+                atom=str(xyz),
+                basis=basis,
+                charge=int(metadata["charge"]),
+                spin=0,
+                unit="Angstrom",
+                verbose=0,
             )
             nao = molecule.nao_nr()
             rows.append(
@@ -38,7 +42,9 @@ def main() -> None:
                     "ao_functions": nao,
                     "one_dense_matrix_mb": 8 * nao**2 / 1e6,
                     "in_core_eri_tb": 8 * nao**4 / 1e12,
-                    "recommendation": "direct/density-fitted SCF required" if 8 * nao**4 / 1e12 > 0.01 else "in-core may fit",
+                    "recommendation": "direct/density-fitted SCF required"
+                    if 8 * nao**4 / 1e12 > 0.01
+                    else "in-core may fit",
                 }
             )
     frame = pd.DataFrame(rows)

@@ -39,7 +39,9 @@ def main() -> None:
             row[f"{drug}_n_cultures"] = int(drug_rows["Replica"].nunique())
             row[f"{drug}_mean_day0_percent"] = drug_rows["0.0"].mean()
             row[f"{drug}_mean_day21_percent"] = drug_rows["21.0"].mean()
-        grouped = major[major["Mutation"].apply(lambda label: variant in expands_group(label))]
+        grouped = major[
+            major["Mutation"].apply(lambda label: variant in expands_group(label))
+        ]
         if not grouped.empty:
             row["grouped_day21_TMP_percent"] = float(grouped.iloc[0]["TMP"])
             row["grouped_day21_V041_percent"] = float(grouped.iloc[0]["V041"])

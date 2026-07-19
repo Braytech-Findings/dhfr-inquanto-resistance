@@ -28,8 +28,19 @@ def main() -> None:
     stem = f"{args.system}_{args.tier}"
     metadata = __import__("json").loads((CLUSTERS / f"{stem}.json").read_text())
     lines = (CLUSTERS / f"{stem}.xyz").read_text().splitlines()[2:]
-    atoms = [(fields[0], tuple(float(value) for value in fields[1:4])) for fields in (line.split() for line in lines)]
-    molecule = gto.M(atom=atoms, basis=args.basis, charge=int(metadata["charge"]), spin=0, unit="Angstrom", verbose=3, max_memory=args.memory)
+    atoms = [
+        (fields[0], tuple(float(value) for value in fields[1:4]))
+        for fields in (line.split() for line in lines)
+    ]
+    molecule = gto.M(
+        atom=atoms,
+        basis=args.basis,
+        charge=int(metadata["charge"]),
+        spin=0,
+        unit="Angstrom",
+        verbose=3,
+        max_memory=args.memory,
+    )
     mean_field = scf.RHF(molecule) if args.method == "HF" else dft.RKS(molecule)
     if args.method == "PBE0":
         mean_field.xc = "pbe0"
@@ -37,13 +48,24 @@ def main() -> None:
     if not args.no_embedding:
         background = "L28R" if args.system.startswith("L28R") else "WT"
         embedding = pd.read_csv(EMBEDDING / f"{background}_nadph_charmm36.csv")
-        mean_field = qmmm.mm_charge(mean_field, embedding[["x_A", "y_A", "z_A"]].to_numpy(), embedding["charge_e"].to_numpy(), unit="Angstrom")
+        mean_field = qmmm.mm_charge(
+            mean_field,
+            embedding[["x_A", "y_A", "z_A"]].to_numpy(),
+            embedding["charge_e"].to_numpy(),
+            unit="Angstrom",
+        )
     mean_field.conv_tol = args.conv_tol
     mean_field.chkfile = str(args.output)
     energy = float(mean_field.kernel())
     if not mean_field.converged:
         raise RuntimeError("SCF did not converge")
-    print({"checkpoint": str(args.output), "energy_hartree": energy, "converged": bool(mean_field.converged)})
+    print(
+        {
+            "checkpoint": str(args.output),
+            "energy_hartree": energy,
+            "converged": bool(mean_field.converged),
+        }
+    )
 
 
 if __name__ == "__main__":

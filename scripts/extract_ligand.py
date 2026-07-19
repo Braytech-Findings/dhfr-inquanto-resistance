@@ -14,15 +14,23 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("pdb", type=Path)
     parser.add_argument("output", type=Path)
-    parser.add_argument("--resname", default="TOP", help="PDB residue name (TOP in 6XG4/6XG5)")
+    parser.add_argument(
+        "--resname", default="TOP", help="PDB residue name (TOP in 6XG4/6XG5)"
+    )
     args = parser.parse_args()
-    lines = [line for line in args.pdb.read_text().splitlines() if line.startswith(("ATOM  ", "HETATM")) and line[17:20].strip() == args.resname]
+    lines = [
+        line
+        for line in args.pdb.read_text().splitlines()
+        if line.startswith(("ATOM  ", "HETATM")) and line[17:20].strip() == args.resname
+    ]
     if not lines:
         raise ValueError(f"Residue {args.resname!r} not found in {args.pdb}")
     block = "\n".join(lines + ["END"]) + "\n"
     mol = Chem.MolFromPDBBlock(block, removeHs=False, sanitize=False)
     if mol is None:
-        raise ValueError("RDKit could not infer ligand bonding; use an RCSB chemical-component SDF instead")
+        raise ValueError(
+            "RDKit could not infer ligand bonding; use an RCSB chemical-component SDF instead"
+        )
     if args.resname == "TOP":
         # PDB coordinates do not encode bond order. Restore the deposited TMP
         # chemistry while retaining the crystallographic atom coordinates.

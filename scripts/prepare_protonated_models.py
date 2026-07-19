@@ -31,7 +31,11 @@ def main() -> None:
     rows = []
     for system in SYSTEMS:
         background, ligand = system.split("_", 1)
-        path = ROOT / "data/processed/protonation_models" / f"{background}_{ligand}_protonatedN1.sdf"
+        path = (
+            ROOT
+            / "data/processed/protonation_models"
+            / f"{background}_{ligand}_protonatedN1.sdf"
+        )
         rows.append(prepare(system, args.iterations, 10.0, 5.0, "protonatedN1", path))
     frame = pd.DataFrame(rows)
     output = ROOT / "results/tables/protonated_structure_manifest.csv"

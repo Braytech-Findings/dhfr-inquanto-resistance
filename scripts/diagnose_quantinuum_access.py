@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Create a sanitized, discovery-only Quantinuum Nexus access report."""
+
 from __future__ import annotations
 
 import argparse
@@ -38,6 +39,7 @@ def dataframe_rows(fetcher, label: str) -> tuple[list[dict], str | None]:
 def write_csv(name: str, rows: list[dict]) -> None:
     try:
         import pandas as pd
+
         pd.DataFrame(rows).to_csv(OUT / name, index=False)
     except Exception:
         (OUT / name).write_text("")
@@ -45,7 +47,11 @@ def write_csv(name: str, rows: list[dict]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Sanitized Quantinuum Nexus discovery")
-    parser.add_argument("--login", action="store_true", help="Use normal qnexus browser login if required")
+    parser.add_argument(
+        "--login",
+        action="store_true",
+        help="Use normal qnexus browser login if required",
+    )
     args = parser.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     errors: list[str] = []
@@ -71,12 +77,35 @@ def main() -> None:
     write_csv("projects.csv", project_rows)
     write_csv("available_targets.csv", device_rows)
     write_csv("groups.csv", [])  # qnexus 0.46.0 exposes no documented groups module.
-    (OUT / "software_versions.json").write_text(json.dumps(package_versions(), indent=2) + "\n")
+    (OUT / "software_versions.json").write_text(
+        json.dumps(package_versions(), indent=2) + "\n"
+    )
     (OUT / "error_history.json").write_text(json.dumps(errors, indent=2) + "\n")
-    report = {"generated_utc": datetime.now(timezone.utc).isoformat(), "authenticated": authenticated, "authentication_method": "normal qnexus session/browser flow only", "platform": platform.platform(), "python": sys.version, "quotas": len(quota_rows), "projects": len(project_rows), "visible_targets": len(device_rows), "errors": errors, "security": "No tokens, cookies, API keys, or credential objects were inspected or written."}
+    report = {
+        "generated_utc": datetime.now(timezone.utc).isoformat(),
+        "authenticated": authenticated,
+        "authentication_method": "normal qnexus session/browser flow only",
+        "platform": platform.platform(),
+        "python": sys.version,
+        "quotas": len(quota_rows),
+        "projects": len(project_rows),
+        "visible_targets": len(device_rows),
+        "errors": errors,
+        "security": "No tokens, cookies, API keys, or credential objects were inspected or written.",
+    }
     (OUT / "access_report.json").write_text(json.dumps(report, indent=2) + "\n")
-    (OUT / "access_report.md").write_text("# Quantinuum access diagnostic\n\n" + "\n".join(f"- **{key}**: {value}" for key, value in report.items() if key != "errors") + "\n\n## Errors or unavailable endpoints\n" + "\n".join(f"- {error}" for error in errors) + "\n")
-    (OUT / "support_packet.md").write_text("# Sanitized support packet\n\nProject: `dhfr-h2-hardware` (`ee45224b-05fb-4520-9a0e-45b5be2528c3`)\n\nPrevious H2-1E job: `ed5127b9-8b92-4ad3-b0a4-02a5d3202586` returned machine-access code 14. This report lists visible targets and quota API results without credentials. Ask the organization administrator/Quantinuum support whether the account has a hardware machine entitlement, a simulation-time allocation, and the required user-group assignment.\n")
+    (OUT / "access_report.md").write_text(
+        "# Quantinuum access diagnostic\n\n"
+        + "\n".join(
+            f"- **{key}**: {value}" for key, value in report.items() if key != "errors"
+        )
+        + "\n\n## Errors or unavailable endpoints\n"
+        + "\n".join(f"- {error}" for error in errors)
+        + "\n"
+    )
+    (OUT / "support_packet.md").write_text(
+        "# Sanitized support packet\n\nProject: `dhfr-h2-hardware` (`ee45224b-05fb-4520-9a0e-45b5be2528c3`)\n\nPrevious H2-1E job: `ed5127b9-8b92-4ad3-b0a4-02a5d3202586` returned machine-access code 14. This report lists visible targets and quota API results without credentials. Ask the organization administrator/Quantinuum support whether the account has a hardware machine entitlement, a simulation-time allocation, and the required user-group assignment.\n"
+    )
     print(json.dumps(report, indent=2))
 
 

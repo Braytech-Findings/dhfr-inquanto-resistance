@@ -10,7 +10,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 
-PDBS = {"6XG5": "https://files.rcsb.org/download/6XG5.pdb", "6XG4": "https://files.rcsb.org/download/6XG4.pdb"}
+PDBS = {
+    "6XG5": "https://files.rcsb.org/download/6XG5.pdb",
+    "6XG4": "https://files.rcsb.org/download/6XG4.pdb",
+}
 
 
 def download(url: str, destination: Path) -> str:
@@ -48,4 +51,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -24,7 +24,9 @@ def main() -> None:
         from inquanto.express import get_system, run_vqe
         from pytket.extensions.qiskit import AerStateBackend
     except ImportError as exc:
-        raise SystemExit("Install licensed InQuanto plus pytket-qiskit in the dhfr-qc environment") from exc
+        raise SystemExit(
+            "Install licensed InQuanto plus pytket-qiskit in the dhfr-qc environment"
+        ) from exc
 
     fermion_hamiltonian, fermion_space, hf_state = get_system(str(args.system_h5))
     ansatz = FermionSpaceAnsatzUCCSD(fermion_space, hf_state)
@@ -43,4 +45,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -1,5 +1,0 @@
-system,file,status,ligand_resname,ligand_heavy_atoms,residue_28,ligand_res28_min_A,ligand_res28_centroid_A,min_protein_ligand_A,severe_clashes_lt_1_2A,waters,notes
-WT_TMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_TMP_minimized_protonatedN1.pdb,PASS,TOP,21,A:LEU28,4.087207114889092,5.861324965224692,2.683828049633581,0,10,
-WT_4DTMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_4DTMP_minimized_protonatedN1.pdb,PASS,DTM,20,A:LEU28,4.119038115871226,5.948787988846974,2.66119935367496,0,9,
-L28R_TMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/L28R_TMP_minimized_protonatedN1.pdb,PASS,TOP,21,A:ARG28,3.7463009756291603,6.690490693224399,2.682742812868949,0,8,
-L28R_4DTMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/L28R_4DTMP_minimized_protonatedN1.pdb,PASS,DTM,20,A:ARG28,4.950495429752461,6.844331579722145,2.6941649912356866,0,8,

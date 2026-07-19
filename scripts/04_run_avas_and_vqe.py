@@ -12,11 +12,17 @@ RESULTS = ROOT / "results"
 
 def main() -> None:
     manifest = {
-        "avas": [{"system": "WT_TMP", "method": "HF/sto-3g", "notes": "placeholder manifest"}],
-        "vqe": [{"system": "WT_TMP", "ansatz": "UCCSD", "notes": "placeholder manifest"}],
+        "avas": [
+            {"system": "WT_TMP", "method": "HF/sto-3g", "notes": "placeholder manifest"}
+        ],
+        "vqe": [
+            {"system": "WT_TMP", "ansatz": "UCCSD", "notes": "placeholder manifest"}
+        ],
     }
     (RESULTS / "reports").mkdir(parents=True, exist_ok=True)
-    (RESULTS / "reports" / "avas_vqe_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    (RESULTS / "reports" / "avas_vqe_manifest.json").write_text(
+        json.dumps(manifest, indent=2) + "\n"
+    )
     print(json.dumps(manifest, indent=2))
 
 

@@ -14,13 +14,33 @@ from openmm.app import PDBFile
 ROOT = Path(__file__).resolve().parents[1]
 SYSTEMS = ("WT_TMP", "WT_4DTMP", "L28R_TMP", "L28R_4DTMP")
 PROTEIN_NAMES = {
-    "ALA", "ARG", "ASN", "ASP", "CYS", "GLN", "GLU", "GLY", "HIS", "ILE",
-    "LEU", "LYS", "MET", "PHE", "PRO", "SER", "THR", "TRP", "TYR", "VAL",
+    "ALA",
+    "ARG",
+    "ASN",
+    "ASP",
+    "CYS",
+    "GLN",
+    "GLU",
+    "GLY",
+    "HIS",
+    "ILE",
+    "LEU",
+    "LYS",
+    "MET",
+    "PHE",
+    "PRO",
+    "SER",
+    "THR",
+    "TRP",
+    "TYR",
+    "VAL",
 }
 
 
 def coords_angstrom(pdb: PDBFile) -> np.ndarray:
-    return np.asarray([p.value_in_unit(unit.angstrom) for p in pdb.positions], dtype=float)
+    return np.asarray(
+        [p.value_in_unit(unit.angstrom) for p in pdb.positions], dtype=float
+    )
 
 
 def inspect(system_id: str, path: Path) -> dict[str, object]:
@@ -29,7 +49,9 @@ def inspect(system_id: str, path: Path) -> dict[str, object]:
     residues = list(pdb.topology.residues())
     ligand_residues = [r for r in residues if r.name in {"TOP", "DTM", "4DT", "UNK"}]
     if len(ligand_residues) != 1:
-        raise ValueError(f"{path}: expected exactly one ligand residue, found {len(ligand_residues)}")
+        raise ValueError(
+            f"{path}: expected exactly one ligand residue, found {len(ligand_residues)}"
+        )
     ligand = ligand_residues[0]
     ligand_atoms = list(ligand.atoms())
     ligand_heavy = [a.index for a in ligand_atoms if a.element.symbol != "H"]
@@ -40,16 +62,27 @@ def inspect(system_id: str, path: Path) -> dict[str, object]:
         raise ValueError(f"{path}: protein residue number 28 not found")
     # Prefer the chain closest to the ligand if crystallographic copies exist.
     lig_center = xyz[ligand_heavy].mean(axis=0)
-    res28 = min(res28_candidates, key=lambda r: np.linalg.norm(
-        xyz[[a.index for a in r.atoms() if a.element.symbol != "H"]].mean(axis=0) - lig_center
-    ))
+    res28 = min(
+        res28_candidates,
+        key=lambda r: np.linalg.norm(
+            xyz[[a.index for a in r.atoms() if a.element.symbol != "H"]].mean(axis=0)
+            - lig_center
+        ),
+    )
     res28_heavy = [a.index for a in res28.atoms() if a.element.symbol != "H"]
     res28_center = xyz[res28_heavy].mean(axis=0)
-    pair = np.linalg.norm(xyz[ligand_heavy, None, :] - xyz[res28_heavy][None, :, :], axis=2)
+    pair = np.linalg.norm(
+        xyz[ligand_heavy, None, :] - xyz[res28_heavy][None, :, :], axis=2
+    )
 
-    protein_heavy = [a.index for a in pdb.topology.atoms()
-                     if a.residue.name in PROTEIN_NAMES and a.element.symbol != "H"]
-    contacts = np.linalg.norm(xyz[ligand_heavy, None, :] - xyz[protein_heavy][None, :, :], axis=2)
+    protein_heavy = [
+        a.index
+        for a in pdb.topology.atoms()
+        if a.residue.name in PROTEIN_NAMES and a.element.symbol != "H"
+    ]
+    contacts = np.linalg.norm(
+        xyz[ligand_heavy, None, :] - xyz[protein_heavy][None, :, :], axis=2
+    )
     min_contact = float(contacts.min())
     severe_clashes = int(np.count_nonzero(contacts < 1.2))
     waters = sum(1 for r in residues if r.name in {"HOH", "WAT"})
@@ -87,28 +120,52 @@ def inspect(system_id: str, path: Path) -> dict[str, object]:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--processed", type=Path, default=ROOT / "data/processed")
-    parser.add_argument("--csv", type=Path, default=ROOT / "results/tables/structure_qc.csv")
-    parser.add_argument("--report", type=Path, default=ROOT / "results/reports/structure_qc.md")
+    parser.add_argument(
+        "--csv", type=Path, default=ROOT / "results/tables/structure_qc.csv"
+    )
+    parser.add_argument(
+        "--report", type=Path, default=ROOT / "results/reports/structure_qc.md"
+    )
     args = parser.parse_args()
     rows = []
     for system_id in SYSTEMS:
         path = args.processed / f"{system_id}_minimized.pdb"
         if not path.exists():
-            rows.append({"system": system_id, "file": str(path), "status": "MISSING", "notes": "file not found"})
+            rows.append(
+                {
+                    "system": system_id,
+                    "file": str(path),
+                    "status": "MISSING",
+                    "notes": "file not found",
+                }
+            )
             continue
         rows.append(inspect(system_id, path))
     frame = pd.DataFrame(rows)
     args.csv.parent.mkdir(parents=True, exist_ok=True)
     args.report.parent.mkdir(parents=True, exist_ok=True)
     frame.to_csv(args.csv, index=False)
-    columns = ["system", "status", "ligand_heavy_atoms", "residue_28", "ligand_res28_min_A", "min_protein_ligand_A", "severe_clashes_lt_1_2A", "notes"]
+    columns = [
+        "system",
+        "status",
+        "ligand_heavy_atoms",
+        "residue_28",
+        "ligand_res28_min_A",
+        "min_protein_ligand_A",
+        "severe_clashes_lt_1_2A",
+        "notes",
+    ]
     report = "# Prepared-structure quality control\n\n"
     report += "| " + " | ".join(columns) + " |\n"
     report += "| " + " | ".join("---" for _ in columns) + " |\n"
     for row in frame.to_dict(orient="records"):
-        report += "| " + " | ".join(str(row.get(column, "")) for column in columns) + " |\n"
+        report += (
+            "| " + " | ".join(str(row.get(column, "")) for column in columns) + " |\n"
+        )
     report += "\n"
-    report += "Distances are geometric screening metrics, not evidence of binding affinity. "
+    report += (
+        "Distances are geometric screening metrics, not evidence of binding affinity. "
+    )
     report += "The current protocol retains crystallographic waters within 5 Å of any ligand heavy atom; explicit no-water and expanded-water sensitivity models remain required before production QM calculations.\n"
     args.report.write_text(report)
     print(frame.to_string(index=False))

@@ -37,12 +37,7 @@ def main():
         / f"{args.system}_compact_primary.xyz"
     )
 
-    parameter_path = (
-        ROOT
-        / "data"
-        / "params"
-        / f"{args.system}_params.json"
-    )
+    parameter_path = ROOT / "data" / "params" / f"{args.system}_params.json"
 
     output_dir = ROOT / "results" / "quantum" / "measurement_plans"
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -75,11 +70,7 @@ def main():
     n_mo = len(mean_field.mo_energy)
 
     active_indices = list(range(n_occ - 3, n_occ + 3))
-    frozen_indices = [
-        index
-        for index in range(n_mo)
-        if index not in active_indices
-    ]
+    frozen_indices = [index for index in range(n_mo) if index not in active_indices]
 
     print(f"   Active orbitals: {active_indices}", flush=True)
 
@@ -101,14 +92,9 @@ def main():
         hf_state,
     )
 
-    saved_parameters = json.loads(
-        parameter_path.read_text()
-    )["params"]
+    saved_parameters = json.loads(parameter_path.read_text())["params"]
 
-    symbols = {
-        symbol.name: symbol
-        for symbol in ansatz.state_circuit.free_symbols()
-    }
+    symbols = {symbol.name: symbol for symbol in ansatz.state_circuit.free_symbols()}
 
     parameters = {
         symbols[name]: float(value)
@@ -119,10 +105,7 @@ def main():
     missing = sorted(set(symbols) - set(saved_parameters))
 
     if missing:
-        raise SystemExit(
-            "❌ Missing parameter values: "
-            + ", ".join(missing)
-        )
+        raise SystemExit("❌ Missing parameter values: " + ", ".join(missing))
 
     print(f"   Qubits: {ansatz.state_circuit.n_qubits}", flush=True)
     print(f"   Hamiltonian terms: {len(qubit_hamiltonian)}", flush=True)
@@ -160,25 +143,14 @@ def main():
     resource_table = protocol.dataframe_circuit_shot()
     partition_table = protocol.dataframe_partitioning()
 
-    resource_path = (
-        output_dir
-        / (
-            f"{args.system}_H2-1LE_"
-            f"{args.shots_per_circuit}shots_resources.csv"
-        )
+    resource_path = output_dir / (
+        f"{args.system}_H2-1LE_{args.shots_per_circuit}shots_resources.csv"
     )
 
-    partition_path = (
-        output_dir
-        / f"{args.system}_pauli_partitioning.csv"
-    )
+    partition_path = output_dir / f"{args.system}_pauli_partitioning.csv"
 
-    summary_path = (
-        output_dir
-        / (
-            f"{args.system}_H2-1LE_"
-            f"{args.shots_per_circuit}shots_plan.json"
-        )
+    summary_path = output_dir / (
+        f"{args.system}_H2-1LE_{args.shots_per_circuit}shots_plan.json"
     )
 
     resource_table.to_csv(resource_path, index=True)
@@ -199,9 +171,7 @@ def main():
         "partition_table": str(partition_path),
     }
 
-    summary_path.write_text(
-        json.dumps(summary, indent=2)
-    )
+    summary_path.write_text(json.dumps(summary, indent=2))
 
     print("", flush=True)
     print("✅ Measurement plan prepared.", flush=True)

@@ -17,7 +17,9 @@ OUTPUT = ROOT / "results/reports/structures"
 
 
 def coordinates(pdb: app.PDBFile) -> np.ndarray:
-    return np.asarray([position.value_in_unit(unit.angstrom) for position in pdb.positions])
+    return np.asarray(
+        [position.value_in_unit(unit.angstrom) for position in pdb.positions]
+    )
 
 
 def set_equal_3d(ax: plt.Axes, points: np.ndarray) -> None:
@@ -47,7 +49,9 @@ def main() -> None:
             elif residue.name in {"HOH", "WAT"}:
                 waters.extend(indices)
             else:
-                backbone.extend(atom.index for atom in residue.atoms() if atom.name == "CA")
+                backbone.extend(
+                    atom.index for atom in residue.atoms() if atom.name == "CA"
+                )
         focus_indices = ligand + res28 + waters
         focus = xyz[focus_indices]
         fig = plt.figure(figsize=(11, 8.5), facecolor="white")
@@ -62,13 +66,29 @@ def main() -> None:
             f"<1.2 Å clashes {int(metrics.severe_clashes_lt_1_2A)}  |  retained waters {int(metrics.waters)}"
         )
         title_ax.text(0, 0.18, summary, fontsize=11, linespacing=1.5)
-        for column, (elev, azim, label) in enumerate(((20, -55, "Pocket overview"), (5, 35, "Orthogonal view"))):
+        for column, (elev, azim, label) in enumerate(
+            ((20, -55, "Pocket overview"), (5, 35, "Orthogonal view"))
+        ):
             ax = fig.add_subplot(grid[1, column], projection="3d")
             ax.plot(*xyz[backbone].T, color="#c5c9ce", linewidth=1, alpha=0.55)
-            ax.scatter(*xyz[ligand].T, color="#129e9a", s=42, label="ligand", depthshade=False)
-            ax.scatter(*xyz[res28].T, color="#b8324a", s=42, label="residue 28", depthshade=False)
+            ax.scatter(
+                *xyz[ligand].T, color="#129e9a", s=42, label="ligand", depthshade=False
+            )
+            ax.scatter(
+                *xyz[res28].T,
+                color="#b8324a",
+                s=42,
+                label="residue 28",
+                depthshade=False,
+            )
             if waters:
-                ax.scatter(*xyz[waters].T, color="#3b82c4", s=20, label="retained water O/H", alpha=0.65)
+                ax.scatter(
+                    *xyz[waters].T,
+                    color="#3b82c4",
+                    s=20,
+                    label="retained water O/H",
+                    alpha=0.65,
+                )
             set_equal_3d(ax, focus)
             ax.view_init(elev=elev, azim=azim)
             ax.set_title(label, fontsize=13)

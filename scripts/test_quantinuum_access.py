@@ -10,10 +10,10 @@ H2-1SC is a syntax checker: its counts are artificial and scientifically unusabl
 H2-Emulator uses Nexus simulation quota rather than HQCs. Visible/online targets
 do not prove execution entitlement.
 """
+
 from __future__ import annotations
 
 import argparse
-import math
 import os
 from datetime import datetime, timezone
 from typing import Any
@@ -134,7 +134,9 @@ def access_report(args: argparse.Namespace) -> None:
             try:
                 available = qnx.quotas.check_quota(name=quota_name)
             except Exception as exc:
-                print(f"{quota_name} quota guard: unavailable ({type(exc).__name__}: {exc})")
+                print(
+                    f"{quota_name} quota guard: unavailable ({type(exc).__name__}: {exc})"
+                )
             else:
                 print(f"{quota_name} quota guard: {available}")
         devices = qnx.devices.get_all().df()
@@ -155,21 +157,32 @@ def wait_and_print(qnx: Any, job: Any, project: Any, timeout: int) -> None:
     status = qnx.jobs.wait_for(job, timeout=timeout)
     status_name = status.status.value
     print(f"Status: {status_name}; reported cost: {status.cost}")
-    print(f"Nexus job URL: https://nexus.quantinuum.com/projects/{project.id}/jobs/{job.id}")
-    if "COMPLETED" not in status_name.upper() and "COMPLETED" not in str(status).upper():
+    print(
+        f"Nexus job URL: https://nexus.quantinuum.com/projects/{project.id}/jobs/{job.id}"
+    )
+    if (
+        "COMPLETED" not in status_name.upper()
+        and "COMPLETED" not in str(status).upper()
+    ):
         raise SystemExit("Job did not complete; inspect the Nexus job URL.")
     references = qnx.jobs.results(job)
     result = references[0].download_result()
-    print("Counts:", {str(key): int(value) for key, value in result.get_counts().items()})
+    print(
+        "Counts:", {str(key): int(value) for key, value in result.get_counts().items()}
+    )
 
 
-def estimate_hqc(qnx: Any, compiled: Any, config: Any, project: Any, args: argparse.Namespace) -> float:
+def estimate_hqc(
+    qnx: Any, compiled: Any, config: Any, project: Any, args: argparse.Namespace
+) -> float:
     backend = args.backend.upper()
     if backend in SYNTAX_CHECKERS:
         print("Estimated HQC cost: 0 (syntax-checker submissions do not consume HQCs).")
         return 0.0
     if backend in NEXUS_EMULATORS:
-        print("Estimated HQC cost: 0 (Nexus-hosted emulator uses simulation-time quota).")
+        print(
+            "Estimated HQC cost: 0 (Nexus-hosted emulator uses simulation-time quota)."
+        )
         return 0.0
     estimated = qnx.circuits.cost(
         circuit_ref=compiled[0],
@@ -178,7 +191,9 @@ def estimate_hqc(qnx: Any, compiled: Any, config: Any, project: Any, args: argpa
         project=project,
     )
     if estimated is None:
-        raise SystemExit("Nexus did not return an HQC estimate; refusing hardware execution.")
+        raise SystemExit(
+            "Nexus did not return an HQC estimate; refusing hardware execution."
+        )
     estimated_float = float(estimated)
     print(f"Estimated HQC cost: {estimated_float} (maximum allowed: {args.max_hqc})")
     return estimated_float
@@ -197,7 +212,9 @@ def hosted_bell(args: argparse.Namespace) -> None:
     if args.max_hqc < 0:
         raise SystemExit("--max-hqc must be non-negative.")
     if backend in HARDWARE_NAMES and args.max_hqc <= 0:
-        raise SystemExit("Hardware/high-performance emulators require a positive --max-hqc.")
+        raise SystemExit(
+            "Hardware/high-performance emulators require a positive --max-hqc."
+        )
 
     group, source = resolve_user_group(args)
     print(f"Submission group: {group or '<default>'} (source: {source})")
@@ -209,7 +226,9 @@ def hosted_bell(args: argparse.Namespace) -> None:
         )
         return
     if not args.confirm_submit:
-        raise SystemExit("Hosted execution requires --confirm-submit. Use --dry-run first.")
+        raise SystemExit(
+            "Hosted execution requires --confirm-submit. Use --dry-run first."
+        )
 
     qnx, QuantinuumConfig = load_nexus()
     try:
@@ -228,10 +247,7 @@ def hosted_bell(args: argparse.Namespace) -> None:
         )
 
         hardware_hqc_ceiling = min(args.max_hqc, 20_000.0)
-        config_kwargs: dict[str, Any] = {"device_name": args.backend}
-        if backend in HARDWARE_NAMES and args.max_hqc > 0:
-            config_kwargs["max_cost"] = math.ceil(hardware_hqc_ceiling)
-        config = QuantinuumConfig(**config_kwargs)
+        config = QuantinuumConfig(device_name=args.backend)
 
         compiled = qnx.compile(
             programs=uploaded,
@@ -252,21 +268,31 @@ def hosted_bell(args: argparse.Namespace) -> None:
         if backend in HARDWARE_NAMES:
             print(f"Enforced hardware HQC ceiling: {hardware_hqc_ceiling}")
         if estimated > hardware_hqc_ceiling:
-            raise SystemExit("Estimated HQC cost exceeds --max-hqc; refusing execution.")
+            raise SystemExit(
+                "Estimated HQC cost exceeds --max-hqc; refusing execution."
+            )
 
         if backend in NEXUS_EMULATORS:
-            print("H2-Emulator uses simulation-time quota, not HQCs; submitting directly after compilation.")
+            print(
+                "H2-Emulator uses simulation-time quota, not HQCs; submitting directly after compilation."
+            )
 
-        job = qnx.start_execute_job(
-            programs=compiled,
-            n_shots=args.shots,
-            backend_config=config,
-            project=project,
-            name=f"{stamp}-execute",
-            user_group=group,
-        )
+        execute_kwargs: dict[str, Any] = {
+            "programs": compiled,
+            "n_shots": args.shots,
+            "backend_config": config,
+            "project": project,
+            "name": f"{stamp}-execute",
+            "user_group": group,
+        }
+        if backend in HARDWARE_NAMES:
+            # qnexus 0.46.0 documents max_cost on the execution submission.
+            execute_kwargs["max_cost"] = hardware_hqc_ceiling
+        job = qnx.start_execute_job(**execute_kwargs)
         print(f"Submitted Nexus job {job.id}")
-        print(f"Nexus job URL: https://nexus.quantinuum.com/projects/{project.id}/jobs/{job.id}")
+        print(
+            f"Nexus job URL: https://nexus.quantinuum.com/projects/{project.id}/jobs/{job.id}"
+        )
         if backend in SYNTAX_CHECKERS:
             print(
                 "Syntax-checker counts are artificial all-zero validation output and are "

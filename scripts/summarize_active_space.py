@@ -72,7 +72,9 @@ def main() -> None:
                 "occupation_sum": casci["occupation_sum"],
                 "spin_square": casci["spin_square"],
                 "multiplicity": casci["multiplicity"],
-                "natural_occupations": ",".join(f"{value:.6f}" for value in occupations),
+                "natural_occupations": ",".join(
+                    f"{value:.6f}" for value in occupations
+                ),
                 "casci_status": casci["status"],
             }
         )

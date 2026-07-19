@@ -1,0 +1,29 @@
+{
+  "system": "WT_TMP",
+  "basis": "STO-3G",
+  "active_space": "six selected spatial orbitals; the published local workflow used indices 208–213",
+  "ansatz": "UCCSD with 117 saved parameters",
+  "backend_classification": "Quantinuum H2-1LE local noiseless emulator",
+  "emulator_local": true,
+  "measurement_circuits": 576,
+  "shots_per_circuit": 100,
+  "total_shots": 57600,
+  "ideal_vqe_energy_hartree": -2587.912001526413,
+  "finite_shot_energy_hartree": -2587.917118821447,
+  "standard_error_hartree": 0.007647045141,
+  "difference_from_ideal_hartree": -0.005117295034,
+  "software_versions": {
+    "inquanto": "6.1.0",
+    "pytket": "2.18.1",
+    "pytket-quantinuum": "0.57.0",
+    "qnexus": "0.46.0",
+    "pyscf": "2.13.1"
+  },
+  "date": "2026-07-17",
+  "limitations": [
+    "One WT system only.",
+    "Not a binding free energy or resistance prediction.",
+    "No hosted Nexus, noisy-emulator, or physical-hardware molecular-energy result.",
+    "Contiguous active-space choice remains to be validated against localized or AVAS alternatives."
+  ]
+}

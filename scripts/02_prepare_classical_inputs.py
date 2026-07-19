@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 import pandas as pd
@@ -22,15 +21,22 @@ def main() -> None:
             suffix = "neutral"
         else:
             prefix = stem.removesuffix("_minimized")
-            system, suffix = prefix.rsplit("_", 1) if "_" in prefix and prefix.rsplit("_", 1)[1] in {"dry", "expanded6A", "protonatedN1"} else (prefix, "neutral")
+            system, suffix = (
+                prefix.rsplit("_", 1)
+                if "_" in prefix
+                and prefix.rsplit("_", 1)[1] in {"dry", "expanded6A", "protonatedN1"}
+                else (prefix, "neutral")
+            )
             if suffix == "neutral":
                 system = prefix
-        rows.append({
-            "system": system,
-            "structure_suffix": suffix,
-            "pdb_path": str(pdb),
-            "json_path": str(PROCESSED / f"{pdb.stem}.json"),
-        })
+        rows.append(
+            {
+                "system": system,
+                "structure_suffix": suffix,
+                "pdb_path": str(pdb),
+                "json_path": str(PROCESSED / f"{pdb.stem}.json"),
+            }
+        )
     df = pd.DataFrame(rows)
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(OUTPUT, index=False)

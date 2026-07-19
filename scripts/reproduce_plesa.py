@@ -57,7 +57,9 @@ def main() -> None:
         )
     distributions = pd.DataFrame(distribution_rows)
 
-    parent = perfects[["ID", "fitD05D03"]].rename(columns={"fitD05D03": "parent_fitness"})
+    parent = perfects[["ID", "fitD05D03"]].rename(
+        columns={"fitD05D03": "parent_fitness"}
+    )
     single = mutants.loc[mutants["mutations"].eq(1), ["IDalign", "mutID", "fitD05D03"]]
     single = single.rename(columns={"fitD05D03": "mutant_fitness"})
     joined = single.merge(parent, left_on="IDalign", right_on="ID", how="inner")
@@ -70,7 +72,10 @@ def main() -> None:
                 "metric": "dropout parent homologs with measured single mutants",
                 "value": int(dropout["IDalign"].nunique()),
             },
-            {"metric": "unique single-mutant GOF rescues", "value": int(rescues["mutID"].nunique())},
+            {
+                "metric": "unique single-mutant GOF rescues",
+                "value": int(rescues["mutID"].nunique()),
+            },
             {
                 "metric": "dropout parent homologs with >=1 GOF rescue",
                 "value": int(rescues["IDalign"].nunique()),
@@ -82,15 +87,17 @@ def main() -> None:
     FIGURES.mkdir(parents=True, exist_ok=True)
     distributions.to_csv(TABLES / "plesa_homolog_fitness_summary.csv", index=False)
     rescue_summary.to_csv(TABLES / "plesa_gof_summary.csv", index=False)
-    rescues.assign(delta_fitness=rescues["mutant_fitness"] - rescues["parent_fitness"]).to_csv(
-        TABLES / "plesa_single_mutant_gof_rescues.csv", index=False
-    )
+    rescues.assign(
+        delta_fitness=rescues["mutant_fitness"] - rescues["parent_fitness"]
+    ).to_csv(TABLES / "plesa_single_mutant_gof_rescues.csv", index=False)
 
     fig, axes = plt.subplots(1, 2, figsize=(11, 4.2))
     plot_columns = list(FITNESS_COLUMNS)
     axes[0].boxplot(
         [finite(perfects[column]).to_numpy() for column in plot_columns],
-        tick_labels=[FITNESS_COLUMNS[column].replace(" ug/mL TMP", "") for column in plot_columns],
+        tick_labels=[
+            FITNESS_COLUMNS[column].replace(" ug/mL TMP", "") for column in plot_columns
+        ],
         showfliers=False,
     )
     axes[0].axhline(-1, color="#b33a3a", linestyle="--", linewidth=1)
@@ -98,7 +105,9 @@ def main() -> None:
     axes[0].set_ylabel("Median fitness (log fold-change)")
     axes[0].set_title("DHFR homolog fitness across TMP selection")
     if not rescues.empty:
-        axes[1].scatter(rescues["parent_fitness"], rescues["mutant_fitness"], s=12, alpha=0.55)
+        axes[1].scatter(
+            rescues["parent_fitness"], rescues["mutant_fitness"], s=12, alpha=0.55
+        )
     axes[1].axvline(-1, color="#b33a3a", linestyle="--", linewidth=1)
     axes[1].axhline(-1, color="#b33a3a", linestyle="--", linewidth=1)
     axes[1].set_xlabel("Parent complementation fitness")

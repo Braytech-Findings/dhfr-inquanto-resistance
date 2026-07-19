@@ -21,7 +21,13 @@ def main() -> None:
     mf = scf.RHF(mol)
     mf.__dict__.update(scf_data)
     ncas, nelecas, mo = avas.avas(mf, args.ao_label)
-    result = {"method": "AVAS", "ao_labels": args.ao_label, "active_orbitals": int(ncas), "active_electrons": int(nelecas), "requested_model_space": "Review and reduce to (6e,6o) only after orbital inspection"}
+    result = {
+        "method": "AVAS",
+        "ao_labels": args.ao_label,
+        "active_orbitals": int(ncas),
+        "active_electrons": int(nelecas),
+        "requested_model_space": "Review and reduce to (6e,6o) only after orbital inspection",
+    }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2))

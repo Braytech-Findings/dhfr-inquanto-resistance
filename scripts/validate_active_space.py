@@ -33,13 +33,19 @@ def main() -> None:
     background = "L28R" if args.system.startswith("L28R") else "WT"
     embedding = pd.read_csv(EMBEDDING / f"{background}_nadph_charmm36.csv")
     mean_field = qmmm.mm_charge(
-        mean_field, embedding[["x_A", "y_A", "z_A"]].to_numpy(), embedding["charge_e"].to_numpy(), unit="Angstrom"
+        mean_field,
+        embedding[["x_A", "y_A", "z_A"]].to_numpy(),
+        embedding["charge_e"].to_numpy(),
+        unit="Angstrom",
     )
     mean_field.__dict__.update(data)
     selection_bytes = args.selection.read_bytes()
     selection = json.loads(selection_bytes)
     orbitals = [int(row["orbital"]) for row in selection["candidate_orbitals"]]
-    if len(orbitals) != 6 or selection["candidate_active_space"] != {"electrons": 6, "orbitals": 6}:
+    if len(orbitals) != 6 or selection["candidate_active_space"] != {
+        "electrons": 6,
+        "orbitals": 6,
+    }:
         raise ValueError("Expected exactly a 6e,6o candidate selection")
     casci = (
         mcscf.DFCASCI(mean_field, 6, 6)

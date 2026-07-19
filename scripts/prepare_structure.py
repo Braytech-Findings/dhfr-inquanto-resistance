@@ -35,8 +35,12 @@ def main() -> None:
     fixer.addMissingHydrogens(args.ph)
 
     forcefield = ForceField("amber14-all.xml", "implicit/gbn2.xml")
-    system = forcefield.createSystem(fixer.topology, nonbondedMethod=NoCutoff, constraints=HBonds)
-    integrator = LangevinMiddleIntegrator(300 * unit.kelvin, 1 / unit.picosecond, 0.002 * unit.picoseconds)
+    system = forcefield.createSystem(
+        fixer.topology, nonbondedMethod=NoCutoff, constraints=HBonds
+    )
+    integrator = LangevinMiddleIntegrator(
+        300 * unit.kelvin, 1 / unit.picosecond, 0.002 * unit.picoseconds
+    )
     simulation = Simulation(fixer.topology, system, integrator)
     simulation.context.setPositions(fixer.positions)
     simulation.minimizeEnergy(maxIterations=args.max_iterations)
@@ -49,4 +53,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

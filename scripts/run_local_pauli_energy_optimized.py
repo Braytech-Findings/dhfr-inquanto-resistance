@@ -53,7 +53,9 @@ BACKEND_NAME = "H2-1LE"
 BACKEND_LABEL = "local noiseless H2-1LE emulator (not physical hardware)"
 
 
-def progress(message: str, current: int | None = None, total: int | None = None) -> None:
+def progress(
+    message: str, current: int | None = None, total: int | None = None
+) -> None:
     prefix = time.strftime("%H:%M:%S")
     suffix = "" if current is None else f" {current}/{total}"
     print(f"[{prefix}] {message}{suffix}", flush=True)
@@ -141,7 +143,9 @@ def circuit_metrics(circuit: Circuit) -> dict[str, Any]:
             len(command.qubits) == 2 and command.op.type != OpType.Measure
             for command in commands
         ),
-        "measurement_count": sum(command.op.type == OpType.Measure for command in commands),
+        "measurement_count": sum(
+            command.op.type == OpType.Measure for command in commands
+        ),
         "classical_bit_order": [str(bit) for bit in circuit.bits],
         "sha256": circuit_hash(circuit),
     }
@@ -196,8 +200,7 @@ def placement_to_json(final_map: dict[Any, Any]) -> list[dict[str, Any]]:
 
 def placement_from_json(payload: list[dict[str, Any]]) -> dict[Qubit, Qubit | Node]:
     return {
-        json_to_wire(item["source"]): json_to_wire(item["target"])
-        for item in payload
+        json_to_wire(item["source"]): json_to_wire(item["target"]) for item in payload
     }
 
 
@@ -270,10 +273,14 @@ def make_problem(
     system: str, basis: str
 ) -> tuple[Any, Any, ExpectationValue, dict[Any, float], list[int]]:
     """Build the same active space, Hamiltonian, ansatz, and parameter map."""
-    xyz_path = ROOT / "data" / "processed" / "qm_clusters" / f"{system}_compact_primary.xyz"
+    xyz_path = (
+        ROOT / "data" / "processed" / "qm_clusters" / f"{system}_compact_primary.xyz"
+    )
     params_path = ROOT / "data" / "params" / f"{system}_params.json"
     if not xyz_path.exists() or not params_path.exists():
-        raise FileNotFoundError("Missing the required geometry or saved-parameter file.")
+        raise FileNotFoundError(
+            "Missing the required geometry or saved-parameter file."
+        )
 
     progress("Reconstructing the baseline RHF active space")
     molecule = gto.M(atom=str(xyz_path), basis=basis, charge=0, spin=0)
@@ -341,13 +348,13 @@ def compile_shared_preparation(
     if checkpoint.exists():
         progress("Loading compiled shared UCCSD preparation")
         payload = json_read(checkpoint)
-        return Circuit.from_dict(payload["circuit"]), placement_from_json(payload["final_map"])
+        return Circuit.from_dict(payload["circuit"]), placement_from_json(
+            payload["final_map"]
+        )
 
     progress("Compiling the shared UCCSD preparation once")
     compilation_unit = CompilationUnit(preparation.copy())
-    compiler = backend.default_compilation_pass(
-        optimisation_level=optimisation_level
-    )
+    compiler = backend.default_compilation_pass(optimisation_level=optimisation_level)
     compiler.apply(compilation_unit)
     if compilation_unit.final_map is None:
         raise RuntimeError("Compiler did not provide the required final placement map.")
@@ -373,9 +380,9 @@ def compile_suffix(
 ) -> Circuit:
     measured = suffix.copy()
     Placement.place_with_map(measured, final_map)
-    backend.default_compilation_pass(
-        optimisation_level=optimisation_level
-    ).apply(measured)
+    backend.default_compilation_pass(optimisation_level=optimisation_level).apply(
+        measured
+    )
     return measured
 
 
@@ -407,7 +414,9 @@ def measurement_basis_kind(suffix: Circuit) -> str:
     return "mostly Z-type"
 
 
-def representative_indices(full_circuits: list[Circuit], preparation: Circuit) -> list[int]:
+def representative_indices(
+    full_circuits: list[Circuit], preparation: Circuit
+) -> list[int]:
     """Choose one Z, one X, and one Y/mixed suffix rather than first-three."""
     wanted = ["mostly Z-type", "X-containing", "Y-containing or mixed-basis"]
     selected: dict[str, int] = {}
@@ -445,8 +454,12 @@ def without_measurements(source: Circuit) -> Circuit:
 def exact_state_comparison(left: Circuit, right: Circuit) -> dict[str, float]:
     """Compare compiled pre-measurement statevectors after global-phase alignment."""
     exact_backend = AerStateBackend()
-    left_state = np.asarray(exact_backend.run_circuit(without_measurements(left)).get_state())
-    right_state = np.asarray(exact_backend.run_circuit(without_measurements(right)).get_state())
+    left_state = np.asarray(
+        exact_backend.run_circuit(without_measurements(left)).get_state()
+    )
+    right_state = np.asarray(
+        exact_backend.run_circuit(without_measurements(right)).get_state()
+    )
     anchor = int(np.argmax(np.abs(left_state)))
     if abs(right_state[anchor]) > 1e-15:
         right_state = right_state * np.exp(
@@ -512,7 +525,10 @@ def run_test(
         }
         keys = set(baseline_counts) | set(optimized_counts)
         variation_distance = 0.5 * sum(
-            abs(baseline_counts.get(key, 0) / shots - optimized_counts.get(key, 0) / shots)
+            abs(
+                baseline_counts.get(key, 0) / shots
+                - optimized_counts.get(key, 0) / shots
+            )
             for key in keys
         )
         report.append(
@@ -576,8 +592,12 @@ def final_energy(
     protocol.retrieve(results)
     measured = complex(energy.evaluate(protocol.get_evaluator()))
     uncertainty = protocol.evaluate_expectation_uvalue(ansatz, qubit_hamiltonian)
-    nominal = float(getattr(uncertainty, "nominal_value", getattr(uncertainty, "n", measured.real)))
-    standard_error = float(getattr(uncertainty, "std_dev", getattr(uncertainty, "s", math.nan)))
+    nominal = float(
+        getattr(uncertainty, "nominal_value", getattr(uncertainty, "n", measured.real))
+    )
+    standard_error = float(
+        getattr(uncertainty, "std_dev", getattr(uncertainty, "s", math.nan))
+    )
     return nominal, standard_error
 
 
@@ -610,7 +630,9 @@ def write_final_artifacts(
                 "executed_checkpoint": str(result_path),
             }
         )
-        for index, result_hash in zip(result["indices"], result["result_sha256"], strict=True):
+        for index, result_hash in zip(
+            result["indices"], result["result_sha256"], strict=True
+        ):
             measurements.append(
                 {
                     "circuit_index": index,
@@ -720,11 +742,23 @@ def main() -> None:
         raise RuntimeError("No PauliAveraging circuits were built.")
 
     params_path = ROOT / "data" / "params" / f"{args.system}_params.json"
-    xyz_path = ROOT / "data" / "processed" / "qm_clusters" / f"{args.system}_compact_primary.xyz"
-    hamiltonian_path = ROOT / "data" / "processed" / f"{args.system}_qubit_hamiltonian.json"
+    xyz_path = (
+        ROOT
+        / "data"
+        / "processed"
+        / "qm_clusters"
+        / f"{args.system}_compact_primary.xyz"
+    )
+    hamiltonian_path = (
+        ROOT / "data" / "processed" / f"{args.system}_qubit_hamiltonian.json"
+    )
     exact_path = ROOT / "results" / "quantum" / f"{args.system}_saved_params_exact.json"
     partitioning_path = (
-        ROOT / "results" / "quantum" / "measurement_plans" / f"{args.system}_pauli_partitioning.csv"
+        ROOT
+        / "results"
+        / "quantum"
+        / "measurement_plans"
+        / f"{args.system}_pauli_partitioning.csv"
     )
     input_paths = [
         xyz_path,
@@ -736,8 +770,12 @@ def main() -> None:
     ]
     missing_inputs = [str(path) for path in input_paths if not path.exists()]
     if missing_inputs:
-        raise FileNotFoundError("Missing integrity input(s): " + ", ".join(missing_inputs))
-    input_hashes = {str(path.relative_to(ROOT)): file_hash(path) for path in input_paths}
+        raise FileNotFoundError(
+            "Missing integrity input(s): " + ", ".join(missing_inputs)
+        )
+    input_hashes = {
+        str(path.relative_to(ROOT)): file_hash(path) for path in input_paths
+    }
     json_write(root / "input_hashes.json", input_hashes)
     json_write(root / "environment.json", environment_payload())
     manifest_path = root / "manifest.json"
@@ -832,7 +870,9 @@ def main() -> None:
             progress("Reusing execution checkpoint", position, len(work))
             continue
         if compiled_path.exists():
-            saved_indices, compiled_suffixes = deserialise_circuits(json_read(compiled_path))
+            saved_indices, compiled_suffixes = deserialise_circuits(
+                json_read(compiled_path)
+            )
             if saved_indices != indices:
                 raise RuntimeError(f"Unexpected circuit indices in {compiled_path}")
             progress("Reusing compilation checkpoint", position, len(work))
@@ -861,7 +901,9 @@ def main() -> None:
             )
             json_write(compiled_path, compiled_payload)
 
-        jobs = [append_suffix(shared_preparation, suffix) for suffix in compiled_suffixes]
+        jobs = [
+            append_suffix(shared_preparation, suffix) for suffix in compiled_suffixes
+        ]
         if not all(backend.valid_circuit(circuit) for circuit in jobs):
             raise RuntimeError(f"Invalid optimized circuit in batch {batch_number}.")
         progress("Executing local-emulator batch", position, len(work))
@@ -887,10 +929,14 @@ def main() -> None:
             {
                 "stage": "executing",
                 "completed_compilation_batches": [
-                    number for number, _ in work if batch_paths(root, number)[0].exists()
+                    number
+                    for number, _ in work
+                    if batch_paths(root, number)[0].exists()
                 ],
                 "completed_execution_batches": [
-                    number for number, _ in work if batch_paths(root, number)[1].exists()
+                    number
+                    for number, _ in work
+                    if batch_paths(root, number)[1].exists()
                 ],
                 "updated_utc": datetime.now(timezone.utc).isoformat(),
             },
@@ -905,39 +951,52 @@ def main() -> None:
         qubit_hamiltonian,
         result_paths,
     )
-    exact = float(json_read(exact_path)["vqe_energy_hartree"]) if exact_path.exists() else None
+    exact = (
+        float(json_read(exact_path)["vqe_energy_hartree"])
+        if exact_path.exists()
+        else None
+    )
     output = root / "final_energy.json"
     absolute_error = abs(nominal - exact) if exact is not None else None
     final = {
-            "system": args.system,
-            "basis": args.basis,
-            "backend": BACKEND_LABEL,
-            "method": "UCCSD PauliAveraging with a shared compiled preparation",
-            "n_measurement_circuits": len(full_circuits),
-            "shots_per_circuit": args.shots_per_circuit,
-            "total_shots": len(full_circuits) * args.shots_per_circuit,
-            "energy_hartree": json_number(nominal),
-            "standard_error_hartree": json_number(standard_error),
-            "confidence_interval_95_hartree": (
-                [json_number(nominal - 1.96 * standard_error), json_number(nominal + 1.96 * standard_error)]
-                if math.isfinite(standard_error)
-                else None
-            ),
-            "exact_saved_parameter_energy_hartree": exact,
-            "difference_from_exact_hartree": json_number(nominal - exact) if exact is not None else None,
-            "absolute_error_hartree": json_number(absolute_error),
-            "absolute_error_millihartree": json_number(absolute_error * 1000) if absolute_error is not None else None,
-            "absolute_error_kcal_per_mol": json_number(absolute_error * 627.509474) if absolute_error is not None else None,
-            "compile_and_execution_checkpoint_directory": str(root),
-            "evaluation_seconds": time.time() - evaluation_started,
-            "total_wall_seconds": time.time() - workflow_started,
-            "equivalence_test": str(validation_path),
-            "active_space_methodology_warning": (
-                "Contiguous HOMO/LUMO-style active indices are retained for "
-                "reproducibility only; future production biological claims should "
-                "verify orbital localization or AVAS-derived mapping."
-            ),
-        }
+        "system": args.system,
+        "basis": args.basis,
+        "backend": BACKEND_LABEL,
+        "method": "UCCSD PauliAveraging with a shared compiled preparation",
+        "n_measurement_circuits": len(full_circuits),
+        "shots_per_circuit": args.shots_per_circuit,
+        "total_shots": len(full_circuits) * args.shots_per_circuit,
+        "energy_hartree": json_number(nominal),
+        "standard_error_hartree": json_number(standard_error),
+        "confidence_interval_95_hartree": (
+            [
+                json_number(nominal - 1.96 * standard_error),
+                json_number(nominal + 1.96 * standard_error),
+            ]
+            if math.isfinite(standard_error)
+            else None
+        ),
+        "exact_saved_parameter_energy_hartree": exact,
+        "difference_from_exact_hartree": json_number(nominal - exact)
+        if exact is not None
+        else None,
+        "absolute_error_hartree": json_number(absolute_error),
+        "absolute_error_millihartree": json_number(absolute_error * 1000)
+        if absolute_error is not None
+        else None,
+        "absolute_error_kcal_per_mol": json_number(absolute_error * 627.509474)
+        if absolute_error is not None
+        else None,
+        "compile_and_execution_checkpoint_directory": str(root),
+        "evaluation_seconds": time.time() - evaluation_started,
+        "total_wall_seconds": time.time() - workflow_started,
+        "equivalence_test": str(validation_path),
+        "active_space_methodology_warning": (
+            "Contiguous HOMO/LUMO-style active indices are retained for "
+            "reproducibility only; future production biological claims should "
+            "verify orbital localization or AVAS-derived mapping."
+        ),
+    }
     json_write(output, final)
     write_final_artifacts(root, result_paths, work, final)
     json_write(

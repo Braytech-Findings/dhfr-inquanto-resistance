@@ -16,7 +16,9 @@ TABLES = ROOT / "results/tables"
 
 
 def load(path: Path) -> Chem.Mol:
-    molecule = next((mol for mol in Chem.SDMolSupplier(str(path), removeHs=False) if mol), None)
+    molecule = next(
+        (mol for mol in Chem.SDMolSupplier(str(path), removeHs=False) if mol), None
+    )
     if molecule is None:
         raise ValueError(f"Cannot parse {path}")
     return molecule
@@ -36,10 +38,14 @@ def main() -> None:
         dtmp_h = heavy(dtmp)
         match = tmp_h.GetSubstructMatch(dtmp_h)
         if len(match) != dtmp_h.GetNumAtoms():
-            raise ValueError(f"{background}: 4-DTMP is not an exact heavy-atom substructure of TMP")
+            raise ValueError(
+                f"{background}: 4-DTMP is not an exact heavy-atom substructure of TMP"
+            )
         tmp_xyz = np.asarray(tmp_h.GetConformer().GetPositions())[list(match)]
         dtmp_xyz = np.asarray(dtmp_h.GetConformer().GetPositions())
-        retained_rmsd = float(np.sqrt(np.mean(np.sum((tmp_xyz - dtmp_xyz) ** 2, axis=1))))
+        retained_rmsd = float(
+            np.sqrt(np.mean(np.sum((tmp_xyz - dtmp_xyz) ** 2, axis=1)))
+        )
         for dtmp_index, tmp_index in enumerate(match):
             maps.append(
                 {
@@ -59,7 +65,9 @@ def main() -> None:
                     "formal_charge": Chem.GetFormalCharge(molecule),
                     "heavy_atoms": molecule_h.GetNumAtoms(),
                     "canonical_smiles": Chem.MolToSmiles(molecule_h, canonical=True),
-                    "retained_atom_rmsd_from_tmp_A": 0.0 if ligand == "TMP" else retained_rmsd,
+                    "retained_atom_rmsd_from_tmp_A": 0.0
+                    if ligand == "TMP"
+                    else retained_rmsd,
                 }
             )
     TABLES.mkdir(parents=True, exist_ok=True)

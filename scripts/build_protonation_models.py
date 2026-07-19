@@ -21,7 +21,8 @@ def protonate_n1(molecule: Chem.Mol) -> Chem.Mol:
     if not match:
         raise ValueError("Could not identify diaminopyrimidine N1")
     n1 = next(
-        matched for query, matched in enumerate(match)
+        matched
+        for query, matched in enumerate(match)
         if N1_PATTERN.GetAtomWithIdx(query).GetAtomMapNum() == 1
     )
     editable = Chem.RWMol(molecule)
@@ -40,7 +41,10 @@ def main() -> None:
     for background in ("WT", "L28R"):
         for ligand in ("TMP", "4DTMP"):
             source = PROCESSED / f"{background}_{ligand}.sdf"
-            molecule = next((mol for mol in Chem.SDMolSupplier(str(source), removeHs=False) if mol), None)
+            molecule = next(
+                (mol for mol in Chem.SDMolSupplier(str(source), removeHs=False) if mol),
+                None,
+            )
             if molecule is None:
                 raise ValueError(f"Cannot parse {source}")
             product = protonate_n1(molecule)
@@ -56,7 +60,9 @@ def main() -> None:
                     "state": "N1-protonated",
                     "formal_charge": Chem.GetFormalCharge(product),
                     "formula": rdMolDescriptors.CalcMolFormula(product),
-                    "canonical_smiles": Chem.MolToSmiles(Chem.RemoveHs(product), canonical=True),
+                    "canonical_smiles": Chem.MolToSmiles(
+                        Chem.RemoveHs(product), canonical=True
+                    ),
                     "coordinate_rule": "all heavy coordinates inherited",
                 }
             )

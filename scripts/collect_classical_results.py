@@ -38,11 +38,18 @@ def main() -> None:
     contrast_rows = []
     group_columns = ["tier", "method", "basis", "nadph_embedding"]
     for keys, group in frame.groupby(group_columns):
-        values = dict(zip(group["system_id"], group["interaction_energy_hartree"], strict=True))
+        values = dict(
+            zip(group["system_id"], group["interaction_energy_hartree"], strict=True)
+        )
         if len(values) == 4:
             contrast_rows.append(
-                {**dict(zip(group_columns, keys, strict=True)), "D_hartree": contrast(values),
-                 "status": "pilot_only" if keys[1:] == ("HF", "sto-3g", True) else "sensitivity"}
+                {
+                    **dict(zip(group_columns, keys, strict=True)),
+                    "D_hartree": contrast(values),
+                    "status": "pilot_only"
+                    if keys[1:] == ("HF", "sto-3g", True)
+                    else "sensitivity",
+                }
             )
     contrasts = pd.DataFrame(contrast_rows)
     contrasts.to_csv(CONTRASTS, index=False)
@@ -53,4 +60,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

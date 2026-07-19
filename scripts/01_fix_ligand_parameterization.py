@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import os
 import shutil
 import subprocess
 import tempfile
@@ -28,14 +27,40 @@ def generate_gaff_params(smiles: str, ligand_name: str, charge: int = 0) -> None
         Chem.MolToMolFile(mol, str(mol2_path))
         antechamber_out = Path(tmpdir) / f"{ligand_name}_gaff.mol2"
         frcmod_path = Path(tmpdir) / f"{ligand_name}.frcmod"
-        subprocess.run([
-            "antechamber", "-i", str(mol2_path), "-fi", "mol2",
-            "-o", str(antechamber_out), "-fo", "mol2",
-            "-c", "bcc", "-nc", str(charge), "-rn", ligand_name,
-        ], check=True, capture_output=True)
-        subprocess.run([
-            "parmchk2", "-i", str(antechamber_out), "-o", str(frcmod_path), "-f", "mol2",
-        ], check=True, capture_output=True)
+        subprocess.run(
+            [
+                "antechamber",
+                "-i",
+                str(mol2_path),
+                "-fi",
+                "mol2",
+                "-o",
+                str(antechamber_out),
+                "-fo",
+                "mol2",
+                "-c",
+                "bcc",
+                "-nc",
+                str(charge),
+                "-rn",
+                ligand_name,
+            ],
+            check=True,
+            capture_output=True,
+        )
+        subprocess.run(
+            [
+                "parmchk2",
+                "-i",
+                str(antechamber_out),
+                "-o",
+                str(frcmod_path),
+                "-f",
+                "mol2",
+            ],
+            check=True,
+            capture_output=True,
+        )
         shutil.copy(str(antechamber_out), DATA_PROCESSED / f"{ligand_name}.mol2")
         shutil.copy(str(frcmod_path), DATA_PROCESSED / f"{ligand_name}.frcmod")
     print(f"✅ Generated GAFF params for {ligand_name}")

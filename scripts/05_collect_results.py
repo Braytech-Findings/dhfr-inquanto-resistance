@@ -16,7 +16,14 @@ def main() -> None:
     rows = []
     for path in sorted((RESULTS / "classical").glob("*.json")):
         data = json.loads(path.read_text())
-        rows.append({"source": path.name, "interaction_energy_hartree": data.get("interaction_energy_hartree", None)})
+        rows.append(
+            {
+                "source": path.name,
+                "interaction_energy_hartree": data.get(
+                    "interaction_energy_hartree", None
+                ),
+            }
+        )
     df = pd.DataFrame(rows)
     (RESULTS / "tables").mkdir(parents=True, exist_ok=True)
     df.to_csv(RESULTS / "tables" / "classical_summary.csv", index=False)

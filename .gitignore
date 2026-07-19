@@ -58,6 +58,19 @@ results/quantum/optimized_pauli_checkpoints/
 results/quantum/measurement_plans/*compiled*
 results/quantum/*pauli_measurements.csv
 results/quantinuum_access/
+data/results/
+
+# Transient local execution and Amber/Antechamber working files.
+logs/*
+!logs/.gitkeep
+*.pid
+*.backup
+*.timeout-backup
+*_backup.yml
+ANTECHAMBER_*
+ATOMTYPE.INF
+sqm.in
+sqm.out
 
 # Conda/R temporary state
 .conda/

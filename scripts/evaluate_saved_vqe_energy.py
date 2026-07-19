@@ -38,12 +38,7 @@ def main():
         / f"{args.system}_compact_primary.xyz"
     )
 
-    param_path = (
-        ROOT
-        / "data"
-        / "params"
-        / f"{args.system}_params.json"
-    )
+    param_path = ROOT / "data" / "params" / f"{args.system}_params.json"
 
     if not xyz_path.exists():
         raise SystemExit(f"❌ Missing geometry: {xyz_path}")
@@ -76,11 +71,7 @@ def main():
     n_mo = len(mean_field.mo_energy)
 
     active_indices = list(range(n_occ - 3, n_occ + 3))
-    frozen_indices = [
-        index
-        for index in range(n_mo)
-        if index not in active_indices
-    ]
+    frozen_indices = [index for index in range(n_mo) if index not in active_indices]
 
     print(f"   Occupied orbitals: {n_occ}", flush=True)
     print(f"   Total orbitals: {n_mo}", flush=True)
@@ -108,10 +99,7 @@ def main():
 
     saved = json.loads(param_path.read_text())["params"]
 
-    symbol_map = {
-        symbol.name: symbol
-        for symbol in ansatz.state_circuit.free_symbols()
-    }
+    symbol_map = {symbol.name: symbol for symbol in ansatz.state_circuit.free_symbols()}
 
     parameters = {
         symbol_map[name]: float(value)
@@ -122,18 +110,14 @@ def main():
     missing = sorted(set(symbol_map) - set(saved))
 
     if missing:
-        raise SystemExit(
-            "❌ Missing saved parameters: "
-            + ", ".join(missing)
-        )
+        raise SystemExit("❌ Missing saved parameters: " + ", ".join(missing))
 
     print(f"   Qubits: {ansatz.state_circuit.n_qubits}", flush=True)
     print(f"   Hamiltonian terms: {len(qubit_hamiltonian)}", flush=True)
     print(f"   Loaded parameters: {len(parameters)}", flush=True)
 
     print(
-        "⚛️ Evaluating exact saved-parameter energy "
-        "with an ideal statevector...",
+        "⚛️ Evaluating exact saved-parameter energy with an ideal statevector...",
         flush=True,
     )
 
@@ -142,32 +126,23 @@ def main():
         qubit_hamiltonian,
     )
 
-    energy_value = complex(
-        energy_expression.default_evaluate(parameters)
-    )
+    energy_value = complex(energy_expression.default_evaluate(parameters))
 
     elapsed = time.time() - start
 
     if abs(energy_value.imag) > 1e-8:
         print(
-            f"⚠️ Non-negligible imaginary component: "
-            f"{energy_value.imag}",
+            f"⚠️ Non-negligible imaginary component: {energy_value.imag}",
             flush=True,
         )
 
     output_dir = ROOT / "results" / "quantum"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    result_path = (
-        output_dir
-        / f"{args.system}_saved_params_exact.json"
-    )
+    result_path = output_dir / f"{args.system}_saved_params_exact.json"
 
     hamiltonian_path = (
-        ROOT
-        / "data"
-        / "processed"
-        / f"{args.system}_qubit_hamiltonian.json"
+        ROOT / "data" / "processed" / f"{args.system}_qubit_hamiltonian.json"
     )
 
     hamiltonian_terms = []
@@ -192,9 +167,7 @@ def main():
         "terms": hamiltonian_terms,
     }
 
-    hamiltonian_path.write_text(
-        json.dumps(hamiltonian_payload, indent=2)
-    )
+    hamiltonian_path.write_text(json.dumps(hamiltonian_payload, indent=2))
 
     result = {
         "system": args.system,
@@ -204,9 +177,7 @@ def main():
         "scf_energy_hartree": scf_energy,
         "vqe_energy_hartree": float(energy_value.real),
         "imaginary_component": float(energy_value.imag),
-        "correlation_relative_to_scf_hartree": float(
-            energy_value.real - scf_energy
-        ),
+        "correlation_relative_to_scf_hartree": float(energy_value.real - scf_energy),
         "n_qubits": ansatz.state_circuit.n_qubits,
         "n_hamiltonian_terms": len(qubit_hamiltonian),
         "n_parameters": len(parameters),
@@ -215,9 +186,7 @@ def main():
         "hamiltonian_file": str(hamiltonian_path),
     }
 
-    result_path.write_text(
-        json.dumps(result, indent=2)
-    )
+    result_path.write_text(json.dumps(result, indent=2))
 
     print("", flush=True)
     print("✅ Exact saved-parameter evaluation finished.", flush=True)
@@ -227,8 +196,7 @@ def main():
         flush=True,
     )
     print(
-        f"   VQE − SCF: "
-        f"{energy_value.real - scf_energy:.12f} Hartree",
+        f"   VQE − SCF: {energy_value.real - scf_energy:.12f} Hartree",
         flush=True,
     )
     print(f"   Runtime: {elapsed:.1f} seconds", flush=True)

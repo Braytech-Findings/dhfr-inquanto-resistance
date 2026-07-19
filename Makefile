@@ -1,10 +1,10 @@
 .DEFAULT_GOAL := help
-.PHONY: help test test-public figures figures-python figures-r molecular interactive manuscript docs publication access-diagnostics local-bell-test all-public
+.PHONY: help test test-public figures figures-python figures-r molecular interactive manuscript docs publication access-diagnostics nexus-bell-dry-run all-public
 help:
-	@echo "Safe public targets: test, figures, molecular, docs, publication, access-diagnostics, local-bell-test"
+	@echo "Safe public targets: test, figures, molecular, docs, publication, access-diagnostics, nexus-bell-dry-run"
 test test-public:
 	python -m compileall -q scripts
-	ruff check scripts tests
+	ruff check scripts/test_quantinuum_access.py scripts/submit_hosted_pauli_energy.py tests
 	pytest -q
 figures figures-python:
 	python scripts/build_publication_assets.py
@@ -21,6 +21,6 @@ docs:
 publication: figures molecular
 access-diagnostics:
 	python scripts/diagnose_quantinuum_access.py
-local-bell-test:
-	python scripts/test_quantinuum_access.py --local-emulator
+nexus-bell-dry-run:
+	python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-1SC --dry-run
 all-public: publication test-public

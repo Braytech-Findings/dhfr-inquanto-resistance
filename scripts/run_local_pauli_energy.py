@@ -37,12 +37,7 @@ def main():
         / f"{args.system}_compact_primary.xyz"
     )
 
-    parameter_path = (
-        ROOT
-        / "data"
-        / "params"
-        / f"{args.system}_params.json"
-    )
+    parameter_path = ROOT / "data" / "params" / f"{args.system}_params.json"
 
     output_dir = ROOT / "results" / "quantum" / "measurement_plans"
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -75,11 +70,7 @@ def main():
     n_mo = len(mean_field.mo_energy)
 
     active_indices = list(range(n_occ - 3, n_occ + 3))
-    frozen_indices = [
-        index
-        for index in range(n_mo)
-        if index not in active_indices
-    ]
+    frozen_indices = [index for index in range(n_mo) if index not in active_indices]
 
     print(f"   Active orbitals: {active_indices}", flush=True)
 
@@ -101,14 +92,9 @@ def main():
         hf_state,
     )
 
-    saved_parameters = json.loads(
-        parameter_path.read_text()
-    )["params"]
+    saved_parameters = json.loads(parameter_path.read_text())["params"]
 
-    symbols = {
-        symbol.name: symbol
-        for symbol in ansatz.state_circuit.free_symbols()
-    }
+    symbols = {symbol.name: symbol for symbol in ansatz.state_circuit.free_symbols()}
 
     parameters = {
         symbols[name]: float(value)
@@ -119,10 +105,7 @@ def main():
     missing = sorted(set(symbols) - set(saved_parameters))
 
     if missing:
-        raise SystemExit(
-            "❌ Missing parameter values: "
-            + ", ".join(missing)
-        )
+        raise SystemExit("❌ Missing parameter values: " + ", ".join(missing))
 
     print(f"   Qubits: {ansatz.state_circuit.n_qubits}", flush=True)
     print(f"   Hamiltonian terms: {len(qubit_hamiltonian)}", flush=True)
@@ -157,36 +140,19 @@ def main():
     number_of_circuits = len(circuits)
     total_shots = number_of_circuits * args.shots_per_circuit
 
-    checkpoint_dir = (
-        ROOT
-        / "results"
-        / "quantum"
-        / "protocol_checkpoints"
-    )
+    checkpoint_dir = ROOT / "results" / "quantum" / "protocol_checkpoints"
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
 
-    built_checkpoint = (
-        checkpoint_dir
-        / (
-            f"{args.system}_H2-1LE_"
-            f"{args.shots_per_circuit}shots_built.pkl"
-        )
+    built_checkpoint = checkpoint_dir / (
+        f"{args.system}_H2-1LE_{args.shots_per_circuit}shots_built.pkl"
     )
 
-    compiled_checkpoint = (
-        checkpoint_dir
-        / (
-            f"{args.system}_H2-1LE_"
-            f"{args.shots_per_circuit}shots_compiled.pkl"
-        )
+    compiled_checkpoint = checkpoint_dir / (
+        f"{args.system}_H2-1LE_{args.shots_per_circuit}shots_compiled.pkl"
     )
 
-    completed_checkpoint = (
-        checkpoint_dir
-        / (
-            f"{args.system}_H2-1LE_"
-            f"{args.shots_per_circuit}shots_completed.pkl"
-        )
+    completed_checkpoint = checkpoint_dir / (
+        f"{args.system}_H2-1LE_{args.shots_per_circuit}shots_completed.pkl"
     )
 
     protocol.dump(str(built_checkpoint))
@@ -214,13 +180,8 @@ def main():
 
     compiled_resources = protocol.dataframe_circuit_shot()
 
-    compiled_resource_path = (
-        output_dir
-        / (
-            f"{args.system}_H2-1LE_"
-            f"{args.shots_per_circuit}shots_"
-            "compiled_resources.csv"
-        )
+    compiled_resource_path = output_dir / (
+        f"{args.system}_H2-1LE_{args.shots_per_circuit}shots_compiled_resources.csv"
     )
 
     compiled_resources.to_csv(
@@ -231,8 +192,7 @@ def main():
     protocol.dump(str(compiled_checkpoint))
 
     print(
-        f"✅ Compilation finished in "
-        f"{compile_seconds:.1f} seconds.",
+        f"✅ Compilation finished in {compile_seconds:.1f} seconds.",
         flush=True,
     )
     print(
@@ -258,18 +218,13 @@ def main():
     run_seconds = time.time() - run_start
 
     print(
-        f"✅ All local measurements completed in "
-        f"{run_seconds:.1f} seconds.",
+        f"✅ All local measurements completed in {run_seconds:.1f} seconds.",
         flush=True,
     )
 
     print("⚛️ Reconstructing the molecular energy...", flush=True)
 
-    measured_energy = complex(
-        energy.evaluate(
-            protocol.get_evaluator()
-        )
-    )
+    measured_energy = complex(energy.evaluate(protocol.get_evaluator()))
 
     energy_uvalue = protocol.evaluate_expectation_uvalue(
         ansatz,
@@ -300,26 +255,15 @@ def main():
         )
     )
 
-    exact_path = (
-        ROOT
-        / "results"
-        / "quantum"
-        / f"{args.system}_saved_params_exact.json"
-    )
+    exact_path = ROOT / "results" / "quantum" / f"{args.system}_saved_params_exact.json"
 
     exact_energy = None
 
     if exact_path.exists():
-        exact_energy = float(
-            json.loads(
-                exact_path.read_text()
-            )["vqe_energy_hartree"]
-        )
+        exact_energy = float(json.loads(exact_path.read_text())["vqe_energy_hartree"])
 
     difference_from_exact = (
-        nominal_energy - exact_energy
-        if exact_energy is not None
-        else None
+        nominal_energy - exact_energy if exact_energy is not None else None
     )
 
     measurement_table = protocol.dataframe_measurements()
@@ -328,11 +272,7 @@ def main():
         ROOT
         / "results"
         / "quantum"
-        / (
-            f"{args.system}_H2-1LE_"
-            f"{args.shots_per_circuit}shots_"
-            "pauli_measurements.csv"
-        )
+        / (f"{args.system}_H2-1LE_{args.shots_per_circuit}shots_pauli_measurements.csv")
     )
 
     measurement_table.to_csv(
@@ -344,10 +284,7 @@ def main():
         ROOT
         / "results"
         / "quantum"
-        / (
-            f"{args.system}_H2-1LE_"
-            f"{args.shots_per_circuit}shots_energy.json"
-        )
+        / (f"{args.system}_H2-1LE_{args.shots_per_circuit}shots_energy.json")
     )
 
     result = {
@@ -372,9 +309,7 @@ def main():
         "compiled_resources": str(compiled_resource_path),
     }
 
-    result_path.write_text(
-        json.dumps(result, indent=2)
-    )
+    result_path.write_text(json.dumps(result, indent=2))
 
     protocol.dump(str(completed_checkpoint))
 
@@ -382,24 +317,12 @@ def main():
     print("======================================")
     print("✅ SHOT-BASED VQE ENERGY COMPLETE")
     print("======================================")
-    print(
-        f"Shot-based energy: "
-        f"{nominal_energy:.12f} Hartree"
-    )
-    print(
-        f"Standard error:    "
-        f"{standard_error:.12f} Hartree"
-    )
+    print(f"Shot-based energy: {nominal_energy:.12f} Hartree")
+    print(f"Standard error:    {standard_error:.12f} Hartree")
 
     if exact_energy is not None:
-        print(
-            f"Exact reference:   "
-            f"{exact_energy:.12f} Hartree"
-        )
-        print(
-            f"Difference:        "
-            f"{difference_from_exact:+.12f} Hartree"
-        )
+        print(f"Exact reference:   {exact_energy:.12f} Hartree")
+        print(f"Difference:        {difference_from_exact:+.12f} Hartree")
 
     print(f"Measurement circuits: {number_of_circuits}")
     print(f"Total shots: {total_shots}")

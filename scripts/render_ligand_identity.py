@@ -14,7 +14,9 @@ OUTPUT = ROOT / "results/reports/ligand_identity.png"
 
 
 def load(path: Path) -> Chem.Mol:
-    molecule = next((mol for mol in Chem.SDMolSupplier(str(path), removeHs=False) if mol), None)
+    molecule = next(
+        (mol for mol in Chem.SDMolSupplier(str(path), removeHs=False) if mol), None
+    )
     if molecule is None:
         raise ValueError(f"Cannot parse {path}")
     molecule = Chem.RemoveHs(molecule)
@@ -29,8 +31,15 @@ def main() -> None:
         load(PROCESSED / "protonation_models/WT_TMP_protonatedN1.sdf"),
         load(PROCESSED / "protonation_models/WT_4DTMP_protonatedN1.sdf"),
     ]
-    legends = ["TMP, neutral", "4-DTMP, neutral", "TMP, N1-protonated (+1)", "4-DTMP, N1-protonated (+1)"]
-    image = Draw.MolsToGridImage(molecules, legends=legends, molsPerRow=2, subImgSize=(520, 360))
+    legends = [
+        "TMP, neutral",
+        "4-DTMP, neutral",
+        "TMP, N1-protonated (+1)",
+        "4-DTMP, N1-protonated (+1)",
+    ]
+    image = Draw.MolsToGridImage(
+        molecules, legends=legends, molsPerRow=2, subImgSize=(520, 360)
+    )
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     image.save(OUTPUT)
     print(OUTPUT)

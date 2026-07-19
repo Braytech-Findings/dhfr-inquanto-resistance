@@ -55,11 +55,11 @@ conda activate dhfr-qc
 python -m pytest
 ```
 
-InQuanto, `inquanto-pyscf`, `inquanto-nexus`, and `qnexus` are licensed/separately distributed and intentionally absent from the public environment file. Install the versions provided through your Quantinuum organization into `dhfr-qc`. Never commit tokens.
+`qnexus==0.46.0` is installed from PyPI through `environment.yml`; it is public client software but needs an authenticated account for remote operations. InQuanto and its extensions are proprietary/separately distributed and must be installed from the organization-provided index into `dhfr-qc`. Public CI does not install either chemistry stack or perform Nexus access. Never commit tokens.
 
 ## Nexus safety boundary
 
-The completed finite-shot result is local H2-1LE only: `-2587.917118821447 ± 0.007647045141 Ha` from 576 circuits × 100 shots. It is neither a Nexus-hosted nor physical-hardware result. A state-preparation circuit alone cannot calculate molecular energy. The guarded Nexus Bell test is `python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-1SC --shots 10 --confirm-submit --max-hqc 1 --wait`; use `--dry-run` first. H2-1SC is artificial syntax checking, while H2-Emulator requires simulation quota. Backend visibility/“online” status does not establish execution entitlement; access code 14/default-group problems require organization or Quantinuum support.
+The completed finite-shot result is local H2-1LE only: `-2587.917118821447 ± 0.007647045141 Ha` from 576 circuits × 100 shots. It is neither a Nexus-hosted nor physical-hardware result. A state-preparation circuit alone cannot calculate molecular energy. The guarded Nexus Bell test is `python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-1SC --shots 10 --confirm-submit --wait`; H2-1SC is artificial syntax checking, while H2-Emulator requires simulation quota. Backend visibility/“online” status does not establish execution entitlement; teams and organization display names are not necessarily quota-bearing Nexus user groups. Access code 14/default-group problems require organization or Quantinuum support.
 
 ## Publication-ready files
 
@@ -128,7 +128,7 @@ Run commands from the repository root.
 
    ```bash
    python scripts/run_inquanto_vqe.py system.h5 --output results/tables/WT_TMP_vqe.json
-   python scripts/check_nexus_backend.py --login --device H2-Emulator
+   python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-Emulator --shots 10 --dry-run
    ```
 
    Use `H2-Emulator` for early remote tests. `H2-1E` consumes HQCs; submit only after checking circuit width/depth, shot count, queue status, and cost. The backend check does not submit a job.

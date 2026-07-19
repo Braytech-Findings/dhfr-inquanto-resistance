@@ -49,9 +49,14 @@ def main() -> None:
             "primary5A": {"cutoff_angstrom": 5.0, "role": "primary"},
             "expanded6A": {"cutoff_angstrom": 6.0, "role": "sensitivity"},
         },
-        "preparation": {"iterations": args.iterations, "restraint_k_kcal_mol_angstrom2": args.restraint},
+        "preparation": {
+            "iterations": args.iterations,
+            "restraint_k_kcal_mol_angstrom2": args.restraint,
+        },
     }
-    (ROOT / "configs/water_models.yaml").write_text(yaml.safe_dump(frozen, sort_keys=False))
+    (ROOT / "configs/water_models.yaml").write_text(
+        yaml.safe_dump(frozen, sort_keys=False)
+    )
     print(json.dumps(frozen, indent=2))
     print(table.to_string(index=False))
 

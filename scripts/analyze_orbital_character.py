@@ -15,7 +15,9 @@ from pyscf import scf
 
 def atom_ao_indices(molecule, atom_indices: list[int]) -> np.ndarray:
     slices = molecule.aoslice_by_atom()
-    return np.concatenate([np.arange(slices[index, 2], slices[index, 3]) for index in atom_indices])
+    return np.concatenate(
+        [np.arange(slices[index, 2], slices[index, 3]) for index in atom_indices]
+    )
 
 
 def main() -> None:
@@ -36,7 +38,11 @@ def main() -> None:
     ligand_ao = atom_ao_indices(molecule, ligand_atoms)
     overlap = molecule.intor_symmetric("int1e_ovlp")
     ligand_population = np.einsum(
-        "pi,pq,qi->i", coefficients[ligand_ao], overlap[ligand_ao, :], coefficients, optimize=True
+        "pi,pq,qi->i",
+        coefficients[ligand_ao],
+        overlap[ligand_ao, :],
+        coefficients,
+        optimize=True,
     )
     table = pd.DataFrame(
         {
@@ -48,8 +54,10 @@ def main() -> None:
     )
     occupied = table.index[table.occupation > 0].max()
     virtual = occupied + 1
-    occupied_window = table.iloc[max(0, occupied - args.occupied_window + 1):occupied + 1]
-    virtual_window = table.iloc[virtual:virtual + args.virtual_window]
+    occupied_window = table.iloc[
+        max(0, occupied - args.occupied_window + 1) : occupied + 1
+    ]
+    virtual_window = table.iloc[virtual : virtual + args.virtual_window]
     selected_occupied = occupied_window.nlargest(3, "ligand_population")
     selected_virtual = virtual_window.nlargest(3, "ligand_population")
     selection = pd.concat([selected_occupied, selected_virtual]).sort_values("orbital")
@@ -66,15 +74,22 @@ def main() -> None:
             f"{args.virtual_window}-orbital virtual frontier windows"
         ),
         "candidate_orbitals": selection.to_dict(orient="records"),
-        "candidate_active_space": {"electrons": int(selected_occupied.occupation.sum()), "orbitals": 6},
+        "candidate_active_space": {
+            "electrons": int(selected_occupied.occupation.sum()),
+            "orbitals": 6,
+        },
         "status": "candidate only; inspect orbitals and correspondence across all systems before freezing",
     }
     args.output.write_text(json.dumps(result, indent=2) + "\n")
     fig, axis = plt.subplots(figsize=(7, 5))
     shown = table.iloc[
-        max(0, occupied - args.occupied_window + 1):virtual + args.virtual_window
+        max(0, occupied - args.occupied_window + 1) : virtual + args.virtual_window
     ]
-    axis.scatter(shown.ligand_population, shown.energy_hartree, c=np.where(shown.occupation > 0, "#2166ac", "#b2182b"))
+    axis.scatter(
+        shown.ligand_population,
+        shown.energy_hartree,
+        c=np.where(shown.occupation > 0, "#2166ac", "#b2182b"),
+    )
     for index, row in enumerate(selection.itertuples(index=False)):
         vertical_offset = 3 + 12 * (index % 3)
         axis.annotate(

@@ -16,7 +16,9 @@ CLUSTERS = ROOT / "data/processed/qm_clusters"
 EMBEDDING = ROOT / "data/processed/embedding"
 
 
-def geometry(stem: str, real_fragment: str | None = None) -> list[tuple[str, tuple[float, float, float]]]:
+def geometry(
+    stem: str, real_fragment: str | None = None
+) -> list[tuple[str, tuple[float, float, float]]]:
     lines = (CLUSTERS / f"{stem}.xyz").read_text().splitlines()[2:]
     atom_map = pd.read_csv(CLUSTERS / f"{stem}_atoms.csv")
     atoms = []
@@ -38,7 +40,15 @@ def run_scf(
     embedding: pd.DataFrame | None,
     conv_tol: float,
 ) -> tuple[float, bool, int, float]:
-    molecule = gto.M(atom=atoms, basis=basis, charge=charge, spin=0, unit="Angstrom", verbose=3, max_memory=memory)
+    molecule = gto.M(
+        atom=atoms,
+        basis=basis,
+        charge=charge,
+        spin=0,
+        unit="Angstrom",
+        verbose=3,
+        max_memory=memory,
+    )
     if method == "HF":
         mean_field = scf.RHF(molecule).density_fit()
     else:
@@ -74,9 +84,18 @@ def main() -> None:
     stem = f"{args.system}_{args.tier}"
     metadata = json.loads((CLUSTERS / f"{stem}.json").read_text())
     background = "L28R" if args.system.startswith("L28R") else "WT"
-    embedding = None if args.no_embedding else pd.read_csv(EMBEDDING / f"{background}_nadph_charmm36.csv")
+    embedding = (
+        None
+        if args.no_embedding
+        else pd.read_csv(EMBEDDING / f"{background}_nadph_charmm36.csv")
+    )
     embedding_label = "noembed" if args.no_embedding else "embed"
-    output = args.output or ROOT / "results/classical" / f"{stem}_{args.method}_{args.basis.replace('*', 's')}_{embedding_label}.json"
+    output = (
+        args.output
+        or ROOT
+        / "results/classical"
+        / f"{stem}_{args.method}_{args.basis.replace('*', 's')}_{embedding_label}.json"
+    )
     partial = output.with_suffix(".partial.json")
     signature = {
         "system": args.system,
@@ -96,19 +115,34 @@ def main() -> None:
         cached = json.loads(partial.read_text())
         if cached.get("signature") == signature:
             components = cached.get("components", {})
-            print(f"Resuming {len(components)} cached counterpoise component(s) from {partial}")
+            print(
+                f"Resuming {len(components)} cached counterpoise component(s) from {partial}"
+            )
     for name, (fragment, charge) in definitions.items():
         if name in components:
             continue
         energy, converged, cycles, elapsed = run_scf(
-            geometry(stem, fragment), charge, args.method, args.basis, args.memory,
-            embedding, args.conv_tol,
+            geometry(stem, fragment),
+            charge,
+            args.method,
+            args.basis,
+            args.memory,
+            embedding,
+            args.conv_tol,
         )
         if not converged:
             raise RuntimeError(f"{name} SCF failed to converge")
-        components[name] = {"energy_hartree": energy, "charge": charge, "cycles": cycles, "elapsed_seconds": elapsed}
+        components[name] = {
+            "energy_hartree": energy,
+            "charge": charge,
+            "cycles": cycles,
+            "elapsed_seconds": elapsed,
+        }
         partial.parent.mkdir(parents=True, exist_ok=True)
-        partial.write_text(json.dumps({"signature": signature, "components": components}, indent=2) + "\n")
+        partial.write_text(
+            json.dumps({"signature": signature, "components": components}, indent=2)
+            + "\n"
+        )
     interaction = (
         components["complex"]["energy_hartree"]
         - components["ligand"]["energy_hartree"]

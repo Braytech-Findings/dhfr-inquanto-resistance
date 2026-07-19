@@ -1,9 +1,0 @@
-system,file,status,ligand_resname,ligand_heavy_atoms,residue_28,ligand_res28_min_A,ligand_res28_centroid_A,min_protein_ligand_A,severe_clashes_lt_1_2A,waters,notes,water_model
-WT_TMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_TMP_minimized_dry.pdb,PASS,TOP,21,A:LEU28,4.150362996172744,5.880669947650411,2.8704442164933273,0,0,waters intentionally absent from current preparation,dry
-WT_TMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_TMP_minimized_expanded6A.pdb,PASS,TOP,21,A:LEU28,4.1042101554379515,5.88576578693914,2.844748495034315,0,13,,expanded6A
-WT_4DTMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_4DTMP_minimized_dry.pdb,PASS,DTM,20,A:LEU28,4.1688792258831375,5.945556126742897,2.811549394906656,0,0,waters intentionally absent from current preparation,dry
-WT_4DTMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_4DTMP_minimized_expanded6A.pdb,PASS,DTM,20,A:LEU28,4.108949500784841,5.926122345756542,2.836893195028671,0,11,,expanded6A
-L28R_TMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/L28R_TMP_minimized_dry.pdb,PASS,TOP,21,A:ARG28,3.7161431619355043,6.680623145008976,2.7969878440922846,0,0,waters intentionally absent from current preparation,dry
-L28R_TMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/L28R_TMP_minimized_expanded6A.pdb,PASS,TOP,21,A:ARG28,3.6718660106272996,6.698970641941045,2.7306204423170928,0,11,,expanded6A
-L28R_4DTMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/L28R_4DTMP_minimized_dry.pdb,PASS,DTM,20,A:ARG28,4.990529531021732,6.821185306873173,2.784106678990585,0,0,waters intentionally absent from current preparation,dry
-L28R_4DTMP,/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/L28R_4DTMP_minimized_expanded6A.pdb,PASS,DTM,20,A:ARG28,4.97478230679494,6.81805504353958,2.7681730437239667,0,10,,expanded6A
