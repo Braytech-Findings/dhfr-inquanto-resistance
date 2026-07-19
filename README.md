@@ -57,6 +57,10 @@ python -m pytest
 
 InQuanto, `inquanto-pyscf`, `inquanto-nexus`, and `qnexus` are licensed/separately distributed and intentionally absent from the public environment file. Install the versions provided through your Quantinuum organization into `dhfr-qc`. Never commit tokens.
 
+## Nexus safety boundary
+
+The completed finite-shot result is local H2-1LE only: `-2587.917118821447 ± 0.007647045141 Ha` from 576 circuits × 100 shots. It is neither a Nexus-hosted nor physical-hardware result. A state-preparation circuit alone cannot calculate molecular energy. The guarded Nexus Bell test is `python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-1SC --shots 10 --confirm-submit --max-hqc 1 --wait`; use `--dry-run` first. H2-1SC is artificial syntax checking, while H2-Emulator requires simulation quota. Backend visibility/“online” status does not establish execution entitlement; access code 14/default-group problems require organization or Quantinuum support.
+
 ## Publication-ready files
 
 This repository now includes:

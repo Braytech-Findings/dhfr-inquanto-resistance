@@ -1,5 +1,7 @@
 import json
 from pathlib import Path
+import subprocess
+import sys
 
 import pandas as pd
 
@@ -50,3 +52,21 @@ def test_public_data_has_no_nan_or_index_column():
         data = pd.read_csv(csv)
         assert not data.isna().any().any()
         assert not any(column.lower().startswith("unnamed") for column in data.columns)
+
+
+def test_hosted_bell_dry_run_never_logs_in_or_submits():
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/test_quantinuum_access.py",
+            "--nexus-emulator",
+            "--backend",
+            "H2-1SC",
+            "--dry-run",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "No login, upload, compile, cost request, or execution occurred" in result.stdout
