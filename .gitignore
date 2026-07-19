@@ -57,6 +57,7 @@ results/quantum/protocol_checkpoints/
 results/quantum/optimized_pauli_checkpoints/
 results/quantum/measurement_plans/*compiled*
 results/quantum/*pauli_measurements.csv
+results/quantinuum_access/
 
 # Conda/R temporary state
 .conda/
