@@ -22,8 +22,9 @@ HARDWARE_NAMES = {"H2-1E", "H2-2E", "H2-1", "H2-2", "H1-1"}
 SYNTAX_CHECKERS = {"H2-1SC", "H2-2SC"}
 NEXUS_EMULATORS = {"H2-EMULATOR", "H1-EMULATOR"}
 SUPPORTED_TARGETS = HARDWARE_NAMES | SYNTAX_CHECKERS | NEXUS_EMULATORS
-DEFAULT_PROJECT = "ee45224b-05fb-4520-9a0e-45b5be2528c3"
 GROUP_ENV = "QNEXUS_USER_GROUP"
+PROJECT_ID_ENV = "QNEXUS_PROJECT_ID"
+PROJECT_NAME_ENV = "QNEXUS_PROJECT_NAME"
 
 
 def load_nexus() -> tuple[Any, Any]:
@@ -106,10 +107,13 @@ def explain_error(exc: Exception, user_group: str | None) -> str:
 
 
 def project_for(qnx: Any, args: argparse.Namespace):
-    return (
-        qnx.projects.get(id=args.project_id)
-        if args.project_id
-        else qnx.projects.get(name=args.project_name)
+    if args.project_id:
+        return qnx.projects.get(id=args.project_id)
+    if args.project_name:
+        return qnx.projects.get(name=args.project_name)
+    raise SystemExit(
+        "Set an authorized project through --project-id, --project-name, "
+        f"{PROJECT_ID_ENV}, or {PROJECT_NAME_ENV}."
     )
 
 
@@ -315,8 +319,8 @@ def build_parser() -> argparse.ArgumentParser:
     modes.add_argument("--local-emulator", action="store_true")
     parser.add_argument("--backend", default="H2-1SC")
     parser.add_argument("--shots", type=int, default=10)
-    parser.add_argument("--project-id", default=DEFAULT_PROJECT)
-    parser.add_argument("--project-name", default="dhfr-h2-hardware")
+    parser.add_argument("--project-id", default=os.getenv(PROJECT_ID_ENV))
+    parser.add_argument("--project-name", default=os.getenv(PROJECT_NAME_ENV))
     parser.add_argument("--user-group")
     parser.add_argument(
         "--require-user-group",

@@ -201,6 +201,16 @@ def test_readme_visual_assets_and_key_documents_exist():
         assert (ROOT / relative_path).exists()
 
 
+def test_no_hard_coded_nexus_identifiers_in_maintained_sources():
+    import re
+
+    pattern = re.compile(
+        r"\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b"
+    )
+    for path in (ROOT / "scripts").glob("*.py"):
+        assert not pattern.search(path.read_text())
+
+
 class _FakeCircuit:
     n_qubits = 2
     n_gates = 4

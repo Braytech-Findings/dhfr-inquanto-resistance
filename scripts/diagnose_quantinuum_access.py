@@ -104,7 +104,11 @@ def main() -> None:
         + "\n"
     )
     (OUT / "support_packet.md").write_text(
-        "# Sanitized support packet\n\nProject: `dhfr-h2-hardware` (`ee45224b-05fb-4520-9a0e-45b5be2528c3`)\n\nPrevious H2-1E job: `ed5127b9-8b92-4ad3-b0a4-02a5d3202586` returned machine-access code 14. This report lists visible targets and quota API results without credentials. Ask the organization administrator/Quantinuum support whether the account has a hardware machine entitlement, a simulation-time allocation, and the required user-group assignment.\n"
+        "# Sanitized support packet\n\n"
+        "This report lists visible targets and quota API results without credentials, "
+        "project identifiers, or job identifiers. Ask the organization administrator or "
+        "Quantinuum support whether the account has machine entitlement, simulation-time "
+        "allocation, and the required user-group assignment.\n"
     )
     print(json.dumps(report, indent=2))
 

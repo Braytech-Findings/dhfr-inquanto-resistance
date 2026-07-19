@@ -108,6 +108,8 @@ python -m pytest
 
 `qnexus==0.46.0` is installed from PyPI through `environment.yml`; it is public client software but needs an authenticated account for remote operations. InQuanto and its extensions are proprietary/separately distributed and must be installed from the organization-provided index into `dhfr-qc`. Public CI does not install either chemistry stack or perform Nexus access. Never commit tokens.
 
+For an authenticated Nexus Bell test, set your authorized project privately in the shell (`QNEXUS_PROJECT_ID` or `QNEXUS_PROJECT_NAME`) and, if required, `QNEXUS_USER_GROUP`; `.env.example` documents only placeholder names. Never commit a populated `.env` file.
+
 ## Nexus safety boundary
 
 The completed finite-shot result is local H2-1LE only: `-2587.917118821447 ± 0.007647045141 Ha` from 576 circuits × 100 shots. It is neither a Nexus-hosted nor physical-hardware result. A state-preparation circuit alone cannot calculate molecular energy. The guarded Nexus Bell test is `python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-1SC --shots 10 --confirm-submit --wait`; H2-1SC is artificial syntax checking, while H2-Emulator requires simulation quota. Backend visibility/“online” status does not establish execution entitlement; teams and organization display names are not necessarily quota-bearing Nexus user groups. Access code 14/default-group problems require organization or Quantinuum support.
