@@ -1,29 +1,80 @@
-# DHFR InQuanto Resistance
+<p align="center"><img src="docs/assets/dhfr_quantum_hero.svg" alt="Molecular network flowing into a quantum circuit, representing the DHFR quantum-chemistry workflow." width="100%"></p>
 
-> **Plain-English summary:** DHFR is a tiny protein machine. Trimethoprim is a drug that can slow it down. This project uses quantum-chemistry tools to study one small, carefully selected part of a DHFR–drug model. Think of the full molecule as a huge school and the selected active space as one classroom: this is a useful simplification, not a literal description of electrons.
+<h1 align="center">Quantum-Enabled Analysis of DHFR-Mediated Drug Resistance</h1>
+
+<p align="center">A reproducible workflow connecting DHFR structural models, electronic-structure calculations, and finite-shot quantum-circuit measurements.</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11-3776AB?logo=python&amp;logoColor=white" alt="Python 3.11">
+  <img src="https://img.shields.io/badge/Research-reproducible%20workflow-0B7285" alt="Research workflow">
+  <img src="https://img.shields.io/badge/Domain-quantum%20chemistry-5C4B8A" alt="Quantum chemistry">
+  <img src="https://img.shields.io/badge/Focus-DHFR%20and%20TMP-167C80" alt="DHFR and TMP">
+  <img src="https://img.shields.io/badge/License-MIT-2EA44F" alt="MIT license">
+</p>
+
+> **In one sentence:** this project evaluates one small, reproducible DHFR–trimethoprim electronic model with classical and local quantum-emulator methods; it does not claim a drug-resistance prediction or a hardware result.
+
+**Explore:** [Start here](#start-here-what-is-this-project) · [Research question](#research-question) · [Verified result](#what-is-verified-now) · [Figures](docs/FIGURE_GALLERY.md) · [Methods](docs/methods.md) · [Reproduction](docs/REPRODUCIBILITY.md) · [Backend status](docs/backend-status.md) · [Limitations](docs/LIMITATIONS.md) · [Manuscript](manuscript/README.md)
+
+## Start Here: What Is This Project?
+
+### Beginner explanation
+
+Proteins are tiny biological machines. DHFR is a protein that helps cells make molecules needed for growth. Some medicines, including trimethoprim (TMP), interfere with DHFR. Changes in the genetic instructions for DHFR can change the protein and may contribute to drug resistance. Computational chemistry lets researchers study simplified molecular models on computers. Quantum computing may eventually help with selected electronic-structure problems; it does not replace laboratory experiments or automatically make calculations better.
+
+This repository combines biology, molecular modeling, chemistry, and quantum computing to study a small selected part of one DHFR–TMP model. The active-space analogy is like studying one classroom in a large school: helpful for focus, but not a literal description of electrons.
+
+### Technical explanation
+
+The completed calculation uses a `WT_TMP` compact QM-cluster model, STO-3G basis, six selected spatial orbitals, a 12-qubit UCCSD ansatz, and Pauli-grouped finite-shot expectation estimation. Quantinuum InQuanto is the specialized quantum-chemistry software used to formulate this workflow. See [scientific background](docs/scientific-background.md) and the [glossary](docs/GLOSSARY.md).
+
+## Research question
+
+Can reproducible, mutation-specific electronic interaction descriptors help frame future studies of why TMP and 4-DTMP can follow different DHFR resistance trajectories? The present repository establishes workflow components and one WT_TMP local-emulator benchmark; it does **not** answer that biological question yet. Drug resistance matters because it can limit treatment options and raises the cost and difficulty of drug development, but molecular energy alone does not demonstrate clinical resistance.
+
+## Project pipeline
+
+```mermaid
+flowchart LR
+  A[Biological question] --> B[DHFR system selection]
+  B --> C[Structure and QM-cluster preparation]
+  C --> D[Classical electronic structure]
+  D --> E[Active-space Hamiltonian]
+  E --> F[UCCSD circuit and Pauli grouping]
+  F --> G[Local H2-1LE finite-shot measurements]
+  G --> H[Energy and uncertainty analysis]
+  H --> I[Careful interpretation]
+  classDef bio fill:#d9f1e8,stroke:#167c80,color:#102a43;
+  classDef quantum fill:#eee6ff,stroke:#5c4b8a,color:#102a43;
+  class A,B,C bio;
+  class D,E,F,G,H,I quantum;
+```
+
+Stages `A–C` connect biology and molecular modeling; `D` is classical computation; `E–G` are quantum-chemistry/circuit stages; `H–I` are data analysis and visualization. The actual workflow is also shown in [workflow_technical.png](results/publication/figures/workflow_technical.png).
 
 ## What is verified now
 
-For one `WT_TMP` active-space model, the repository contains an ideal saved-parameter VQE result and a completed 57,600-shot result from the **Quantinuum H2-1LE local noiseless emulator**. It is not physical quantum hardware, a noisy-emulator result, a mutation comparison, a binding-free-energy calculation, or a drug-resistance prediction.
+| Item | Verified value | Evidence and meaning |
+|---|---:|---|
+| System | `WT_TMP` | One wild-type DHFR–TMP active-space model. |
+| Method | UCCSD / Pauli averaging | 12 qubits; 117 saved parameters; 1,819 Pauli terms grouped into 576 circuits. |
+| Basis | STO-3G | Minimal basis; a methodological limitation. |
+| Ideal reference | `-2587.912001526413 Ha` | Saved-parameter expectation value. |
+| Finite-shot result | `-2587.917118821447 ± 0.007647045141 Ha` | 57,600-shot local H2-1LE noiseless-emulator result. |
+| Execution environment | Local emulator | Not Nexus-hosted, noisy hardware, or physical quantum hardware. |
 
-The finite-shot result is `-2587.917118821447 ± 0.007647045141 Hartree`; the ideal saved-parameter reference is `-2587.912001526413 Hartree`. The uncertainty is too large for strong chemical or biological conclusions. Read [docs/RESULTS.md](docs/RESULTS.md), [docs/LIMITATIONS.md](docs/LIMITATIONS.md), and the fifth-grade guide in [docs/EXPLAINED_FOR_EVERYONE.md](docs/EXPLAINED_FOR_EVERYONE.md).
+The finite-shot value differs from the ideal reference by `-0.005117295034 Ha`; its standard error is larger than that difference. Read the [result details](docs/RESULTS.md), [machine-readable provenance](results/publication/data/verified_quantum_provenance.json), and [backend-status table](docs/backend-status.md).
 
 ## Publication assets
 
 Regenerate verified tables and figures with:
 
 ```bash
-conda activate dhfr-inquanto
+conda activate dhfr-qc
 python scripts/build_publication_assets.py
 ```
 
 Outputs are under `results/publication/`; each figure has a PNG, PDF, source CSV, and accessibility manifest. See [docs/GLOSSARY.md](docs/GLOSSARY.md) for definitions and [docs/FUTURE_WORK.md](docs/FUTURE_WORK.md) for the research roadmap.
-
-Reproducible scaffold for testing whether mutation-specific electronic interaction signatures explain divergent resistance trajectories for trimethoprim (TMP) and 4′-desmethyltrimethoprim (4-DTMP).
-
-## Research question
-
-Can mutation-specific electronic interaction signatures calculated with InQuanto explain, and help predict, why TMP and 4-DTMP steer bacterial DHFR resistance along different evolutionary paths?
 
 ## Claims this project does not make
 
@@ -68,7 +119,7 @@ This repository now includes:
 - [LICENSE](LICENSE)
 - [CITATION.cff](CITATION.cff)
 - [data/README.md](data/README.md)
-- [notebooks/01_exploratory_analysis.ipynb](notebooks/01_exploratory_analysis.ipynb)
+- [notebooks/publication_figure_validation.ipynb](notebooks/publication_figure_validation.ipynb)
 - [results/tables/final_results.csv](results/tables/final_results.csv) and [results/tables/final_results.json](results/tables/final_results.json)
 - [results/reports/manuscript_draft.md](results/reports/manuscript_draft.md)
 - [analysis/figures.R](analysis/figures.R)
@@ -76,6 +127,25 @@ This repository now includes:
 ## How to Cite
 
 If you use this repository or its generated results, cite the metadata in [CITATION.cff](CITATION.cff) and reference the DHFR InQuanto Resistance project repository at https://github.com/Braytech-Findings/dhfr-inquanto-resistance.
+
+## Project status and structure
+
+| Status | Scope |
+|---|---|
+| Completed locally | WT_TMP ideal expectation and finite-shot local H2-1LE estimate. |
+| Circuit generated | Active-space/UCCSD workflow and local measurement plan. |
+| Not yet completed | Matched mutant comparison, noisy hosted emulation, physical-hardware energy, wet-lab validation. |
+
+```text
+configs/                Prespecified systems, models, and protocol settings
+data/                   Small public parameters and data documentation
+scripts/                Reproducible preparation, analysis, plotting, and guarded access tools
+results/publication/    Lightweight verified summaries, figures, and provenance
+docs/                   Beginner, methods, results, limitations, and backend explanations
+manuscript/             LaTeX source for the draft report
+tests/                  Public lightweight integrity and safety tests
+visualization/          Molecular rendering recipes and interactive viewer assets
+```
 
 ## Workflow
 

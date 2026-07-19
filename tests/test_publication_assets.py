@@ -188,6 +188,19 @@ def test_workflow_yaml_is_valid_and_public():
     assert "pytest -q" in rendered
 
 
+def test_readme_visual_assets_and_key_documents_exist():
+    readme = (ROOT / "README.md").read_text()
+    for relative_path in (
+        "docs/assets/dhfr_quantum_hero.svg",
+        "docs/backend-status.md",
+        "docs/scientific-background.md",
+        "docs/RESULTS.md",
+        "docs/LIMITATIONS.md",
+    ):
+        assert relative_path in readme
+        assert (ROOT / relative_path).exists()
+
+
 class _FakeCircuit:
     n_qubits = 2
     n_gates = 4
