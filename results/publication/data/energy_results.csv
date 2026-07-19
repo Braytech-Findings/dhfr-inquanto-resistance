@@ -1,0 +1,4 @@
+method,energy_hartree,standard_error_hartree,relative_to_scf_millihartree
+Hartree–Fock,-2587.9060226463553,0.0,0.0
+Ideal saved-parameter VQE,-2587.912001526413,0.0,-5.978880057682545
+Finite-shot H2-1LE local emulator,-2587.917118821447,0.007647045140626157,-11.09617509155214

@@ -1,0 +1,12 @@
+field,value
+System,WT_TMP
+Basis,STO-3G
+Active spatial orbitals,"[208, 209, 210, 211, 212, 213]"
+Spatial orbitals,6
+Qubits,12
+UCCSD parameters,117
+Hamiltonian terms,1819
+Grouped circuits,576
+Shots per circuit,100
+Total shots,57600
+Backend,Quantinuum H2-1LE local noiseless emulator

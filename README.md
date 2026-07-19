@@ -1,5 +1,24 @@
 # DHFR InQuanto Resistance
 
+> **Plain-English summary:** DHFR is a tiny protein machine. Trimethoprim is a drug that can slow it down. This project uses quantum-chemistry tools to study one small, carefully selected part of a DHFR–drug model. Think of the full molecule as a huge school and the selected active space as one classroom: this is a useful simplification, not a literal description of electrons.
+
+## What is verified now
+
+For one `WT_TMP` active-space model, the repository contains an ideal saved-parameter VQE result and a completed 57,600-shot result from the **Quantinuum H2-1LE local noiseless emulator**. It is not physical quantum hardware, a noisy-emulator result, a mutation comparison, a binding-free-energy calculation, or a drug-resistance prediction.
+
+The finite-shot result is `-2587.917118821447 ± 0.007647045141 Hartree`; the ideal saved-parameter reference is `-2587.912001526413 Hartree`. The uncertainty is too large for strong chemical or biological conclusions. Read [docs/RESULTS.md](docs/RESULTS.md), [docs/LIMITATIONS.md](docs/LIMITATIONS.md), and the fifth-grade guide in [docs/EXPLAINED_FOR_EVERYONE.md](docs/EXPLAINED_FOR_EVERYONE.md).
+
+## Publication assets
+
+Regenerate verified tables and figures with:
+
+```bash
+conda activate dhfr-inquanto
+python scripts/build_publication_assets.py
+```
+
+Outputs are under `results/publication/`; each figure has a PNG, PDF, source CSV, and accessibility manifest. See [docs/GLOSSARY.md](docs/GLOSSARY.md) for definitions and [docs/FUTURE_WORK.md](docs/FUTURE_WORK.md) for the research roadmap.
+
 Reproducible scaffold for testing whether mutation-specific electronic interaction signatures explain divergent resistance trajectories for trimethoprim (TMP) and 4′-desmethyltrimethoprim (4-DTMP).
 
 ## Research question

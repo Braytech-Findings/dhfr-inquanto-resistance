@@ -16,8 +16,11 @@ pip-delete-this-directory.txt
 *.bam
 *.sam
 *.h5
+*.hdf5
 *.chk
 *.log
+*.pkl
+*.pickle
 *.partial.json
 data/raw/
 data/processed/
@@ -45,3 +48,19 @@ tmp/
 *.ipynb
 .pytest_cache/
 .ruff_cache/
+
+# Local quantum execution artefacts: keep lightweight manifests only.
+results/quantum/*
+!results/quantum/README.md
+!results/quantum/results_manifest.json
+results/quantum/protocol_checkpoints/
+results/quantum/optimized_pauli_checkpoints/
+results/quantum/measurement_plans/*compiled*
+results/quantum/*pauli_measurements.csv
+
+# Conda/R temporary state
+.conda/
+conda-env/
+.Rhistory
+.RData
+.Rproj.user/

@@ -1,0 +1,25 @@
+{
+  "backend": "Quantinuum H2-1LE local noiseless emulator",
+  "software": {
+    "python": "3.11",
+    "inquanto": "6.1.0",
+    "pytket": "2.18.1",
+    "pytket-quantinuum": "0.57.0",
+    "pytket-qiskit": "0.77.0",
+    "pyscf": "2.13.1",
+    "numpy": "2.4.6"
+  },
+  "verified_summary_file": "../publication/data/verified_summary.json",
+  "local_excluded_files": [
+    {"path": "protocol_checkpoints/WT_TMP_H2-1LE_100shots_built.pkl", "size": "1.0 GB", "sha256": "ff3e3aad2312b2230eace53116238e8fca33a5812f2e542cf5abf90764806601"},
+    {"path": "protocol_checkpoints/WT_TMP_H2-1LE_100shots_compiled.pkl", "size": "1.5 GB", "reason": "compiled protocol checkpoint"},
+    {"path": "protocol_checkpoints/WT_TMP_H2-1LE_100shots_completed.pkl", "size": "1.5 GB", "reason": "completed protocol checkpoint"},
+    {"path": "measurement_plans/WT_TMP_pauli_partitioning.csv", "size": "2.3 GB", "reason": "expanded partitioning serialization"}
+  ],
+  "small_result_checksums": {
+    "WT_TMP_H2-1LE_100shots_energy.json": "2314ce91d75f79cc55ae2e890c6e89b23daf5d072e326cce10ef6ae44e4f5edf",
+    "WT_TMP_saved_params_exact.json": "95a7dcd000842740d2c076ac4688be167805add95e97db231ee4e6c83316647a",
+    "data/params/WT_TMP_params.json": "35ba27e04073cf24e6d88a0aa657fd6ddf964b911b24fa0ad2dbaf60f2ca56df",
+    "data/processed/WT_TMP_qubit_hamiltonian.json": "a0c2815931264befd25ec8ed801b2b5f355f9b9a64ec570a375384e4af5befc4"
+  }
+}

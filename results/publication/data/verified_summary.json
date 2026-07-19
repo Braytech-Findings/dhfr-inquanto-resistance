@@ -1,0 +1,16 @@
+{
+  "hartree_to_kcal_per_mol": 627.509474,
+  "scf_energy_hartree": -2587.9060226463553,
+  "ideal_vqe_energy_hartree": -2587.912001526413,
+  "finite_shot_energy_hartree": -2587.917118821447,
+  "standard_error_hartree": 0.007647045140626157,
+  "difference_from_exact_hartree": -0.0051172950338695955,
+  "absolute_error_millihartree": 5.1172950338695955,
+  "absolute_error_kcal_per_mol": 3.211151115006322,
+  "standard_error_kcal_per_mol": 4.798593273848575,
+  "approximate_95_ci_hartree": [
+    -2587.9321070299225,
+    -2587.902130612971
+  ],
+  "backend": "Quantinuum H2-1LE local noiseless emulator"
+}

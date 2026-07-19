@@ -1,0 +1,5 @@
+{
+  "figure": "energy_comparison",
+  "alt_text": "Energy relative to Hartree\u2013Fock for ideal and finite-shot VQE; finite-shot point has one-standard-error bar.",
+  "source": "verified WT_TMP JSON outputs"
+}
