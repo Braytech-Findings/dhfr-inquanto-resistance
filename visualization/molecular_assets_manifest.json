@@ -1,0 +1,17 @@
+{
+  "system": "WT_TMP",
+  "pdb": "data/processed/WT_TMP_minimized.pdb",
+  "ligand_residue": "TOP",
+  "protein_chain": "A",
+  "ligand_atoms": 39,
+  "pocket_radius_angstrom": 5.0,
+  "pocket_atoms": 23,
+  "qm_xyz": "data/processed/qm_clusters/WT_TMP_compact_primary.xyz",
+  "qm_cluster_atoms": 116,
+  "qm_cluster_mapping_verified": false,
+  "mapping_note": "No PDB-overlaid QM selection is shown because atom-level correspondence was not independently verified.",
+  "inputs_sha256": {
+    "data/processed/WT_TMP_minimized.pdb": "064ece60680bc3e78b828bae09b11cd1f08baa6611967a7b176c394878190b2e",
+    "data/processed/qm_clusters/WT_TMP_compact_primary.xyz": "1c33b72d813561f5368fb10685fb0f62b98b1d0b09d1fcc9dc4dc01ca06d13a3"
+  }
+}

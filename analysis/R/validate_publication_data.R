@@ -1,0 +1,7 @@
+root <- normalizePath(file.path(getwd()), mustWork=FALSE)
+if (!file.exists(file.path(root, "results/publication/data/energy_results.csv"))) root <- normalizePath(file.path(root, "../.."))
+f <- file.path(root, "results/publication/data/energy_results.csv")
+stopifnot(file.exists(f)); d <- read.csv(f, check.names=FALSE)
+stopifnot(nrow(d) == 3, all(is.finite(d$energy_hartree)), all(is.finite(d$standard_error_hartree)))
+writeLines(capture.output(sessionInfo()), file.path(root, "analysis/R/sessionInfo.txt"))
+message("Validated energy_results.csv: ", nrow(d), " rows")

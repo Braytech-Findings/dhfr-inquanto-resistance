@@ -1,0 +1,6 @@
+\documentclass[11pt]{article}
+\title{A Reproducible Finite-Shot VQE Workflow for Active-Space Electronic-Structure Modeling of DHFR--Trimethoprim on a Quantinuum H2 Local Emulator}
+\author{Project contributors}\date{2026}
+\begin{document}\maketitle
+\begin{abstract}We report a reproducible finite-shot variational quantum eigensolver workflow for one WT DHFR--trimethoprim active-space model. The completed calculation is emulator-only and is not a binding-free-energy, resistance, clinical, or physical-hardware result.\end{abstract}
+\section{Methods}The STO-3G model used six contiguous spatial orbitals (208--213), twelve qubits, 117 saved UCCSD parameters, and 1,819 Pauli terms grouped into 576 circuits.\section{Results}The ideal saved-parameter value was $-2587.912001526413$ Hartree. The 57,600-shot local H2-1LE estimate was $-2587.917118821447\pm0.007647045141$ Hartree (one standard error).\section{Limitations}No mutant comparison, active-space validation, binding free energy, noisy complete result, physical-hardware energy, wet-lab validation, or clinical conclusion is claimed.\section{Reproducibility}Source tables and generated figures are under \texttt{results/publication}; see repository documentation.\end{document}

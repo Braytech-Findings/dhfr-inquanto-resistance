@@ -1,0 +1,12 @@
+field,value
+system,WT_TMP
+pdb,data/processed/WT_TMP_minimized.pdb
+ligand_residue,TOP
+protein_chain,A
+ligand_atoms,39
+pocket_radius_angstrom,5.0
+pocket_atoms,23
+qm_xyz,data/processed/qm_clusters/WT_TMP_compact_primary.xyz
+qm_cluster_atoms,116
+qm_cluster_mapping_verified,False
+mapping_note,No PDB-overlaid QM selection is shown because atom-level correspondence was not independently verified.
