@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -54,7 +55,7 @@ def test_public_data_has_no_nan_or_index_column():
         assert not any(column.lower().startswith("unnamed") for column in data.columns)
 
 
-def test_hosted_bell_dry_run_never_logs_in_or_submits():
+def test_hosted_bell_dry_run_never_imports_or_submits():
     result = subprocess.run(
         [
             sys.executable,
@@ -69,4 +70,55 @@ def test_hosted_bell_dry_run_never_logs_in_or_submits():
         capture_output=True,
         text=True,
     )
-    assert "No login, upload, compile, cost request, or execution occurred" in result.stdout
+    assert (
+        "No qnexus import, login, upload, compile, cost request, or execution occurred"
+        in result.stdout
+    )
+    assert "Submission group: <default>" in result.stdout
+
+
+def test_hosted_bell_reads_explicit_group_from_environment():
+    env = os.environ.copy()
+    env["QNEXUS_USER_GROUP"] = "authorized-test-group"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/test_quantinuum_access.py",
+            "--nexus-emulator",
+            "--backend",
+            "H2-1SC",
+            "--require-user-group",
+            "--dry-run",
+        ],
+        cwd=ROOT,
+        env=env,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "Submission group: authorized-test-group" in result.stdout
+    assert "source: QNEXUS_USER_GROUP" in result.stdout
+
+
+def test_hosted_bell_rejects_conflicting_group_sources():
+    env = os.environ.copy()
+    env["QNEXUS_USER_GROUP"] = "group-from-env"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/test_quantinuum_access.py",
+            "--nexus-emulator",
+            "--backend",
+            "H2-1SC",
+            "--user-group",
+            "different-cli-group",
+            "--dry-run",
+        ],
+        cwd=ROOT,
+        env=env,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert "Conflicting user groups" in result.stderr
