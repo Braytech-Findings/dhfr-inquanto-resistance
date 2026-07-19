@@ -106,7 +106,7 @@ conda activate dhfr-qc
 python -m pytest
 ```
 
-`qnexus==0.46.0` is installed from PyPI through `environment.yml`; it is public client software but needs an authenticated account for remote operations. InQuanto and its extensions are proprietary/separately distributed and must be installed from the organization-provided index into `dhfr-qc`. Public CI does not install either chemistry stack or perform Nexus access. Never commit tokens.
+`qnexus==0.46.0` is installed from PyPI through `environment.yml`; it is public client software but needs an authenticated account for remote operations. Use `dhfr-qc` for public tests and preparation utilities. In this workspace, the separately licensed InQuanto stack is installed in `dhfr-inquanto`; use that environment for local InQuanto/H2-1LE scripts. Public CI does not install either licensed stack or perform Nexus access. Never commit tokens.
 
 For an authenticated Nexus Bell test, set your authorized project privately in the shell (`QNEXUS_PROJECT_ID` or `QNEXUS_PROJECT_NAME`) and, if required, `QNEXUS_USER_GROUP`; `.env.example` documents only placeholder names. Never commit a populated `.env` file.
 

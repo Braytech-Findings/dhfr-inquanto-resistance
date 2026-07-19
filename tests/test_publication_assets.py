@@ -106,7 +106,7 @@ def test_hosted_bell_reads_explicit_group_from_environment():
     assert "source: QNEXUS_USER_GROUP" in result.stdout
 
 
-def test_hosted_bell_rejects_conflicting_group_sources():
+def test_hosted_bell_cli_group_overrides_environment():
     env = os.environ.copy()
     env["QNEXUS_USER_GROUP"] = "group-from-env"
     result = subprocess.run(
@@ -122,12 +122,13 @@ def test_hosted_bell_rejects_conflicting_group_sources():
         ],
         cwd=ROOT,
         env=env,
-        check=False,
+        check=True,
         capture_output=True,
         text=True,
     )
-    assert result.returncode != 0
-    assert "Conflicting user groups" in result.stderr
+    assert (
+        "Submission group: different-cli-group (source: --user-group)" in result.stdout
+    )
 
 
 def test_verified_provenance_is_consistent():
@@ -237,7 +238,7 @@ def _nexus_args(backend: str, max_hqc: float = 0.0) -> Namespace:
         require_user_group=False,
         dry_run=False,
         project_id="project-id",
-        project_name="project",
+        project_name=None,
         timeout=1,
         wait=False,
     )
@@ -301,3 +302,28 @@ def test_hardware_cap_is_passed_at_execution_not_backend_config(monkeypatch):
 def test_hardware_requires_positive_limit():
     with pytest.raises(SystemExit, match="positive --max-hqc"):
         nexus.hosted_bell(_nexus_args("H2-1E"))
+
+
+def test_project_selection_is_unambiguous(monkeypatch):
+    args = Namespace(project_id=None, project_name=None)
+    monkeypatch.setenv("QNEXUS_PROJECT_ID", " ")
+    monkeypatch.setenv("QNEXUS_PROJECT_NAME", "named-project")
+    assert nexus.resolve_project_selection(args) == (
+        None,
+        "named-project",
+        "QNEXUS_PROJECT_NAME",
+    )
+    args.project_id = "explicit-project"
+    assert nexus.resolve_project_selection(args) == (
+        "explicit-project",
+        None,
+        "--project-id",
+    )
+
+
+def test_project_selection_rejects_ambiguous_environment(monkeypatch):
+    args = Namespace(project_id=None, project_name=None)
+    monkeypatch.setenv("QNEXUS_PROJECT_ID", "id")
+    monkeypatch.setenv("QNEXUS_PROJECT_NAME", "name")
+    with pytest.raises(SystemExit, match="Set only one"):
+        nexus.resolve_project_selection(args)

@@ -61,11 +61,7 @@ def normalize_group(value: str | None) -> str | None:
 def resolve_user_group(args: argparse.Namespace) -> tuple[str | None, str]:
     cli_group = normalize_group(args.user_group)
     env_group = normalize_group(os.getenv(GROUP_ENV))
-    if cli_group and env_group and cli_group != env_group:
-        raise SystemExit(
-            f"Conflicting user groups: --user-group={cli_group!r} and "
-            f"{GROUP_ENV}={env_group!r}. Refusing to guess which is authorized."
-        )
+    # An explicit CLI value is intentional and overrides a shell default.
     if cli_group:
         return cli_group, "--user-group"
     if env_group:
@@ -76,6 +72,31 @@ def resolve_user_group(args: argparse.Namespace) -> tuple[str | None, str]:
             f"Nexus Settings > Organization with --user-group or {GROUP_ENV}."
         )
     return None, "Nexus default group"
+
+
+def resolve_project_selection(
+    args: argparse.Namespace,
+) -> tuple[str | None, str | None, str]:
+    """Resolve private project selectors with CLI values taking precedence."""
+    cli_id = normalize_group(args.project_id)
+    cli_name = normalize_group(args.project_name)
+    if cli_id and cli_name:
+        raise SystemExit("Provide only one of --project-id or --project-name.")
+    if cli_id:
+        return cli_id, None, "--project-id"
+    if cli_name:
+        return None, cli_name, "--project-name"
+    env_id = normalize_group(os.getenv(PROJECT_ID_ENV))
+    env_name = normalize_group(os.getenv(PROJECT_NAME_ENV))
+    if env_id and env_name:
+        raise SystemExit(
+            f"Set only one of {PROJECT_ID_ENV} or {PROJECT_NAME_ENV}; refusing ambiguous project selection."
+        )
+    if env_id:
+        return env_id, None, PROJECT_ID_ENV
+    if env_name:
+        return None, env_name, PROJECT_NAME_ENV
+    return None, None, "missing"
 
 
 def explain_error(exc: Exception, user_group: str | None) -> str:
@@ -107,10 +128,12 @@ def explain_error(exc: Exception, user_group: str | None) -> str:
 
 
 def project_for(qnx: Any, args: argparse.Namespace):
-    if args.project_id:
-        return qnx.projects.get(id=args.project_id)
-    if args.project_name:
-        return qnx.projects.get(name=args.project_name)
+    project_id, project_name, source = resolve_project_selection(args)
+    print(f"Project selection source: {source}")
+    if project_id:
+        return qnx.projects.get(id=project_id)
+    if project_name:
+        return qnx.projects.get(name=project_name)
     raise SystemExit(
         "Set an authorized project through --project-id, --project-name, "
         f"{PROJECT_ID_ENV}, or {PROJECT_NAME_ENV}."
@@ -130,8 +153,7 @@ def access_report(args: argparse.Namespace) -> None:
     group, source = resolve_user_group(args)
     try:
         qnx.login()
-        user = qnx.users.get_self()
-        print(f"Authenticated Nexus user ID: {user.id}")
+        print("Authenticated Nexus session: available")
         print(f"Submission group: {group or '<default>'} (source: {source})")
         display_frame("User quotas", qnx.quotas.get_all())
         for quota_name in ("compilation", "simulation"):
@@ -319,8 +341,8 @@ def build_parser() -> argparse.ArgumentParser:
     modes.add_argument("--local-emulator", action="store_true")
     parser.add_argument("--backend", default="H2-1SC")
     parser.add_argument("--shots", type=int, default=10)
-    parser.add_argument("--project-id", default=os.getenv(PROJECT_ID_ENV))
-    parser.add_argument("--project-name", default=os.getenv(PROJECT_NAME_ENV))
+    parser.add_argument("--project-id")
+    parser.add_argument("--project-name")
     parser.add_argument("--user-group")
     parser.add_argument(
         "--require-user-group",
