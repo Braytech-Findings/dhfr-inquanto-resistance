@@ -1,0 +1,18 @@
+{
+  "system": "WT_TMP",
+  "backend": "H2-1LE",
+  "local": true,
+  "noiseless": true,
+  "shots": 1,
+  "added_z_basis_measurements": true,
+  "qasm_path": "/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_TMP_circuit.qasm",
+  "compiled_path": "/Users/abdellahaly/dhfr-inquanto-resistance/data/processed/WT_TMP_H2-1LE_compiled.json",
+  "n_qubits": 12,
+  "n_bits": 12,
+  "depth": 20686,
+  "n_commands": 55686,
+  "runtime_seconds": 20.190213918685913,
+  "counts": {
+    "111111000000": 1
+  }
+}
