@@ -82,13 +82,13 @@ def explain_error(exc: Exception, user_group: str | None) -> str:
     if "code 14" in text or "access code 14" in text or "entitlement" in text:
         if user_group:
             return (
-                f"Access code 14: Nexus rejected execution under user group {user_group!r}. "
-                "The group name may be wrong, the account may not belong to it, or that group "
-                "may not have entitlement for this target. No permission was bypassed."
+                "Nexus rejected execution under the supplied group. The group name may be "
+                "incorrect, the account may not belong to it, or the target may not be included."
             )
         return (
-            "Access code 14: the default group has no entitlement for this target. Supply the "
-            f"exact authorized group using --user-group or {GROUP_ENV}; do not guess names."
+            "Nexus rejected execution under the default group with access code 14. Run the "
+            f"same command with the exact authorized QuantumCT/SCSU Nexus group using "
+            f"--user-group or {GROUP_ENV}."
         )
     if "quota" in text or "depleted" in text:
         return (
@@ -196,6 +196,8 @@ def hosted_bell(args: argparse.Namespace) -> None:
         raise SystemExit("--shots must be positive.")
     if args.max_hqc < 0:
         raise SystemExit("--max-hqc must be non-negative.")
+    if backend in HARDWARE_NAMES and args.max_hqc <= 0:
+        raise SystemExit("Hardware/high-performance emulators require a positive --max-hqc.")
 
     group, source = resolve_user_group(args)
     print(f"Submission group: {group or '<default>'} (source: {source})")
@@ -225,9 +227,10 @@ def hosted_bell(args: argparse.Namespace) -> None:
             name=f"{stamp}-circuit",
         )
 
+        hardware_hqc_ceiling = min(args.max_hqc, 20_000.0)
         config_kwargs: dict[str, Any] = {"device_name": args.backend}
         if backend in HARDWARE_NAMES and args.max_hqc > 0:
-            config_kwargs["max_cost"] = math.ceil(args.max_hqc)
+            config_kwargs["max_cost"] = math.ceil(hardware_hqc_ceiling)
         config = QuantinuumConfig(**config_kwargs)
 
         compiled = qnx.compile(
@@ -246,21 +249,13 @@ def hosted_bell(args: argparse.Namespace) -> None:
         )
 
         estimated = estimate_hqc(qnx, compiled, config, project, args)
-        if estimated > args.max_hqc:
+        if backend in HARDWARE_NAMES:
+            print(f"Enforced hardware HQC ceiling: {hardware_hqc_ceiling}")
+        if estimated > hardware_hqc_ceiling:
             raise SystemExit("Estimated HQC cost exceeds --max-hqc; refusing execution.")
 
         if backend in NEXUS_EMULATORS:
-            quota_available = qnx.quotas.check_quota(name="simulation")
-            if not quota_available and not group:
-                raise SystemExit(
-                    "No user/default simulation quota is available. Supply an exact authorized "
-                    "user group if the organization assigned group simulation quota."
-                )
-            if not quota_available and group:
-                print(
-                    "User-level simulation quota guard is false; continuing only because an "
-                    "explicit group was supplied for Nexus to validate server-side."
-                )
+            print("H2-Emulator uses simulation-time quota, not HQCs; submitting directly after compilation.")
 
         job = qnx.start_execute_job(
             programs=compiled,

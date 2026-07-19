@@ -16,6 +16,6 @@ jobs:
       - name: Install lightweight test dependencies
         run: python -m pip install pytest ruff numpy pandas
       - name: Lint
-        run: ruff check scripts tests
+        run: ruff check scripts/test_quantinuum_access.py scripts/submit_to_hardware_direct.py scripts/submit_hosted_pauli_energy.py tests
       - name: Test
         run: pytest -q

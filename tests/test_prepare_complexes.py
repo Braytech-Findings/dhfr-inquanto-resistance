@@ -2,7 +2,11 @@ import importlib.util
 from pathlib import Path
 
 import numpy as np
-from rdkit import Chem
+import pytest
+
+Chem = pytest.importorskip("rdkit.Chem", reason="requires licensed/local chemistry stack")
+pytest.importorskip("openmm", reason="requires local molecular-modeling stack")
+pytest.importorskip("openff.toolkit", reason="requires local molecular-modeling stack")
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("prepare_complexes", ROOT / "scripts" / "01_prepare_complexes.py")
