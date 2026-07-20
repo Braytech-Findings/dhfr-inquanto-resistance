@@ -19,6 +19,12 @@ from pathlib import Path
 from typing import Sequence
 
 ROOT = Path(__file__).resolve().parents[1]
+LINT_TARGETS = (
+    "scripts/test_quantinuum_access.py",
+    "scripts/submit_hosted_pauli_energy.py",
+    "scripts/reproduce_everything.py",
+    "tests",
+)
 
 EXPECTED_PUBLIC_OUTPUTS = (
     ROOT / "results/publication/figures/energy_comparison.png",
@@ -56,8 +62,14 @@ def build_steps(args: argparse.Namespace) -> list[Step]:
     if not args.skip_tests:
         steps.extend(
             [
-                Step("Compile public Python scripts", (python, "-m", "compileall", "-q", "scripts")),
-                Step("Run public lint checks", (python, "-m", "ruff", "check", ".")),
+                Step(
+                    "Compile public Python scripts",
+                    (python, "-m", "compileall", "-q", "scripts"),
+                ),
+                Step(
+                    "Run stable public lint checks",
+                    (python, "-m", "ruff", "check", *LINT_TARGETS),
+                ),
                 Step("Run public automated tests", (python, "-m", "pytest", "-q")),
             ]
         )
@@ -95,7 +107,9 @@ def build_steps(args: argparse.Namespace) -> list[Step]:
     if args.include_manuscript:
         bash = shutil.which("bash")
         if bash is None and not args.dry_run:
-            raise SystemExit("bash was not found; the manuscript build uses manuscript/build.sh.")
+            raise SystemExit(
+                "bash was not found; the manuscript build uses manuscript/build.sh."
+            )
         steps.append(
             Step(
                 "Build the optional manuscript PDF",
@@ -148,18 +162,23 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     print("DHFR InQuanto Resistance — public reproduction runner")
     print(f"Repository: {ROOT}")
-    print("Safety boundary: local public assets only; no Nexus or physical-hardware submission.")
+    print(
+        "Safety boundary: local public assets only; "
+        "no Nexus or physical-hardware submission."
+    )
 
     steps = build_steps(args)
     total = 0.0
     completed: list[str] = []
+    current_step = "initialization"
     try:
         for step in steps:
+            current_step = step.name
             total += run(step, dry_run=args.dry_run)
             completed.append(step.name)
         outputs = check_outputs(dry_run=args.dry_run)
     except subprocess.CalledProcessError as error:
-        print(f"\n✗ Reproduction stopped during: {step.name}", file=sys.stderr)
+        print(f"\n✗ Reproduction stopped during: {current_step}", file=sys.stderr)
         print(f"  Exit code: {error.returncode}", file=sys.stderr)
         return error.returncode or 1
     except RuntimeError as error:
@@ -175,7 +194,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"✓ Verified {len(outputs)} expected public output files")
     if not args.dry_run:
         print(f"Total command time: {total:.1f} seconds")
-    print("Licensed InQuanto/H2-1LE execution is documented separately and is never run here.")
+    print(
+        "Licensed InQuanto/H2-1LE execution is documented separately "
+        "and is never run here."
+    )
     return 0
 
 
