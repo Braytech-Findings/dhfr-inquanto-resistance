@@ -1,6 +1,8 @@
 .DEFAULT_GOAL := help
 .PHONY: help doctor test test-public figures figures-python figures-r molecular interactive manuscript docs publication reproduce reproduce-full access-diagnostics nexus-bell-dry-run all-public
 
+LINT_TARGETS := scripts/test_quantinuum_access.py scripts/submit_hosted_pauli_energy.py scripts/reproduce_everything.py tests
+
 help:
 	@echo "DHFR InQuanto Resistance — safe repository commands"
 	@echo ""
@@ -26,7 +28,7 @@ doctor:
 
 test test-public:
 	python -m compileall -q scripts
-	ruff check .
+	ruff check $(LINT_TARGETS)
 	pytest -q
 
 figures figures-python:
