@@ -1,11 +1,15 @@
 .DEFAULT_GOAL := help
-.PHONY: help test test-public figures figures-python figures-r molecular interactive manuscript docs publication access-diagnostics nexus-bell-dry-run all-public
+.PHONY: help setup test test-public validate figures figures-python figures-r molecular interactive manuscript docs publication access-diagnostics nexus-bell-dry-run all-public
 help:
-	@echo "Safe public targets: test, figures, molecular, docs, publication, access-diagnostics, nexus-bell-dry-run"
+	@echo "Safe public targets: setup, test, validate, figures, molecular, docs, publication, access-diagnostics, nexus-bell-dry-run"
+setup:
+	conda env create -f environment.yml
 test test-public:
 	python -m compileall -q scripts
 	ruff check scripts/test_quantinuum_access.py scripts/submit_hosted_pauli_energy.py tests
 	pytest -q
+validate:
+	python scripts/validate_repository.py
 figures figures-python:
 	python scripts/build_publication_assets.py
 figures-r:

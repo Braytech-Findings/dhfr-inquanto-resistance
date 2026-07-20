@@ -14,7 +14,7 @@
 
 > **In one sentence:** this project evaluates one small, reproducible DHFR–trimethoprim electronic model with classical and local quantum-emulator methods; it does not claim a drug-resistance prediction or a hardware result.
 
-**Explore:** [Start here](#start-here-what-is-this-project) · [Research question](#research-question) · [Verified result](#what-is-verified-now) · [Figures](docs/FIGURE_GALLERY.md) · [Methods](docs/methods.md) · [Reproduction](docs/REPRODUCIBILITY.md) · [Backend status](docs/backend-status.md) · [Limitations](docs/LIMITATIONS.md) · [Manuscript](manuscript/README.md)
+**Explore:** [Start here](#start-here-what-is-this-project) · [Research question](#research-question) · [Verified result](#what-is-verified-now) · [Figures](docs/FIGURE_GALLERY.md) · [Install](docs/INSTALLATION.md) · [Run](docs/RUNNING_THE_PROJECT.md) · [Beginner walkthrough](docs/BEGINNER_WALKTHROUGH.md) · [Reproduction](docs/REPRODUCIBILITY.md) · [Backend status](docs/backend-status.md) · [Limitations](docs/LIMITATIONS.md) · [Manuscript](manuscript/README.md)
 
 ## Start Here: What Is This Project?
 
@@ -82,6 +82,12 @@ Outputs are under `results/publication/`; each figure has a PNG, PDF, source CSV
 - Emulator execution is not physical quantum-hardware execution.
 - The study does not claim clinical efficacy, resistance prevention, a new antibiotic, or quantum advantage.
 - Variant panels, active spaces, pose models, and optimizer settings must not be selected using favorable downstream quantum results.
+
+## Why This Matters to Society
+
+DHFR helps cells make DNA building materials, and some medicines work by interfering with it. Mutations can change DHFR and contribute to treatment resistance in infectious disease or cancer. Transparent computational models may eventually help researchers understand such changes and prioritize laboratory work, while quantum chemistry may become useful for selected electronic problems that are costly classically.
+
+This repository contributes a reproducible exploratory workflow—not a medical test, treatment recommendation, resistance prediction, or demonstration of quantum advantage. Read the full [societal-impact statement](docs/SOCIETAL_IMPACT.md), including who might benefit, what remains uncertain, and which validation steps are still required.
 
 ## Prespecified systems and endpoint
 
