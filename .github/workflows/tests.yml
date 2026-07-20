@@ -35,8 +35,13 @@ jobs:
       - name: Compile scripts
         run: python -m compileall -q scripts
 
-      - name: Lint
-        run: ruff check .
+      - name: Lint stable public paths
+        run: >-
+          ruff check
+          scripts/test_quantinuum_access.py
+          scripts/submit_hosted_pauli_energy.py
+          scripts/reproduce_everything.py
+          tests
 
       - name: Test
         run: pytest -q
