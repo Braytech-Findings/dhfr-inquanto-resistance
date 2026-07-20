@@ -1,20 +1,45 @@
-name: tests
+name: CI
 
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  lint-and-test:
+  public-integrity:
+    name: Public integrity and reproduction plan
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install lightweight test dependencies
-        run: python -m pip install pytest ruff numpy pandas pyyaml
+          cache: pip
+
+      - name: Install lightweight public test dependencies
+        run: python -m pip install --upgrade pytest ruff numpy pandas pyyaml
+
+      - name: Compile scripts
+        run: python -m compileall -q scripts
+
       - name: Lint
         run: ruff check .
+
       - name: Test
         run: pytest -q
+
+      - name: Validate the safe reproduction command plan
+        run: python scripts/reproduce_everything.py --dry-run
