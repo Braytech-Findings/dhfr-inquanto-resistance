@@ -118,7 +118,21 @@ For an authenticated Nexus Bell test, set your authorized project privately in t
 
 ## Nexus safety boundary
 
-The completed finite-shot result is local H2-1LE only: `-2587.917118821447 ± 0.007647045141 Ha` from 576 circuits × 100 shots. It is neither a Nexus-hosted nor physical-hardware result. A state-preparation circuit alone cannot calculate molecular energy. The guarded Nexus Bell test is `python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-1SC --shots 10 --confirm-submit --wait`; H2-1SC is artificial syntax checking, while H2-Emulator requires simulation quota. Backend visibility/“online” status does not establish execution entitlement; teams and organization display names are not necessarily quota-bearing Nexus user groups. Access code 14/default-group problems require organization or Quantinuum support.
+The completed finite-shot result is local `H2-1LE` only: `-2587.917118821447 ± 0.007647045141 Ha` from 576 circuits × 100 shots. It is neither a Nexus-hosted nor physical-hardware result. A state-preparation circuit alone cannot calculate molecular energy.
+
+Quantinuum support confirmed on July 21, 2026 that SCSU retains access to the Nexus-hosted `H2-Emulator` and `H1-Emulator` endpoints. The failed jobs targeted hardware-tier emulators ending in `E`, which are a different endpoint type and are no longer available through the organization. Nexus-hosted emulators are costed in simulation seconds; hardware-tier emulators are costed in HQCs.
+
+Use this credit-safe preview:
+
+```bash
+python scripts/test_quantinuum_access.py \
+  --nexus-emulator \
+  --backend H2-Emulator \
+  --shots 10 \
+  --dry-run
+```
+
+`H1-Emulator` is the supported fallback. The guarded script rejects hardware-tier emulator names before login or submission. Read [Quantinuum access troubleshooting](docs/QUANTINUUM_ACCESS_TROUBLESHOOTING.md) for the exact distinction and commands.
 
 ## Publication-ready files
 
@@ -209,7 +223,7 @@ Run commands from the repository root.
    python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-Emulator --shots 10 --dry-run
    ```
 
-   Use `H2-Emulator` for early remote tests. `H2-1E` consumes HQCs; submit only after checking circuit width/depth, shot count, queue status, and cost. The backend check does not submit a job.
+   Use `H2-Emulator` as the primary remote test and `H1-Emulator` as the supported fallback. Both are Nexus-hosted endpoints costed in simulation seconds. Do not use hardware-tier emulator names ending in `E` with the current SCSU organization access. The dry run does not submit a job.
 
 7. Assemble replicate interaction energies and compute the endpoint:
 
