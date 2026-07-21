@@ -64,9 +64,39 @@ def main() -> int:
         raise SystemExit("Credential-like files are tracked: " + ", ".join(unsafe))
 
     guard = (ROOT / "scripts/test_quantinuum_access.py").read_text()
-    for flag in ("--dry-run", "--confirm-submit", "--confirm-hardware", "--max-hqc"):
-        if flag not in guard:
-            raise SystemExit(f"Hardware guard is missing {flag}")
+    for required_text in (
+        "--dry-run",
+        "--confirm-submit",
+        "H2-Emulator",
+        "H1-Emulator",
+    ):
+        if required_text not in guard:
+            raise SystemExit(f"Nexus-hosted emulator guard is missing {required_text}")
+
+    dry_run = run(
+        sys.executable,
+        "scripts/test_quantinuum_access.py",
+        "--nexus-emulator",
+        "--dry-run",
+    )
+    if "Backend: H2-Emulator" not in dry_run:
+        raise SystemExit("The default remote endpoint is not H2-Emulator")
+
+    rejected = subprocess.run(
+        [
+            sys.executable,
+            "scripts/test_quantinuum_access.py",
+            "--nexus-emulator",
+            "--backend",
+            "H2-1E",
+            "--dry-run",
+        ],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    if rejected.returncode == 0:
+        raise SystemExit("Hardware-tier emulator endpoint H2-1E was not rejected")
 
     print(run(sys.executable, "-m", "pytest", "-q"))
     print("Repository validation passed (no remote jobs were submitted).")
