@@ -1,15 +1,48 @@
 # Quantinuum access troubleshooting
 
-The July 18, 2026 discovery diagnostic authenticated through the normal browser session and listed 16 visible targets. This does not authorize execution. The account dashboard showed 20,000 HQCs for H2-1E/H2-2E, but no default group; the API phrase “No quota set for user” means no individual override, not unlimited organization quota.
+## Confirmed endpoint policy
 
-Evidence boundaries: the H2-1LE local noiseless emulator completed the finite-shot WT_TMP calculation. H2-Emulator compilation completed but its execution was blocked by monthly simulation quota. An H2-1E execution attempt returned access code 14. No physical-hardware molecular energy was submitted or completed.
+On July 21, 2026, Quantinuum support confirmed that Southern Connecticut State University still has access to Nexus and the Nexus-hosted emulators. The failed jobs were sent to hardware-tier Quantinuum emulator endpoints that the organization no longer has access to.
 
-On 2026-07-19, the guarded H2-1SC Bell test authenticated normally and created a job, but Nexus returned an access/entitlement error. No job identifier, account identifier, or result is published. This confirms that authentication alone does not resolve target/user-group authorization.
+Use these exact Nexus-hosted endpoint names:
 
-Use `python scripts/diagnose_quantinuum_access.py --login` for safe discovery. `scripts/test_quantinuum_access.py` refuses hosted submission without explicit flags. Keep reports in ignored `results/quantinuum_access/`; they may contain account-specific operational metadata.
+- `H2-Emulator` — default target for this project
+- `H1-Emulator` — supported fallback
 
-`H2-1SC` is a syntax checker: its output is artificial and scientifically unusable. `H2-Emulator` requires simulation quota. “Online” and visible only mean the backend service is operational and discoverable; they do not grant quota, a default user group, or machine entitlement. Nexus Lab is optional: the documented local `qnexus` API is supported. Access code 14 must be resolved by the organization administrator or Quantinuum support.
+Do not substitute hardware-tier emulator names such as `H2-1E`, `H2-2E`, or `H1-1E`. Quantinuum documentation distinguishes the endpoint families by suffix: names ending in `Emulator` are Nexus-hosted and costed in simulation seconds, while names ending in `E` are hardware-tier emulators costed in Hardware Quantum Credits (HQCs).
 
-`scripts/test_quantinuum_access.py` is the sole maintained Nexus Bell-circuit access tool. A parameterized UCCSD state-preparation circuit does not calculate molecular energy; the complete result requires the exact 576 grouped Hamiltonian measurement circuits and Pauli reconstruction. `scripts/submit_hosted_pauli_energy.py` intentionally refuses submission until that mapping has been independently validated.
+Official reference: <https://docs.quantinuum.com/systems/user_guide/emulator_user_guide/introduction.html>
 
-Before any hosted test, confirm target visibility, user-group entitlement, cost, project association, and quota allocation with the organization administrator or Quantinuum support. Do not change group settings through this repository.
+## Safe test commands
+
+Preview the default target without logging in or submitting anything:
+
+```bash
+python scripts/test_quantinuum_access.py \
+  --nexus-emulator \
+  --backend H2-Emulator \
+  --shots 10 \
+  --dry-run
+```
+
+Use the H1 Nexus-hosted emulator instead:
+
+```bash
+python scripts/test_quantinuum_access.py \
+  --nexus-emulator \
+  --backend H1-Emulator \
+  --shots 10 \
+  --dry-run
+```
+
+After the dry run is correct, a deliberate remote Bell-circuit test adds `--confirm-submit` and may add `--wait`. The authorized Nexus project must be supplied privately through `--project-id`, `--project-name`, `QNEXUS_PROJECT_ID`, or `QNEXUS_PROJECT_NAME`. Use `--user-group` or `QNEXUS_USER_GROUP` only when the organization requires an exact quota-bearing group.
+
+## What the earlier failures mean
+
+Earlier `H2-1E` or `H2-2E` failures do not show that the SCSU Nexus account is broken. They show that the job targeted the wrong endpoint family for the organization's current access. A visible balance, visible device, or online status does not by itself grant entitlement to a hardware-tier endpoint.
+
+A failure on `H2-Emulator` or `H1-Emulator` should be investigated separately for project selection, user-group assignment, authentication, queue state, or simulation-time quota. The script now rejects hardware-tier emulator names before login or submission so the same endpoint mistake is not repeated.
+
+## Scientific evidence boundary
+
+The verified molecular-energy result in this repository used the local `H2-1LE` noiseless emulator. That local result is separate from the Nexus-hosted `H2-Emulator` and `H1-Emulator` access test. A successful Bell-circuit test confirms remote endpoint access only; it is not a completed DHFR molecular-energy result and must not be reported as physical quantum hardware.
