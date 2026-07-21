@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
-"""Guarded Quantinuum Nexus Bell-circuit access test.
+"""Guarded Quantinuum Nexus-hosted emulator Bell-circuit access test.
 
 Dry-run and command validation do not import licensed Quantinuum packages, log in,
-or contact Nexus. Hosted execution uses only documented qnexus APIs and an exact
-user-group name supplied with --user-group or QNEXUS_USER_GROUP. The script never
-guesses or brute-forces group names and cannot bypass Nexus access controls.
-
-H2-1SC is a syntax checker: its counts are artificial and scientifically unusable.
-H2-Emulator uses Nexus simulation quota rather than HQCs. Visible/online targets
-do not prove execution entitlement.
+or contact Nexus. Remote execution is intentionally limited to the SCSU-accessible
+Nexus-hosted endpoints H2-Emulator and H1-Emulator. Hardware-tier emulator names
+ending in ``E`` are not accepted by this script.
 """
 
 from __future__ import annotations
@@ -18,17 +14,17 @@ import os
 from datetime import datetime, timezone
 from typing import Any
 
-HARDWARE_NAMES = {"H2-1E", "H2-2E", "H2-1", "H2-2", "H1-1"}
-SYNTAX_CHECKERS = {"H2-1SC", "H2-2SC"}
-NEXUS_EMULATORS = {"H2-EMULATOR", "H1-EMULATOR"}
-SUPPORTED_TARGETS = HARDWARE_NAMES | SYNTAX_CHECKERS | NEXUS_EMULATORS
+NEXUS_EMULATORS = {
+    "H2-EMULATOR": "H2-Emulator",
+    "H1-EMULATOR": "H1-Emulator",
+}
 GROUP_ENV = "QNEXUS_USER_GROUP"
 PROJECT_ID_ENV = "QNEXUS_PROJECT_ID"
 PROJECT_NAME_ENV = "QNEXUS_PROJECT_NAME"
 
 
 def load_nexus() -> tuple[Any, Any]:
-    """Import optional licensed/runtime dependencies only for real Nexus calls."""
+    """Import optional runtime dependencies only for a real Nexus call."""
     try:
         import qnexus as qnx
         from qnexus import QuantinuumConfig
@@ -53,23 +49,33 @@ def unique_name(label: str) -> str:
     return f"dhfr-bell-{label}-{stamp}"
 
 
-def normalize_group(value: str | None) -> str | None:
+def normalize_value(value: str | None) -> str | None:
     value = value.strip() if value else ""
     return value or None
 
 
+def canonical_backend(value: str) -> str:
+    key = value.strip().upper()
+    if key not in NEXUS_EMULATORS:
+        allowed = ", ".join(NEXUS_EMULATORS.values())
+        raise SystemExit(
+            f"Unsupported endpoint {value!r}. Use a Nexus-hosted emulator: {allowed}. "
+            "Do not use hardware-tier emulator names ending in 'E'."
+        )
+    return NEXUS_EMULATORS[key]
+
+
 def resolve_user_group(args: argparse.Namespace) -> tuple[str | None, str]:
-    cli_group = normalize_group(args.user_group)
-    env_group = normalize_group(os.getenv(GROUP_ENV))
-    # An explicit CLI value is intentional and overrides a shell default.
+    cli_group = normalize_value(args.user_group)
+    env_group = normalize_value(os.getenv(GROUP_ENV))
     if cli_group:
         return cli_group, "--user-group"
     if env_group:
         return env_group, GROUP_ENV
     if args.require_user_group:
         raise SystemExit(
-            "No explicit Nexus user group was supplied. Set the exact group shown in "
-            f"Nexus Settings > Organization with --user-group or {GROUP_ENV}."
+            "No explicit Nexus user group was supplied. Set the exact authorized group "
+            f"with --user-group or {GROUP_ENV}."
         )
     return None, "Nexus default group"
 
@@ -77,20 +83,21 @@ def resolve_user_group(args: argparse.Namespace) -> tuple[str | None, str]:
 def resolve_project_selection(
     args: argparse.Namespace,
 ) -> tuple[str | None, str | None, str]:
-    """Resolve private project selectors with CLI values taking precedence."""
-    cli_id = normalize_group(args.project_id)
-    cli_name = normalize_group(args.project_name)
+    cli_id = normalize_value(args.project_id)
+    cli_name = normalize_value(args.project_name)
     if cli_id and cli_name:
         raise SystemExit("Provide only one of --project-id or --project-name.")
     if cli_id:
         return cli_id, None, "--project-id"
     if cli_name:
         return None, cli_name, "--project-name"
-    env_id = normalize_group(os.getenv(PROJECT_ID_ENV))
-    env_name = normalize_group(os.getenv(PROJECT_NAME_ENV))
+
+    env_id = normalize_value(os.getenv(PROJECT_ID_ENV))
+    env_name = normalize_value(os.getenv(PROJECT_NAME_ENV))
     if env_id and env_name:
         raise SystemExit(
-            f"Set only one of {PROJECT_ID_ENV} or {PROJECT_NAME_ENV}; refusing ambiguous project selection."
+            f"Set only one of {PROJECT_ID_ENV} or {PROJECT_NAME_ENV}; "
+            "refusing ambiguous project selection."
         )
     if env_id:
         return env_id, None, PROJECT_ID_ENV
@@ -102,28 +109,23 @@ def resolve_project_selection(
 def explain_error(exc: Exception, user_group: str | None) -> str:
     text = str(exc).lower()
     if "code 14" in text or "access code 14" in text or "entitlement" in text:
-        if user_group:
-            return (
-                "Nexus rejected execution under the supplied group. The group name may be "
-                "incorrect, the account may not belong to it, or the target may not be included."
-            )
         return (
-            "Nexus rejected execution under the default group with access code 14. Run the "
-            f"same command with the exact authorized QuantumCT/SCSU Nexus group using "
-            f"--user-group or {GROUP_ENV}."
+            "Nexus rejected the job's entitlement. Confirm that the exact endpoint is "
+            "H2-Emulator or H1-Emulator, then verify the project and user group with "
+            "the SCSU Nexus administrator or Quantinuum support."
         )
     if "quota" in text or "depleted" in text:
         return (
-            "The selected user/default group has no available quota for this operation. "
-            "H2-Emulator uses Nexus simulation time; Quantinuum hardware uses HQCs."
+            "The selected group has no available Nexus simulation-time quota. "
+            "H2-Emulator and H1-Emulator are costed in seconds, not HQCs."
         )
     if "group" in text:
         return (
-            "Nexus rejected the user-group assignment. Use the exact group identifier shown "
-            "under Nexus Settings > Organization; teams and project roles are not quota groups."
+            "Nexus rejected the user-group assignment. Use the exact authorized group "
+            "identifier; a team or organization display name may not be a quota group."
         )
     if "auth" in text or "login" in text or "token" in text:
-        return "Authentication appears expired; rerun through the normal qnexus browser login flow."
+        return "Authentication appears expired; rerun the normal qnexus browser login flow."
     return f"Nexus operation failed: {type(exc).__name__}: {exc}"
 
 
@@ -161,19 +163,21 @@ def access_report(args: argparse.Namespace) -> None:
                 available = qnx.quotas.check_quota(name=quota_name)
             except Exception as exc:
                 print(
-                    f"{quota_name} quota guard: unavailable ({type(exc).__name__}: {exc})"
+                    f"{quota_name} quota guard: unavailable "
+                    f"({type(exc).__name__}: {exc})"
                 )
             else:
                 print(f"{quota_name} quota guard: {available}")
+
         devices = qnx.devices.get_all().df()
         if "device_name" in devices.columns:
             devices = devices[
-                devices["device_name"].astype(str).str.upper().isin(SUPPORTED_TARGETS)
+                devices["device_name"].astype(str).str.upper().isin(NEXUS_EMULATORS)
             ]
-        display_frame("Relevant visible devices", devices)
+        display_frame("SCSU Nexus-hosted emulator targets", devices)
         print(
-            "\nGroup discovery note: qnexus exposes user quotas but no documented public "
-            "group-list API. The exact authorized group is shown in Nexus Settings > Organization."
+            "\nUse H2-Emulator by default. H1-Emulator is the supported fallback. "
+            "Hardware-tier emulator endpoints ending in E are intentionally excluded."
         )
     except Exception as exc:
         raise SystemExit(explain_error(exc, group)) from exc
@@ -198,57 +202,19 @@ def wait_and_print(qnx: Any, job: Any, project: Any, timeout: int) -> None:
     )
 
 
-def estimate_hqc(
-    qnx: Any, compiled: Any, config: Any, project: Any, args: argparse.Namespace
-) -> float:
-    backend = args.backend.upper()
-    if backend in SYNTAX_CHECKERS:
-        print("Estimated HQC cost: 0 (syntax-checker submissions do not consume HQCs).")
-        return 0.0
-    if backend in NEXUS_EMULATORS:
-        print(
-            "Estimated HQC cost: 0 (Nexus-hosted emulator uses simulation-time quota)."
-        )
-        return 0.0
-    estimated = qnx.circuits.cost(
-        circuit_ref=compiled[0],
-        n_shots=args.shots,
-        backend_config=config,
-        project=project,
-    )
-    if estimated is None:
-        raise SystemExit(
-            "Nexus did not return an HQC estimate; refusing hardware execution."
-        )
-    estimated_float = float(estimated)
-    print(f"Estimated HQC cost: {estimated_float} (maximum allowed: {args.max_hqc})")
-    return estimated_float
-
-
 def hosted_bell(args: argparse.Namespace) -> None:
-    backend = args.backend.upper()
-    if backend not in SUPPORTED_TARGETS:
-        raise SystemExit(f"Unsupported guarded target {args.backend!r}.")
-    if backend in HARDWARE_NAMES and not args.confirm_hardware:
-        raise SystemExit(
-            "H2-1E/H2-2E or physical hardware requires --confirm-hardware and --confirm-submit."
-        )
+    backend = canonical_backend(args.backend)
     if args.shots <= 0:
         raise SystemExit("--shots must be positive.")
-    if args.max_hqc < 0:
-        raise SystemExit("--max-hqc must be non-negative.")
-    if backend in HARDWARE_NAMES and args.max_hqc <= 0:
-        raise SystemExit(
-            "Hardware/high-performance emulators require a positive --max-hqc."
-        )
 
     group, source = resolve_user_group(args)
     print(f"Submission group: {group or '<default>'} (source: {source})")
+    print(f"Backend: {backend}; width=2; gates=4; depth=3; shots={args.shots}")
 
     if args.dry_run:
         print(
-            "DRY RUN: Bell circuit width=2, gates=4, depth=3. "
-            "No qnexus import, login, upload, compile, cost request, or execution occurred."
+            "DRY RUN: no qnexus import, login, upload, compile, quota use, "
+            "or execution occurred."
         )
         return
     if not args.confirm_submit:
@@ -262,19 +228,12 @@ def hosted_bell(args: argparse.Namespace) -> None:
         project = project_for(qnx, args)
         circuit = bell()
         stamp = unique_name(backend.lower())
-        print(
-            f"Backend: {args.backend}; width={circuit.n_qubits}; "
-            f"gates={circuit.n_gates}; depth={circuit.depth()}"
-        )
         uploaded = qnx.circuits.upload(
             circuit=circuit,
             project=project,
             name=f"{stamp}-circuit",
         )
-
-        hardware_hqc_ceiling = min(args.max_hqc, 20_000.0)
-        config = QuantinuumConfig(device_name=args.backend)
-
+        config = QuantinuumConfig(device_name=backend)
         compiled = qnx.compile(
             programs=uploaded,
             backend_config=config,
@@ -289,41 +248,21 @@ def hosted_bell(args: argparse.Namespace) -> None:
             f"Compiled width={compiled_circuit.n_qubits}; "
             f"gates={compiled_circuit.n_gates}; depth={compiled_circuit.depth()}"
         )
-
-        estimated = estimate_hqc(qnx, compiled, config, project, args)
-        if backend in HARDWARE_NAMES:
-            print(f"Enforced hardware HQC ceiling: {hardware_hqc_ceiling}")
-        if estimated > hardware_hqc_ceiling:
-            raise SystemExit(
-                "Estimated HQC cost exceeds --max-hqc; refusing execution."
-            )
-
-        if backend in NEXUS_EMULATORS:
-            print(
-                "H2-Emulator uses simulation-time quota, not HQCs; submitting directly after compilation."
-            )
-
-        execute_kwargs: dict[str, Any] = {
-            "programs": compiled,
-            "n_shots": args.shots,
-            "backend_config": config,
-            "project": project,
-            "name": f"{stamp}-execute",
-            "user_group": group,
-        }
-        if backend in HARDWARE_NAMES:
-            # qnexus 0.46.0 documents max_cost on the execution submission.
-            execute_kwargs["max_cost"] = hardware_hqc_ceiling
-        job = qnx.start_execute_job(**execute_kwargs)
+        print(
+            f"{backend} uses Nexus simulation-time quota measured in seconds, not HQCs."
+        )
+        job = qnx.start_execute_job(
+            programs=compiled,
+            n_shots=args.shots,
+            backend_config=config,
+            project=project,
+            name=f"{stamp}-execute",
+            user_group=group,
+        )
         print(f"Submitted Nexus job {job.id}")
         print(
             f"Nexus job URL: https://nexus.quantinuum.com/projects/{project.id}/jobs/{job.id}"
         )
-        if backend in SYNTAX_CHECKERS:
-            print(
-                "Syntax-checker counts are artificial all-zero validation output and are "
-                "scientifically unusable."
-            )
         if args.wait:
             wait_and_print(qnx, job, project, args.timeout)
     except SystemExit:
@@ -332,14 +271,26 @@ def hosted_bell(args: argparse.Namespace) -> None:
         raise SystemExit(explain_error(exc, group)) from exc
 
 
+def discover_devices() -> None:
+    qnx, _ = load_nexus()
+    qnx.login()
+    devices = qnx.devices.get_all().df()
+    print(devices.to_string(index=False))
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--discover", action="store_true")
     modes.add_argument("--access-report", action="store_true")
-    modes.add_argument("--nexus-emulator", action="store_true")
+    modes.add_argument(
+        "--nexus-emulator",
+        "--hosted-emulator",
+        dest="nexus_emulator",
+        action="store_true",
+    )
     modes.add_argument("--local-emulator", action="store_true")
-    parser.add_argument("--backend", default="H2-1SC")
+    parser.add_argument("--backend", default="H2-Emulator")
     parser.add_argument("--shots", type=int, default=10)
     parser.add_argument("--project-id")
     parser.add_argument("--project-name")
@@ -351,8 +302,6 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--confirm-submit", action="store_true")
-    parser.add_argument("--confirm-hardware", action="store_true")
-    parser.add_argument("--max-hqc", type=float, default=0.0)
     parser.add_argument("--wait", action="store_true")
     parser.add_argument("--timeout", type=int, default=300)
     return parser
@@ -368,13 +317,10 @@ def main() -> None:
         return
     if args.local_emulator:
         raise SystemExit(
-            "Use scripts/run_h2_smoke.py for the existing local test; "
-            "this script guards Nexus-hosted execution."
+            "Use scripts/run_h2_smoke.py for the existing local H2-1LE test; "
+            "this script is limited to Nexus-hosted H2-Emulator and H1-Emulator."
         )
-    qnx, _ = load_nexus()
-    qnx.login()
-    devices = qnx.devices.get_all().df()
-    print(devices.to_string(index=False))
+    discover_devices()
 
 
 if __name__ == "__main__":
