@@ -1,0 +1,19 @@
+{
+  "label": "OBJECTIVE COMPUTATIONAL OUTPUT - RESEARCHER INTERPRETATION REQUIRED",
+  "jobs": [
+    {
+      "job_id": "333914f2-7128-49b9-a03d-7cc1e6261870",
+      "project": "dhfr-h2-hardware",
+      "backend": "H2-Emulator",
+      "purpose": "MAX_SHOT_BACKEND_VALIDATION_NOT_MOLECULAR_EVIDENCE",
+      "circuits": 4,
+      "requested_shots_per_circuit": 10000,
+      "returned_shots_per_circuit": [10000, 10000, 10000, 10000],
+      "combined_returned_shots": 40000,
+      "state": "COMPLETED",
+      "retrieved": true,
+      "result_path": "artifacts/max_shot_production/nexus/four_circuit_40000_total/raw_result.json",
+      "reported_cost": null
+    }
+  ]
+}

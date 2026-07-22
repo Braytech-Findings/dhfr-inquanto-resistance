@@ -1,0 +1,65 @@
+{
+  "label": "SMOKE_TEST_ONLY",
+  "requested_backend": "H2-Emulator",
+  "resolved_backend": "H2-Emulator",
+  "project": "dhfr-h2-hardware",
+  "user_group": "Nexus default group",
+  "circuit_names": [
+    "bell_z",
+    "bell_x",
+    "bell_y",
+    "product_01"
+  ],
+  "shots_per_circuit": 10000,
+  "job_id": "333914f2-7128-49b9-a03d-7cc1e6261870",
+  "submitted_utc": "2026-07-22T15:36:18.063758+00:00",
+  "state": "COMPLETED",
+  "results": [
+    {
+      "position": 0,
+      "circuit_name": "bell_z",
+      "counts": {
+        "(0, 0)": 5036,
+        "(0, 1)": 17,
+        "(1, 0)": 24,
+        "(1, 1)": 4923
+      },
+      "returned_shots": 10000
+    },
+    {
+      "position": 1,
+      "circuit_name": "bell_x",
+      "counts": {
+        "(0, 0)": 5038,
+        "(0, 1)": 16,
+        "(1, 0)": 27,
+        "(1, 1)": 4919
+      },
+      "returned_shots": 10000
+    },
+    {
+      "position": 2,
+      "circuit_name": "bell_y",
+      "counts": {
+        "(0, 0)": 21,
+        "(0, 1)": 4959,
+        "(1, 0)": 5011,
+        "(1, 1)": 9
+      },
+      "returned_shots": 10000
+    },
+    {
+      "position": 3,
+      "circuit_name": "product_01",
+      "counts": {
+        "(0, 0)": 18,
+        "(1, 0)": 9980,
+        "(1, 1)": 2
+      },
+      "returned_shots": 10000
+    }
+  ],
+  "reported_cost": null,
+  "retrieved_utc": "2026-07-22T15:38:08.963585+00:00",
+  "retrieval_complete": true
+}

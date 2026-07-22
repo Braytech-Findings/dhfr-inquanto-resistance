@@ -1,0 +1,54 @@
+{
+  "label": "MAX_SHOT_BACKEND_VALIDATION - NOT_MOLECULAR_EVIDENCE - NOT_HARDWARE_EVIDENCE",
+  "job_id": "333914f2-7128-49b9-a03d-7cc1e6261870",
+  "backend": "H2-Emulator",
+  "project": "dhfr-h2-hardware",
+  "requested_shots_per_circuit": 10000,
+  "results": [
+    {
+      "position": 0,
+      "circuit_name": "bell_z",
+      "counts": {
+        "00": 5036,
+        "01": 17,
+        "10": 24,
+        "11": 4923
+      },
+      "shots": 10000
+    },
+    {
+      "position": 1,
+      "circuit_name": "bell_x",
+      "counts": {
+        "00": 5038,
+        "01": 16,
+        "10": 27,
+        "11": 4919
+      },
+      "shots": 10000
+    },
+    {
+      "position": 2,
+      "circuit_name": "bell_y",
+      "counts": {
+        "00": 21,
+        "01": 4959,
+        "10": 5011,
+        "11": 9
+      },
+      "shots": 10000
+    },
+    {
+      "position": 3,
+      "circuit_name": "product_01",
+      "counts": {
+        "00": 18,
+        "01": 0,
+        "10": 9980,
+        "11": 2
+      },
+      "shots": 10000
+    }
+  ],
+  "combined_returned_shots": 40000
+}

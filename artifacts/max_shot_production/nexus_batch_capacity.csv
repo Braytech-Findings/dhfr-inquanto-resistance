@@ -1,2 +1,3 @@
 circuit_count,shots_per_circuit,backend,job_id,status,returned_results,notes
 4,10,H2-Emulator,4961b3c8-b875-4709-bc61-c45202b97b0e,COMPLETED,4,previously validated batch pilot
+4,10000,H2-Emulator,333914f2-7128-49b9-a03d-7cc1e6261870,COMPLETED,4,10000 shots returned independently for every circuit

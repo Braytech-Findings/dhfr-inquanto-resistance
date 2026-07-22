@@ -26,6 +26,9 @@
 - H2 multi-circuit pilot job `4961b3c8-b875-4709-bc61-c45202b97b0e`:
   `COMPLETED`, four circuits and 40 total shots retrieved in submission order.
 - Largest verified Nexus batch: four circuits in one execute job.
+- H2 maximum-shot backend-validation job
+  `333914f2-7128-49b9-a03d-7cc1e6261870`: `COMPLETED`, four circuits returned
+  10,000 shots each, 40,000 combined. This is not molecular evidence.
 - Stopping reason: `STOPPED_BY_SCIENTIFIC_BLOCKER`; three systems lack their
   Hamiltonian/VQE/QASM chains, matched orbital correspondence is unresolved,
   and the active environment lacks InQuanto and PySCF. The portable 576-circuit

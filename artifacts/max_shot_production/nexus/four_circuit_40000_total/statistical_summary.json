@@ -1,0 +1,39 @@
+{
+  "circuits": [
+    {
+      "circuit_name": "bell_z",
+      "shots": 10000,
+      "parity_expectation": 0.9918,
+      "expected_parity": 1.0,
+      "parity_standard_error": 0.0012779968701057114,
+      "forbidden_outcomes": 41,
+      "forbidden_frequency": 0.0041
+    },
+    {
+      "circuit_name": "bell_x",
+      "shots": 10000,
+      "parity_expectation": 0.9914,
+      "expected_parity": 1.0,
+      "parity_standard_error": 0.001308664968584399,
+      "forbidden_outcomes": 43,
+      "forbidden_frequency": 0.0043
+    },
+    {
+      "circuit_name": "bell_y",
+      "shots": 10000,
+      "parity_expectation": -0.994,
+      "expected_parity": -1.0,
+      "parity_standard_error": 0.0010938007131100242,
+      "forbidden_outcomes": 30,
+      "forbidden_frequency": 0.003
+    },
+    {
+      "circuit_name": "product_01",
+      "shots": 10000,
+      "expected_outcome": "10",
+      "expected_outcome_count": 9980,
+      "expected_outcome_probability": 0.998,
+      "unexpected_outcome_count": 20
+    }
+  ]
+}

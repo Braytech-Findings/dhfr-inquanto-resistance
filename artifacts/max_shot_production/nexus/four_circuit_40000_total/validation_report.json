@@ -1,0 +1,27 @@
+{
+  "classification": [
+    "MAX_SHOT_BACKEND_VALIDATION",
+    "40000_TOTAL_CIRCUIT_SHOTS",
+    "NOT_MOLECULAR_EVIDENCE",
+    "NOT_HARDWARE_EVIDENCE"
+  ],
+  "job_id": "333914f2-7128-49b9-a03d-7cc1e6261870",
+  "final_state": "COMPLETED",
+  "result_count": 4,
+  "per_circuit_returned_shots": [
+    10000,
+    10000,
+    10000,
+    10000
+  ],
+  "combined_returned_shots": 40000,
+  "shot_semantics": "n_shots list value applied independently to each circuit",
+  "order_preserved": true,
+  "identity_preserved": true,
+  "truncation_detected": false,
+  "reported_cost": null,
+  "raw_sha256": "318d5309281bef4499fad814598927172281dc63b6ba70a17e86feba857df950",
+  "normalized_sha256": "1f70a6ab06faf685bd097283abd87ebc8da1c5354fb1242a27d43560ff38cf95",
+  "summary_sha256": "1fa14b99069cfce2ac51531b5f693789271f2fb81e8fc0d80dc710b412c63aa3",
+  "validation_status": "pass"
+}
