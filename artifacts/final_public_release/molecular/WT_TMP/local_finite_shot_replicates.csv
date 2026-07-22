@@ -1,0 +1,4 @@
+shots_per_circuit,seed,replicate,energy_hartree,uncertainty_hartree,absolute_z_score,statistically_consistent_with_ideal_at_3sigma,total_circuit_shots,source_file
+100,102,1,-2587.9260683434227,0.006479922953474805,2.1708309050481853,True,57600,artifacts/max_shot_production/WT_TMP/local_finite_shots/shots_100_seed_102.json
+100,103,2,-2587.9242507099107,0.00649478315716535,1.8860034586684464,True,57600,artifacts/max_shot_production/WT_TMP/local_finite_shots/shots_100_seed_103.json
+100,104,3,-2587.920881430262,0.0064566372024140745,1.3753140482590982,True,57600,artifacts/max_shot_production/WT_TMP/local_finite_shots/shots_100_seed_104.json

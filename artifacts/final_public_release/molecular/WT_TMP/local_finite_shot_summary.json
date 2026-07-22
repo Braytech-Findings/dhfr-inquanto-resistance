@@ -1,0 +1,24 @@
+{
+  "evidence_label": "OBJECTIVE_COMPUTATIONAL_OUTPUT",
+  "interpretation_label": "RESEARCHER_INTERPRETATION_REQUIRED",
+  "valid_replicates": 3,
+  "invalid_diagnostics": 1,
+  "completed_shot_levels": [
+    100
+  ],
+  "required_shot_levels": [
+    100,
+    250,
+    500,
+    1000,
+    2500,
+    5000,
+    10000
+  ],
+  "all_required_levels_complete": false,
+  "all_valid_replicates_within_3sigma": true,
+  "mean_energy_hartree": -2587.923733494532,
+  "replicate_standard_deviation_hartree": 0.0026318531200274606,
+  "remote_molecular_gate": "closed",
+  "gate_reason": "Higher-shot local convergence levels are incomplete."
+}
