@@ -1,10 +1,16 @@
 {
   "evidence_label": "OBJECTIVE_COMPUTATIONAL_OUTPUT",
   "interpretation_label": "RESEARCHER_INTERPRETATION_REQUIRED",
-  "valid_replicates": 3,
+  "valid_replicates": 21,
   "invalid_diagnostics": 1,
   "completed_shot_levels": [
-    100
+    100,
+    250,
+    500,
+    1000,
+    2500,
+    5000,
+    10000
   ],
   "required_shot_levels": [
     100,
@@ -15,10 +21,80 @@
     5000,
     10000
   ],
-  "all_required_levels_complete": false,
+  "all_required_levels_complete": true,
   "all_valid_replicates_within_3sigma": true,
-  "mean_energy_hartree": -2587.923733494532,
-  "replicate_standard_deviation_hartree": 0.0026318531200274606,
-  "remote_molecular_gate": "closed",
-  "gate_reason": "Higher-shot local convergence levels are incomplete."
+  "per_level_summary": [
+    {
+      "shots_per_circuit": 100,
+      "replicate_count": 3,
+      "mean_energy_hartree": -2587.923733494532,
+      "replicate_standard_deviation_hartree": 0.0026318531200274606,
+      "mean_propagated_uncertainty_hartree": 0.0064771144376847434,
+      "maximum_absolute_z_score": 2.1708309050481853
+    },
+    {
+      "shots_per_circuit": 250,
+      "replicate_count": 3,
+      "mean_energy_hartree": -2587.909245691234,
+      "replicate_standard_deviation_hartree": 0.0050050238441211375,
+      "mean_propagated_uncertainty_hartree": 0.004091381294418506,
+      "maximum_absolute_z_score": 1.7729431635030575
+    },
+    {
+      "shots_per_circuit": 500,
+      "replicate_count": 3,
+      "mean_energy_hartree": -2587.909820373831,
+      "replicate_standard_deviation_hartree": 0.0027283448256744404,
+      "mean_propagated_uncertainty_hartree": 0.002895481022062779,
+      "maximum_absolute_z_score": 1.789183204220436
+    },
+    {
+      "shots_per_circuit": 1000,
+      "replicate_count": 3,
+      "mean_energy_hartree": -2587.910311211854,
+      "replicate_standard_deviation_hartree": 0.002191807974267273,
+      "mean_propagated_uncertainty_hartree": 0.002048496305937068,
+      "maximum_absolute_z_score": 2.0216692436877
+    },
+    {
+      "shots_per_circuit": 2500,
+      "replicate_count": 3,
+      "mean_energy_hartree": -2587.910966984449,
+      "replicate_standard_deviation_hartree": 0.0003694074121888297,
+      "mean_propagated_uncertainty_hartree": 0.001296436248196687,
+      "maximum_absolute_z_score": 1.1265756942348348
+    },
+    {
+      "shots_per_circuit": 5000,
+      "replicate_count": 3,
+      "mean_energy_hartree": -2587.911692831061,
+      "replicate_standard_deviation_hartree": 0.0003474483332768171,
+      "mean_propagated_uncertainty_hartree": 0.00091626736954933,
+      "maximum_absolute_z_score": 0.7551961884505882
+    },
+    {
+      "shots_per_circuit": 10000,
+      "replicate_count": 3,
+      "mean_energy_hartree": -2587.9122463179046,
+      "replicate_standard_deviation_hartree": 0.00025318251050807826,
+      "mean_propagated_uncertainty_hartree": 0.000647364580336643,
+      "maximum_absolute_z_score": 0.8265232062144984
+    }
+  ],
+  "ten_thousand_shot_mean_energy_hartree": -2587.9122463179046,
+  "ten_thousand_shot_mean_bias_hartree": -0.0002447914916956506,
+  "ten_thousand_shot_combined_standard_error_hartree": 0.000373756123852231,
+  "ten_thousand_shot_replicate_standard_deviation_hartree": 0.00025318251050807826,
+  "numerical_gate_criteria": {
+    "exact_semantic_validation_passed": true,
+    "three_replicates_at_every_required_level": true,
+    "every_10000_shot_replicate_within_3sigma": true,
+    "10000_shot_mean_within_3_combined_standard_errors": true,
+    "10000_shot_replicate_sd_not_more_than_2_mean_uncertainties": true,
+    "uncertainty_decreases_at_every_level": true,
+    "sqrt_shot_scaled_uncertainty_spread_at_most_10_percent": true
+  },
+  "local_numerical_gate_passed": true,
+  "remote_molecular_gate": "local_pass_cost_approval_required",
+  "gate_reason": "Local numerical gate passed; explicit approval of expected Nexus cost is still required."
 }

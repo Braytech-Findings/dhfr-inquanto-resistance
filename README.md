@@ -61,6 +61,8 @@ Stages `A–C` connect biology and molecular modeling; `D` is classical computat
 | Basis | STO-3G | Minimal basis; a methodological limitation. |
 | Ideal reference | `-2587.912001526413 Ha` | Saved-parameter expectation value. |
 | Finite-shot result | `-2587.917118821447 ± 0.007647045141 Ha` | 57,600-shot local H2-1LE noiseless-emulator result. |
+| Regenerated local convergence | `-2587.912246317905 ± 0.000373756124 Ha` | Mean and combined standard error from three complete 10,000-shot-per-circuit Aer replicates. |
+| Remote molecular pilot | No result | H2-Emulator job `e89da51e-bde9-4214-adda-6a08198f6b0a` ended in provider `TimeoutError`; missing values were not replaced with zero. |
 | Execution environment | Local emulator | Not Nexus-hosted, noisy hardware, or physical quantum hardware. |
 
 The finite-shot value differs from the ideal reference by `-0.005117295034 Ha`; its standard error is larger than that difference. Read the [result details](docs/RESULTS.md), [machine-readable provenance](results/publication/data/verified_quantum_provenance.json), and [backend-status table](docs/backend-status.md).
@@ -120,6 +122,13 @@ For an authenticated Nexus Bell test, set your authorized project privately in t
 
 The completed finite-shot result is local H2-1LE only: `-2587.917118821447 ± 0.007647045141 Ha` from 576 circuits × 100 shots. It is neither a Nexus-hosted nor physical-hardware result. A state-preparation circuit alone cannot calculate molecular energy. The safe first hosted check is `python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-Emulator --shots 10 --dry-run`; it submits nothing. A later smoke submission requires `--confirm-submit`. H2-1SC is a syntax checker and is intentionally rejected by `--nexus-emulator`; H2-Emulator requires simulation quota. Backend visibility/“online” status does not establish execution entitlement; teams and organization display names are not necessarily quota-bearing Nexus user groups. Access code 14/default-group problems require organization or Quantinuum support.
 
+The regenerated 576-circuit protocol also passed exact validation and seven
+local finite-shot convergence levels. An approved four-group H2-Emulator
+molecular pilot was submitted once, but Nexus ended job
+`e89da51e-bde9-4214-adda-6a08198f6b0a` with a provider timeout before returning
+results. No replacement job was submitted. See [RESULTS_STATUS.md](RESULTS_STATUS.md)
+and [the numerical gate](docs/WT_TMP_REMOTE_SUBMISSION_GATE.md).
+
 ## Publication-ready files
 
 This repository now includes:
@@ -141,8 +150,10 @@ If you use this repository or its generated results, cite the metadata in [CITAT
 | Status | Scope |
 |---|---|
 | Completed locally | WT_TMP ideal expectation and finite-shot local H2-1LE estimate. |
+| Completed regenerated validation | WT_TMP exact semantic validation and local 100–10,000-shot Aer convergence. |
+| Remote molecular pilot | Submitted once to H2-Emulator; provider timeout, no returned molecular results. |
 | Circuit generated | Active-space/UCCSD workflow and local measurement plan. |
-| Not yet completed | Verified quantum results for `WT_4DTMP`, `L28R_TMP`, and `L28R_4DTMP`; optimized-circuit production validation; hosted emulation; physical-hardware energy; wet-lab validation. |
+| Not yet completed | Verified quantum results for `WT_4DTMP`, `L28R_TMP`, and `L28R_4DTMP`; complete hosted molecular emulation; physical-hardware energy; wet-lab validation. |
 
 ```text
 configs/                Prespecified systems, models, and protocol settings

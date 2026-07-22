@@ -1,0 +1,5 @@
+group_id,exact_group_contribution_hartree,local_100_shot_mean_group_contribution_hartree,local_100_shot_replicate_sd_hartree,remote_group_contribution_hartree,remote_minus_exact_hartree,returned_shots,comparison_status
+WT_TMP_G0001,-1.0356154125136947,-1.0353182164159016,0.0013891000070934169,,,,missing_remote_result_provider_timeout
+WT_TMP_G0002,-1.5354578975674842,-1.5355032910718742,0.00020205007874343932,,,,missing_remote_result_provider_timeout
+WT_TMP_G0003,-0.26342398966274905,-0.26283187668766733,0.002572809906237793,,,,missing_remote_result_provider_timeout
+WT_TMP_G0013,-8.79068393368352e-10,0.00019656868655868433,0.0003434202561888446,,,,missing_remote_result_provider_timeout

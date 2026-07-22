@@ -43,6 +43,17 @@ def _group_sample(
     coefficients: dict[str, float],
     shots: int,
 ) -> tuple[float, float]:
+    contribution = _group_contributions(result, mappings, coefficients, shots)
+    return float(np.mean(contribution)), float(np.var(contribution, ddof=1))
+
+
+def _group_contributions(
+    result,
+    mappings: list[dict[str, str]],
+    coefficients: dict[str, float],
+    shots: int,
+) -> np.ndarray:
+    """Return coefficient-weighted per-shot values for covariance propagation."""
     bit_count = (
         max(
             int(bit)
@@ -67,8 +78,8 @@ def _group_sample(
         if mapping["invert"] == "true":
             parity *= -1
         contribution += coefficients[mapping["pauli_string"]] * parity
-    # This scalar variance is exactly c^T Cov(X_group) c and retains covariance.
-    return float(np.mean(contribution)), float(np.var(contribution, ddof=1))
+    # Var(this vector) is exactly c^T Cov(X_group) c and retains covariance.
+    return contribution
 
 
 def run_replicate(shots: int, seed: int, replicate: int) -> dict[str, object]:
@@ -113,7 +124,9 @@ def run_replicate(shots: int, seed: int, replicate: int) -> dict[str, object]:
     covariance_dir.mkdir(parents=True, exist_ok=True)
     covariance_path = covariance_dir / f"shots_{shots}_seed_{seed}.csv"
     with covariance_path.open("w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(covariance_rows[0]))
+        writer = csv.DictWriter(
+            handle, fieldnames=list(covariance_rows[0]), lineterminator="\n"
+        )
         writer.writeheader()
         writer.writerows(covariance_rows)
     summary = {

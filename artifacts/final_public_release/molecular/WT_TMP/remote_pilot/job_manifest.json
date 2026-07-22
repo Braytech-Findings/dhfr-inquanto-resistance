@@ -1,0 +1,123 @@
+{
+  "evidence_label": "REGENERATED_PROTOCOL_REMOTE_PILOT",
+  "scope_label": "PARTIAL_ESTIMATOR_VALIDATION_NOT_A_MOLECULAR_ENERGY",
+  "hardware_label": "NOT_PHYSICAL_HARDWARE",
+  "requested_backend": "H2-Emulator",
+  "resolved_backend": "H2-Emulator",
+  "project": "dhfr-h2-hardware",
+  "user_group": "Nexus default group",
+  "shots_per_circuit": 100,
+  "circuit_count": 4,
+  "total_requested_circuit_shots": 400,
+  "circuit_metadata": [
+    {
+      "group_id": "WT_TMP_G0001",
+      "source": "artifacts/max_shot_production/WT_TMP/regenerated_circuits/WT_TMP_G0001.json",
+      "sha256": "433a53b9692d3ce4edbe998808c573fb11a05d254ab010bc6d7188445058e4b8",
+      "qubits": 12,
+      "bits": 12,
+      "gates": 16358,
+      "depth": 7172
+    },
+    {
+      "group_id": "WT_TMP_G0002",
+      "source": "artifacts/max_shot_production/WT_TMP/regenerated_circuits/WT_TMP_G0002.json",
+      "sha256": "ef0c6bc18d96e345263c4c82d0015f44abd796ed05cf099201c8dac98d7efe8b",
+      "qubits": 12,
+      "bits": 12,
+      "gates": 16356,
+      "depth": 7172
+    },
+    {
+      "group_id": "WT_TMP_G0003",
+      "source": "artifacts/max_shot_production/WT_TMP/regenerated_circuits/WT_TMP_G0003.json",
+      "sha256": "53f108c8c1aa84922cfb77572ef9373a1735f57b77d7852b127b9ba13005e1ad",
+      "qubits": 12,
+      "bits": 12,
+      "gates": 16356,
+      "depth": 7172
+    },
+    {
+      "group_id": "WT_TMP_G0013",
+      "source": "artifacts/max_shot_production/WT_TMP/regenerated_circuits/WT_TMP_G0013.json",
+      "sha256": "e3b4109ddfc63b29dc3847ddf2ec7bf7b6a884b0a122ccecc509271cdd0b9eea",
+      "qubits": 12,
+      "bits": 12,
+      "gates": 16354,
+      "depth": 7172
+    }
+  ],
+  "job_id": "e89da51e-bde9-4214-adda-6a08198f6b0a",
+  "submitted_utc": "2026-07-22T18:32:58.531636+00:00",
+  "state": "ERROR",
+  "cost_approval": {
+    "approved_by_researcher": true,
+    "expected_monetary_cost_usd": 0,
+    "expected_hqc_cost": 0,
+    "expected_resource": "institutional Nexus simulation-time quota",
+    "paid_overage_allowed": false
+  },
+  "quota_before": [
+    {
+      "name": "compilation",
+      "description": "Total CPU running time, in seconds.",
+      "usage": 172.55776186400004,
+      "quota": "No quota set for user"
+    },
+    {
+      "name": "database_usage",
+      "description": "Total megabytes used to store scientific data.",
+      "usage": 3.031462999999999,
+      "quota": "No quota set for user"
+    },
+    {
+      "name": "jupyterhub",
+      "description": "Total Jupyterhub notebook server running time, in seconds.",
+      "usage": 4200.0,
+      "quota": "No quota set for user"
+    },
+    {
+      "name": "simulation",
+      "description": "Total CPU running time, in seconds.",
+      "usage": 30.09263525900001,
+      "quota": "No quota set for user"
+    }
+  ],
+  "results": [],
+  "reported_cost": null,
+  "failure": {
+    "classification": "remote_execution_timeout",
+    "exception_type": "JobError",
+    "detail": "Job errored with detail: <class 'TimeoutError'>: ",
+    "chemistry_failure": false,
+    "automatic_resubmission_allowed": false
+  },
+  "quota_after": [
+    {
+      "name": "compilation",
+      "description": "Total CPU running time, in seconds.",
+      "usage": 228.66431380099993,
+      "quota": "No quota set for user"
+    },
+    {
+      "name": "database_usage",
+      "description": "Total megabytes used to store scientific data.",
+      "usage": 5.288680999999999,
+      "quota": "No quota set for user"
+    },
+    {
+      "name": "jupyterhub",
+      "description": "Total Jupyterhub notebook server running time, in seconds.",
+      "usage": 4200.0,
+      "quota": "No quota set for user"
+    },
+    {
+      "name": "simulation",
+      "description": "Total CPU running time, in seconds.",
+      "usage": 30.09263525900001,
+      "quota": "No quota set for user"
+    }
+  ],
+  "retrieval_complete": false,
+  "updated_utc": "2026-07-22T19:06:05.915881+00:00"
+}

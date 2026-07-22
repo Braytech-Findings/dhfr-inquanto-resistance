@@ -33,3 +33,14 @@
   Hamiltonian/VQE/QASM chains, matched orbital correspondence is unresolved,
   and the active environment lacks InQuanto and PySCF. The portable 576-circuit
   WT measurement map cannot be safely extracted without the original stack.
+- The historical InQuanto environment was subsequently recovered and the
+  regenerated WT_TMP protocol passed exact and local finite-shot validation.
+- WT_TMP remote molecular pilot job
+  `e89da51e-bde9-4214-adda-6a08198f6b0a`: four circuits, 100 requested shots
+  each, exact backend `H2-Emulator`, project `dhfr-h2-hardware`.
+- Pilot terminal state: `ERROR`; provider detail `TimeoutError`. Returned result
+  objects: zero. Reported cost: `None`. Simulation quota usage did not increase;
+  compilation CPU usage increased by approximately 56.11 seconds and database
+  storage by approximately 2.26 MB.
+- Classification: `remote_execution_timeout`, not a chemistry, Hamiltonian,
+  VQE, or estimator failure. No replacement job was submitted.

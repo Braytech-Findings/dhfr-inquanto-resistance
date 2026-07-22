@@ -31,7 +31,33 @@ Representative HF interaction energies (sto-3g) from the generated outputs were:
 
 The workflow included AVAS-based orbital diagnostics and a lightweight VQE/quantum-analysis manifest. The repository stores AVAS outputs and the manifest in `results/reports/avas_vqe_manifest.json`. The licensed InQuanto and qnexus workflow components were referenced through the project scripts and environment configuration, but the public repository snapshot includes the classical and manifest stages rather than a full licensed execution record.
 
+For WT_TMP, a regenerated 576-circuit measurement protocol was validated
+against exact statevector expectations for 1,818 non-identity observables. Local
+finite-shot Aer calculations used three replicates at 100, 250, 500, 1,000,
+2,500, 5,000, and 10,000 shots per circuit. Within-group covariance was
+propagated as `c^T Cov c`, with Bessel correction. The higher-shot levels used
+nested prefixes within each replicate, so estimates across shot levels are
+correlated by design.
+
+One four-group molecular pilot was submitted to the Nexus-hosted H2-Emulator
+after local validation and cost approval. Nexus job
+`e89da51e-bde9-4214-adda-6a08198f6b0a` terminated with provider `TimeoutError`
+and returned no result objects. Missing remote values were not replaced with
+zero, and no replacement job was submitted.
+
 ## Results
+
+The regenerated WT_TMP ideal energy was `-2587.912001526435` Hartree, within
+`2.23e-11` Hartree of the protected reference. The mean of three complete local
+10,000-shot-per-circuit estimates was `-2587.912246317905` Hartree; the combined
+standard error was `0.000373756124` Hartree and the between-replicate standard
+deviation was `0.000253182511` Hartree. All prespecified local numerical gate
+criteria passed. These values are local simulation outputs, not physical
+hardware or remote molecular evidence.
+
+The H2-Emulator pilot yielded no remote measurement results because of the
+provider timeout. Consequently, no remote molecular energy or local-versus-
+remote numerical difference is reported.
 
 The primary endpoint from the classical HF interaction energies was $D = -0.055$ Hartree, with a 95% CI of $[-0.0697, -0.0410]$. Because the interval is entirely negative, the result supports the interpretation that the L28R mutation changes the relative stabilization of 4-DTMP versus TMP in a direction consistent with the biological contrast observed in the Manna and Plesa studies.
 

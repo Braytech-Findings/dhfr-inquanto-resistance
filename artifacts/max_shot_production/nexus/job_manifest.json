@@ -14,6 +14,22 @@
       "retrieved": true,
       "result_path": "artifacts/max_shot_production/nexus/four_circuit_40000_total/raw_result.json",
       "reported_cost": null
+    },
+    {
+      "job_id": "e89da51e-bde9-4214-adda-6a08198f6b0a",
+      "project": "dhfr-h2-hardware",
+      "backend": "H2-Emulator",
+      "purpose": "REGENERATED_PROTOCOL_REMOTE_PILOT_PARTIAL_ESTIMATOR_VALIDATION",
+      "circuits": 4,
+      "requested_shots_per_circuit": 100,
+      "returned_shots_per_circuit": null,
+      "combined_returned_shots": null,
+      "state": "ERROR",
+      "retrieved": false,
+      "result_path": null,
+      "reported_cost": null,
+      "failure_classification": "remote_execution_timeout",
+      "automatic_resubmission": false
     }
   ]
 }
