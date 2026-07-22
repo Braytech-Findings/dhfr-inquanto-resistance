@@ -6,11 +6,17 @@
   "loader": "inquanto.protocols.PauliAveraging.load",
   "checkpoint": "results/quantum/protocol_checkpoints/WT_TMP_H2-1LE_100shots_built.pkl",
   "checkpoint_sha256": "ff3e3aad2312b2230eace53116238e8fca33a5812f2e542cf5abf90764806601",
-  "load_status": "blocked_before_loader",
-  "failure_category": "license_initialization",
-  "sanitized_error": "InQuanto import could not complete normal license/authentication initialization in this noninteractive session.",
+  "load_status": "loader_available_deserialization_did_not_complete",
+  "failure_category": "resource_exhaustion_during_deserialization",
+  "sanitized_error": "InQuanto 6.1.0 imported and PauliAveraging.load was available, but loading the 1.06-GB object terminated before returning while system memory was nearly exhausted.",
   "circuits_exported": 0,
   "remote_jobs_created": 0,
   "credentials_inspected": false,
-  "bypass_attempted": false
+  "bypass_attempted": false,
+  "partition_csv_recovery": {
+    "group_records": 576,
+    "unique_serialized_circuits": 1,
+    "state_preparation_roundtrip": "pass",
+    "measurement_basis_suffixes_recovered": false
+  }
 }

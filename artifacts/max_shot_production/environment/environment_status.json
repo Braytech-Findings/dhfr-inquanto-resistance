@@ -4,7 +4,7 @@
   "modified": false,
   "python": "3.11.15",
   "packages": {
-    "inquanto": "6.1.0 installed; license initialization unavailable",
+    "inquanto": "6.1.0 import confirmed",
     "pyscf": "2.13.1",
     "pytket": "2.18.1",
     "qnexus": "0.46.0",
@@ -20,7 +20,7 @@
     "converged": true,
     "energy_hartree": -1.1167593073964255
   },
-  "inquanto_import": "blocked_by_license_initialization",
-  "checkpoint_load": "not_reached",
+  "inquanto_import": "pass",
+  "checkpoint_load": "resource_exhaustion_during_deserialization",
   "credentials_inspected": false
 }

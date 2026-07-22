@@ -17,27 +17,27 @@ The original environment was found intact at
 | SciPy | 1.17.1 |
 | `pip check` | passed |
 
-A local H2/STO-3G PySCF RHF calculation converged successfully. InQuanto import
-attempted its supported online licensing/authentication initialization. With
-restricted networking it raised a connection error. With network access the
-process terminated during import before user code could report a version or
-write a sanitized checkpoint-load result. No InQuanto credential or license
-environment variable was present, inspected, copied, or bypassed.
+A local H2/STO-3G PySCF RHF calculation converged successfully. A later retry
+using the absolute historical interpreter confirmed that InQuanto imports,
+reports version 6.1.0 through package metadata, and exposes
+`PauliAveraging.load`. The earlier diagnosis of a license blocker was therefore
+incorrect and is superseded by this result.
 
-Consequently the installed package is present but not usable in this
-noninteractive session. The WT protocol checkpoint cannot be loaded, so its 576
-measurement circuits and exact group mapping cannot be exported safely. The
-maximum-shot execution plan requires this export before any shot-limit or
-production experiment; those phases were not run.
+Loading the 1.06-GB built checkpoint still terminated before returning an
+object or writing a report, while system memory was nearly exhausted. The
+remaining blocker is checkpoint-deserialization resource use, not installation
+or license availability. A streaming recovery of the partition CSV found 576
+group records but only one unique serialized circuit: the bound state
+preparation. The measurement-basis suffixes remain internal to the checkpoint.
+The maximum-shot execution plan requires those suffixes before production.
 
-Resume only after normal InQuanto license access is restored:
+Resume on a machine/process with enough memory to deserialize the checkpoint:
 
 ```bash
 conda activate dhfr-inquanto
-python -c "import inquanto; print('InQuanto import succeeded')"
+python -c "from importlib.metadata import version; import inquanto; print(version('inquanto'))"
 python -c "from inquanto.protocols import PauliAveraging; print('protocol loader available')"
 ```
 
 Do not place license keys, private index credentials, or tokens in repository
 files. No environment was created, upgraded, or downgraded in this pass.
-

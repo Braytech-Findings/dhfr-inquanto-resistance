@@ -57,6 +57,8 @@ results/quantum/protocol_checkpoints/
 results/quantum/optimized_pauli_checkpoints/
 results/quantum/measurement_plans/*compiled*
 results/quantum/*pauli_measurements.csv
+# Large local recovery export; commit only compact manifests and maps.
+artifacts/max_shot_production/WT_TMP/circuits/
 results/quantinuum_access/
 data/results/
 
