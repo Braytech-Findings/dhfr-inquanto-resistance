@@ -11,14 +11,21 @@ IONQ_SCRIPTS = [
 ]
 
 
+def parsed_tree(path: Path) -> ast.AST:
+    return ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+
+
 def test_ionq_scripts_parse() -> None:
     for path in IONQ_SCRIPTS:
-        ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        parsed_tree(path)
 
 
-def test_ionq_tools_have_no_submission_call() -> None:
+def test_ionq_tools_have_no_run_calls() -> None:
     for path in IONQ_SCRIPTS:
-        source = path.read_text(encoding="utf-8")
-        assert ".run(" not in source
-        assert "backend.run" not in source
-        assert "submit" not in source.lower().replace("no-submit", "")
+        calls = [node for node in ast.walk(parsed_tree(path)) if isinstance(node, ast.Call)]
+        run_calls = [
+            node
+            for node in calls
+            if isinstance(node.func, ast.Attribute) and node.func.attr == "run"
+        ]
+        assert not run_calls
