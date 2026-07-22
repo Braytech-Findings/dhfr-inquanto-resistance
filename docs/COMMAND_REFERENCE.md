@@ -28,9 +28,10 @@ lists the four approved IDs. **Tested indirectly by unit tests.**
 `python scripts/test_quantinuum_access.py` now prints help and exits without a
 login or network request. **Tested in audit.** This is the default dry path.
 
-`python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-1SC
---dry-run` previews syntax-checker settings. It imports no Nexus client and
-submits nothing. Syntax-checker readiness is not molecular evidence.
+`python scripts/test_quantinuum_access.py --nexus-emulator --backend
+H2-Emulator --dry-run` previews the exact hosted-emulator settings. It imports
+no Nexus client and submits nothing. The emulator mode rejects H2-1SC because a
+syntax checker is a different endpoint type.
 
 `python scripts/run_local_h2.py --help` describes local QASM sampling. A real
 run uses `--system WT_TMP --shots 100`; `--recompile` ignores cached local
@@ -68,3 +69,22 @@ also needs `--confirm-hardware --max-hqc LIMIT`. Always use the identical
 command with `--dry-run` first. This reference deliberately provides no
 automatic paid submission command. No remote command was executed in the audit.
 
+## Final evidence package
+
+`python scripts/four_system_workflow.py --prepare` safely refreshes
+`data/project_status.json` and the detailed status artifact. It is local and
+creates no scientific values.
+
+`python scripts/build_final_validation.py` rebuilds the evidence package from
+saved files. It is local, uses no credits, and does not rerun historical
+chemistry. This command was tested in the final pass.
+
+`python scripts/test_quantinuum_access.py --nexus-emulator --backend
+H2-Emulator --shots 10 --compile-only` is an offline configuration proof. The
+word compile-only here means local validation/recording; it deliberately creates
+no Nexus compilation job and is not execution proof.
+
+`python scripts/four_system_workflow.py --local-all --shots 100` is the later
+four-system local QASM command. It preflights every QASM before running the first
+system and currently stops safely because three QASM files are missing. Local
+QASM counts are not automatically molecular energies.

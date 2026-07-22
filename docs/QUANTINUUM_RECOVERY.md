@@ -136,6 +136,15 @@ missing, it stops before submitting any system. It never substitutes H1,
 hardware, or a zero result. A single reviewed QASM can be dry-run separately
 with `scripts/run_nexus_qasm.py`; QASM counts are not automatically an energy.
 
+The corresponding later all-system local QASM command is:
+
+```bash
+python scripts/four_system_workflow.py --local-all --shots 100
+```
+
+It also uses an all-or-nothing QASM preflight and currently stops before local
+execution because three systems are incomplete.
+
 ## Failure guide
 
 | Observation | Classification | Action |

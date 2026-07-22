@@ -43,3 +43,17 @@ Never place tokens in the environment file. Private selectors belong in shell
 environment variables described by `.env.example`; a populated `.env` is
 ignored by Git.
 
+## Final-pass environment finding
+
+The final validation shell used Python 3.13.5 on ARM64 macOS, not the declared
+Python 3.11 environment. Lightweight tests passed, but `pip check` reported an
+unrelated installed package, `quantum-architecture-comparison 0.1.0`, requiring
+Qiskit `<2` while this shell has Qiskit 2.5.0. This is environment drift and is
+recorded in `artifacts/final_validation/pip_check.txt`. It does not alter the
+historical WT_TMP result, whose saved manifest records Python 3.11, InQuanto
+6.1.0, pytket 2.18.1, and PySCF 2.13.1.
+
+For numerical reproduction, create a clean Python 3.11 environment from
+`environment.yml`, activate the separately authorized InQuanto packages, run
+`python -m pip check`, then run `python scripts/validate_repository.py`. Do not
+use the current mixed base environment as a production lock file.

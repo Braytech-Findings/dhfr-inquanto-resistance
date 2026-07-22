@@ -125,3 +125,15 @@ project's style changes to them.
   module is warranted; a large framework is not.
 - Historical result files and third-party sources will be preserved. Corrections
   will add validation and documentation rather than rewriting provenance.
+
+## Final-pass additions
+
+| Path | Purpose | State / location / cost | Inputs -> outputs | Tests, limitations, final-pass run |
+|---|---|---|---|---|
+| `configs/scientific_defaults.yaml` | Central names, units, sampling, backend, paths, and provenance defaults | active / local / none | researcher defaults -> script configuration reference | Parsed and cross-checked by `test_final_validation.py`; active space remains a decision |
+| `scripts/nexus_backend.py` | Exact backend resolution without aliases/fallback | active / local / none | requested name/context -> immutable resolution | Recovery tests pass; static catalog is not live entitlement |
+| `scripts/run_nexus_qasm.py` | Guarded one-system hosted QASM path | active / remote only with confirmation / quota risk | QASM + exact backend -> submission metadata/result retrieval path | Offline paths tested; no live run in final pass |
+| `scripts/four_system_workflow.py` | Four-system preflight and resumable status | active / local by default / none | artifact tree -> `data/project_status.json`; optional guarded submission | Status/preflight tests pass; three quantum systems blocked |
+| `scripts/build_final_validation.py` | Build traceable evidence package | active / local / none | saved artifacts -> `artifacts/final_validation/` | Run successfully; does not recreate expensive science |
+| `tests/test_quantinuum_recovery.py` | Backend/access/retrieval safety tests | active test / local / none | mocks -> assertions | Passed final suite |
+| `tests/test_final_validation.py` | Evidence/schema/Hamiltonian/QASM/status tests | active test / local / none | saved artifacts -> assertions | Passed final suite; QASM parser available |

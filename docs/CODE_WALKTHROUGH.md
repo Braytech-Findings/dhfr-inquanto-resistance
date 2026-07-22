@@ -374,3 +374,21 @@ hashes. Three PyMOL `.pml` files show the complex, pocket, or separate QM
 cluster. They create views, not energies. Run, for example, `pymol
 visualization/pymol/render_dhfr_tmp.pml` in a separately installed PyMOL.
 
+## Final-validation and orchestration additions
+
+`scripts/build_final_validation.py` reads existing local evidence and creates
+CSV, JSON, Markdown, checksum, runtime, and figure artifacts under
+`artifacts/final_validation/`. It does not run remote services or expensive
+optimization. Run `python scripts/build_final_validation.py`; success prints the
+package path. Missing evidence stays null.
+
+`scripts/four_system_workflow.py --prepare` refreshes the four-system status
+files without calculations. Its later `--submit-all` mode performs a complete
+preflight and requires `--confirm-submit`; today it stops because three systems
+lack required quantum artifacts.
+
+`scripts/nexus_backend.py` is the offline exact-name resolver.
+`scripts/run_nexus_qasm.py` is a guarded single-system hosted QASM path. It is
+offline under `--dry-run` or `--compile-only`; an intentional remote call may
+consume quota and requires `--confirm-submit`. QASM counts are not automatically
+a molecular energy.

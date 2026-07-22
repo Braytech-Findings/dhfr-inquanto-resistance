@@ -20,8 +20,12 @@ historical WT_TMP benchmark.
 ## NEEDS_RESEARCHER_DECISION: untracked dependency snapshot
 
 `requirements_before_qnexus_update.txt` existed untracked before the audit.
-Decide whether it should be committed as historical environment provenance or
-kept outside Git. The audit did not alter it.
+It is a meaningful `pip freeze`-style historical dependency snapshot containing
+licensed InQuanto and Nexus-era versions. It contains no obvious credential
+assignment, but it is outdated relative to the current shell and duplicates a
+new dated snapshot in the final evidence package. Decide whether to commit it
+as explicitly historical provenance or keep it outside Git. The audit did not
+alter or commit it automatically.
 
 ## NEEDS_RESEARCHER_DECISION: legacy preparation entry points
 
@@ -36,4 +40,3 @@ deprecated.
 No verified quantum energies exist for WT_4DTMP, L28R_TMP, or L28R_4DTMP. No
 completed molecular Nexus or physical-hardware result exists. No code decision
 can replace those missing runs and their provenance.
-
