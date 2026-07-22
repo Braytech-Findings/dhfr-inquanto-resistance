@@ -77,7 +77,8 @@ def test_hosted_bell_dry_run_never_imports_or_submits():
         text=True,
     )
     assert (
-        "No qnexus import, login, upload, compile, cost request, or execution occurred"
+        "DRY RUN: no qnexus import, login, upload, compile, quota use, "
+        "or execution occurred."
         in result.stdout
     )
     assert "Submission group: <default>" in result.stdout
