@@ -104,7 +104,15 @@ def test_live_backend_catalog_is_visibility_only() -> None:
     assert catalog["credits_consumed"] is False
 
 
-def test_remote_job_manifest_records_no_submission() -> None:
+def test_remote_job_manifest_records_separate_retrieved_smoke_tests() -> None:
     manifest = json.loads((ARTIFACTS / "quantinuum" / "job_manifest.json").read_text())
-    assert manifest["jobs"] == []
-    assert manifest["stopping_reason"] == "STOPPED_TO_AVOID_CASH_OVERAGE"
+    assert len(manifest["jobs"]) == 2
+    assert {job["backend"] for job in manifest["jobs"]} == {
+        "H1-Emulator",
+        "H2-Emulator",
+    }
+    assert len({job["job_identifier"] for job in manifest["jobs"]}) == 2
+    assert all(job["purpose"] == "SMOKE_TEST_ONLY" for job in manifest["jobs"])
+    assert all(job["final_state"] == "COMPLETED" for job in manifest["jobs"])
+    assert all(job["retrieved"] is True for job in manifest["jobs"])
+    assert manifest["stopping_reason"] == "STOPPED_BY_SCIENTIFIC_BLOCKER"

@@ -1,0 +1,8 @@
+{
+  "job_identifier": "250413ef-f0f1-4acc-b527-2d96a9c82ab9",
+  "backend": "H1-Emulator",
+  "shots": 10,
+  "counts": {"00": 4, "11": 6},
+  "scientific_role": "SMOKE_TEST_ONLY",
+  "final_state": "COMPLETED"
+}

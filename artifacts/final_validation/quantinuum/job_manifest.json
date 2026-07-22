@@ -1,6 +1,31 @@
 {
   "schema_version": 1,
-  "jobs": [],
-  "stopping_reason": "STOPPED_TO_AVOID_CASH_OVERAGE",
-  "notes": "No remote jobs were submitted. Project, group, entitlement, and non-cash balance remain unverified."
+  "jobs": [
+    {
+      "job_identifier": "3d554c78-945d-4c66-b6cf-7f622c02186c",
+      "backend": "H2-Emulator",
+      "project": "dhfr-h2-hardware",
+      "user_group": "Nexus default group",
+      "purpose": "SMOKE_TEST_ONLY",
+      "shots": 10,
+      "final_state": "COMPLETED",
+      "retrieved": true,
+      "result_path": "quantinuum/raw/H2-Emulator_3d554c78_counts.json",
+      "reported_cost": null
+    },
+    {
+      "job_identifier": "250413ef-f0f1-4acc-b527-2d96a9c82ab9",
+      "backend": "H1-Emulator",
+      "project": "dhfr-h2-hardware",
+      "user_group": "Nexus default group",
+      "purpose": "SMOKE_TEST_ONLY",
+      "shots": 10,
+      "final_state": "COMPLETED",
+      "retrieved": true,
+      "result_path": "quantinuum/raw/H1-Emulator_250413ef_counts.json",
+      "reported_cost": null
+    }
+  ],
+  "stopping_reason": "STOPPED_BY_SCIENTIFIC_BLOCKER",
+  "notes": "Two explicitly authorized emulator smoke tests completed and were retrieved. Molecular submission remains blocked by missing quantum chains and unresolved matched active-space correspondence."
 }

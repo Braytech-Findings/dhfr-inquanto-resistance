@@ -12,3 +12,13 @@
 Molecular work must also wait for the active-space decision and complete QASM
 preflight for all intended systems.
 
+Completed smoke jobs can be re-retrieved without replacement submission:
+
+```bash
+python scripts/test_quantinuum_access.py --retrieve-job \
+  3d554c78-945d-4c66-b6cf-7f622c02186c \
+  --project-name dhfr-h2-hardware
+python scripts/test_quantinuum_access.py --retrieve-job \
+  250413ef-f0f1-4acc-b527-2d96a9c82ab9 \
+  --project-name dhfr-h2-hardware
+```

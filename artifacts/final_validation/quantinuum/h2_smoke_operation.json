@@ -1,0 +1,23 @@
+{
+  "authenticated": true,
+  "backend_resolution": {
+    "backend_type": "emulator",
+    "entitlement_verified": false,
+    "hosting_type": "nexus_hosted",
+    "location": "remote",
+    "may_consume_credits": true,
+    "project_id": null,
+    "project_name": "dhfr-h2-hardware",
+    "requested_backend": "H2-Emulator",
+    "resolved_backend": "H2-Emulator",
+    "user_group": null
+  },
+  "entitlement_verified": false,
+  "job_created": true,
+  "job_id": "3d554c78-945d-4c66-b6cf-7f622c02186c",
+  "operation": "smoke_test_submission",
+  "project_selected": true,
+  "scientific_role": "connectivity_smoke_test_not_dhfr_evidence",
+  "shots": 10,
+  "user_group_selected": false
+}

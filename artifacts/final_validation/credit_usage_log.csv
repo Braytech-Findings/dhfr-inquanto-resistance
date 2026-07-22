@@ -1,3 +1,4 @@
 timestamp,job_identifier,system,purpose,backend,circuits,shots,estimated_credits,actual_credits,balance_before,balance_after,status,result_path,scientific_value
 2026-07-22T00:00:00Z,,not_applicable,read_only_discovery,H2-Emulator,,,,0,,,completed,backend_catalog/live_catalog.json,established_visibility_only
-
+2026-07-22T00:00:00Z,3d554c78-945d-4c66-b6cf-7f622c02186c,not_applicable,SMOKE_TEST_ONLY,H2-Emulator,1,10,unknown,unknown,unknown,unknown,COMPLETED,quantinuum/raw/H2-Emulator_3d554c78_counts.json,confirmed_access_submission_retrieval
+2026-07-22T00:00:00Z,250413ef-f0f1-4acc-b527-2d96a9c82ab9,not_applicable,SMOKE_TEST_ONLY,H1-Emulator,1,10,unknown,unknown,unknown,unknown,COMPLETED,quantinuum/raw/H1-Emulator_250413ef_counts.json,confirmed_access_submission_retrieval

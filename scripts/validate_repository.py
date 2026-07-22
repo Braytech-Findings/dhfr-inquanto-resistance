@@ -88,7 +88,7 @@ def main() -> int:
             raise SystemExit(f"Hardware guard is missing {flag}")
 
     print(run(sys.executable, "-m", "pytest", "-q"))
-    print("Repository validation passed (no remote jobs were submitted).")
+    print("Repository validation passed (this validator makes no remote calls).")
     return 0
 
 

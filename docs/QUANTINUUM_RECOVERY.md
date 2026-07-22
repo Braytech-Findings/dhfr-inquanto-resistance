@@ -67,6 +67,13 @@ entitlement was not verified. The quota API reported `No quota set for user`;
 because that does not prove a numeric non-cash allocation or disabled overage,
 remote submission stopped with `NEEDS_RESEARCHER_BILLING_DECISION`.
 
+A subsequent explicit execution authorization selected the repository-matching
+`dhfr-h2-hardware` project and used the existing Nexus default group. Separate
+ten-shot H2-Emulator and H1-Emulator smoke jobs completed and were retrieved.
+They are access-path evidence only, not DHFR evidence. Molecular submission
+remains blocked by incomplete quantum chains and unresolved matched active-space
+correspondence.
+
 Set the authorized project and group privately through command flags or the
 documented environment variables. Do not commit their values.
 

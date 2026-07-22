@@ -1,3 +1,3 @@
 backend,submitted,job_identifier,final_state,result_path,classification
-H2-Emulator,false,,, ,blocked_billing_project_group
-H1-Emulator,false,,, ,not_attempted_no_fallback
+H2-Emulator,true,3d554c78-945d-4c66-b6cf-7f622c02186c,COMPLETED,quantinuum/raw/H2-Emulator_3d554c78_counts.json,SMOKE_TEST_ONLY
+H1-Emulator,true,250413ef-f0f1-4acc-b527-2d96a9c82ab9,COMPLETED,quantinuum/raw/H1-Emulator_250413ef_counts.json,SMOKE_TEST_ONLY_SEPARATE_JOB

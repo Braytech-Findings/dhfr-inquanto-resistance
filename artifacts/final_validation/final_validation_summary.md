@@ -92,7 +92,8 @@ Read-only live discovery completed on 2026-07-22. The sanitized catalog lists
 `H1-Emulator` and `H2-Emulator`. Authentication succeeded, but no project or
 explicit user group was selected and entitlement remains unverified. The quota
 API reported `No quota set for user`, which is not a verified non-cash balance.
-No job was created and no credits were consumed.
+Discovery itself created no job and consumed no credits. A later explicitly
+authorized execution pass selected the matching project and ran two smoke tests.
 
 ## Dry-run status
 
@@ -101,11 +102,13 @@ created no job.
 
 ## Remote submission status
 
-No remote submission, upload, live compile job, retrieval, or paid call occurred.
-Execution stopped before the smoke test because the project, explicit user
-group, numeric allocated balance, and disabled cash overage were not
-established. Classification: `STOPPED_TO_AVOID_CASH_OVERAGE` and
-`NEEDS_RESEARCHER_BILLING_DECISION`.
+Two remote Bell smoke-test jobs were submitted and retrieved under
+`dhfr-h2-hardware`: H2 job `3d554c78-945d-4c66-b6cf-7f622c02186c` and H1 job
+`250413ef-f0f1-4acc-b527-2d96a9c82ab9`. Both completed and are labeled
+`SMOKE_TEST_ONLY`. No molecular job or paid call occurred. Nexus reported cost
+as `None`; numeric allocation use is unknown. Molecular execution stopped at
+`STOPPED_BY_SCIENTIFIC_BLOCKER` because three quantum chains are missing and
+matched active-space correspondence is unresolved.
 
 ## Reproducibility status
 
@@ -172,9 +175,10 @@ python scripts/build_final_validation.py
 See `docs/QUANTINUUM_RECOVERY.md` for separately gated discovery and smoke-test
 commands.
 
-## Confirmation that no remote job was submitted
+## Remote-job confirmation
 
-Confirmed. No remote operation was run.
+Exactly two authorized smoke-test jobs were submitted and retrieved. No
+molecular job was submitted.
 
 ## Confirmation that nothing was pushed
 

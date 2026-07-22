@@ -1,0 +1,5 @@
+system,selection_rule,active_electrons,active_orbitals,selected_canonical_orbitals,min_ligand_population,mean_ligand_population,casci_energy_hartree,correspondence_status,model_label
+WT_TMP,ligand_population_candidate,6,6,"195;206;207;211;215;217",0.9943707565612705,0.997730760595606,-2587.2241512709884,orbital_indices_differ_needs_review,EXPLORATORY_TECHNICAL_MODEL
+WT_4DTMP,ligand_population_candidate,6,6,"192;202;203;207;212;213",0.9133982017924447,0.9836499052442657,-2548.645044504928,orbital_indices_differ_needs_review,EXPLORATORY_TECHNICAL_MODEL
+L28R_TMP,ligand_population_candidate,6,6,"207;214;215;225;226;229",0.7340009976576283,0.9518525922131502,-2749.7527633605064,orbital_character_differs_needs_review,EXPLORATORY_TECHNICAL_MODEL
+L28R_4DTMP,ligand_population_candidate,6,6,"206;211;213;219;221;224",0.8663328540941988,0.9699578715806544,-2711.4445823813003,orbital_character_differs_needs_review,EXPLORATORY_TECHNICAL_MODEL

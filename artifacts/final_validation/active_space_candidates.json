@@ -1,0 +1,13 @@
+{
+  "status": "NEEDS_RESEARCHER_DECISION",
+  "model_label": "EXPLORATORY_TECHNICAL_MODEL",
+  "source": "results/tables/active_space_validation.csv and per-system CASCI JSON",
+  "common_size": {"active_electrons": 6, "active_orbitals": 6, "qubits": 12},
+  "candidate_rule": "select ligand-character occupied and virtual orbitals",
+  "limitations": [
+    "canonical orbital indices reorder across systems",
+    "L28R systems show different occupation patterns",
+    "cross-geometry orbital-overlap correspondence is not established"
+  ],
+  "production_approved": false
+}

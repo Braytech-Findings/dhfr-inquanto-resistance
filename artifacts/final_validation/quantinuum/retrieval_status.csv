@@ -1,1 +1,3 @@
 job_identifier,backend,state,retrieved,result_path,resume_command
+3d554c78-945d-4c66-b6cf-7f622c02186c,H2-Emulator,COMPLETED,true,quantinuum/raw/H2-Emulator_3d554c78_counts.json,python scripts/test_quantinuum_access.py --retrieve-job 3d554c78-945d-4c66-b6cf-7f622c02186c --project-name dhfr-h2-hardware
+250413ef-f0f1-4acc-b527-2d96a9c82ab9,H1-Emulator,COMPLETED,true,quantinuum/raw/H1-Emulator_250413ef_counts.json,python scripts/test_quantinuum_access.py --retrieve-job 250413ef-f0f1-4acc-b527-2d96a9c82ab9 --project-name dhfr-h2-hardware
