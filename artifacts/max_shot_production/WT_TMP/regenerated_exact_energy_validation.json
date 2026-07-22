@@ -1,0 +1,16 @@
+{
+  "label": "OBJECTIVE COMPUTATIONAL OUTPUT - RESEARCHER INTERPRETATION REQUIRED",
+  "protocol": "REGENERATED_PYTKET_MEASUREMENT_PROTOCOL",
+  "groups": 576,
+  "circuits": 576,
+  "observables": 1818,
+  "failed_exact_comparisons": 0,
+  "maximum_absolute_expectation_difference": 7.438494264988549e-15,
+  "tolerance": 1e-10,
+  "identity_constant_hartree": -2585.31709236164,
+  "regenerated_exact_energy_hartree": -2587.9120015264352,
+  "protected_ideal_energy_hartree": -2587.912001526413,
+  "absolute_energy_difference_hartree": 2.2282620193436742e-11,
+  "runtime_seconds": 387.12202286720276,
+  "validation_status": "pass"
+}
