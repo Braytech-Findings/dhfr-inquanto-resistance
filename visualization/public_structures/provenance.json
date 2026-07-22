@@ -1,0 +1,46 @@
+[
+  {
+    "system": "WT_TMP",
+    "source_file": "data/processed/WT_TMP_minimized.pdb",
+    "source_sha256": "064ece60680bc3e78b828bae09b11cd1f08baa6611967a7b176c394878190b2e",
+    "public_file": "visualization/public_structures/WT_TMP.pdb",
+    "public_sha256": "ecb005401271df78857fb48fbfef0cad1ed9de8e16b95d91ba45fbde086167e9",
+    "representation": "prepared protein-ligand PDB coordinates",
+    "rendering": "3Dmol.js cartoon plus ligand sticks",
+    "creation_date": "2026-07-22",
+    "scientific_boundary": "static prepared structure; not molecular dynamics"
+  },
+  {
+    "system": "WT_4DTMP",
+    "source_file": "data/processed/WT_4DTMP_minimized.pdb",
+    "source_sha256": "e1c73d8ad26288f2e743c908284761add367512fc577b89da5fbd9755416e265",
+    "public_file": "visualization/public_structures/WT_4DTMP.pdb",
+    "public_sha256": "23b07868b0638ae79ec0bb963e52e37bcd1b7af9de8b3b228c65554424987628",
+    "representation": "prepared protein-ligand PDB coordinates",
+    "rendering": "3Dmol.js cartoon plus ligand sticks",
+    "creation_date": "2026-07-22",
+    "scientific_boundary": "static prepared structure; not molecular dynamics"
+  },
+  {
+    "system": "L28R_TMP",
+    "source_file": "data/processed/L28R_TMP_minimized.pdb",
+    "source_sha256": "6fc03e9e6df171f6dd7c4dbac39bddc6217f0326fd30343397f9909051244841",
+    "public_file": "visualization/public_structures/L28R_TMP.pdb",
+    "public_sha256": "ea83418923aea0b6f543f7a526195ef01d9b2bef959594db1ea8bb3ee93be88d",
+    "representation": "prepared protein-ligand PDB coordinates",
+    "rendering": "3Dmol.js cartoon plus ligand sticks",
+    "creation_date": "2026-07-22",
+    "scientific_boundary": "static prepared structure; not molecular dynamics"
+  },
+  {
+    "system": "L28R_4DTMP",
+    "source_file": "data/processed/L28R_4DTMP_minimized.pdb",
+    "source_sha256": "64d5a081187c4432660fc89c6d70352677cc8665b6c814e488e692765a6604ca",
+    "public_file": "visualization/public_structures/L28R_4DTMP.pdb",
+    "public_sha256": "6215c266e1a3dc3c8a3590973f058ac7da6051819f226983df00649e385868a6",
+    "representation": "prepared protein-ligand PDB coordinates",
+    "rendering": "3Dmol.js cartoon plus ligand sticks",
+    "creation_date": "2026-07-22",
+    "scientific_boundary": "static prepared structure; not molecular dynamics"
+  }
+]

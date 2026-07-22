@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_pilot_has_four_distinct_named_circuits() -> None:
+    pytest.importorskip("pytket", reason="requires the optional local quantum stack")
     values = circuits()
     assert [item.name for item in values] == [
         "bell_z",

@@ -1,5 +1,7 @@
 import numpy as np
+import pytest
 
+pytest.importorskip("pytket", reason="requires the optional local quantum stack")
 from scripts.run_wt_local_finite_shots import _group_sample
 
 

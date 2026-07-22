@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install lightweight test dependencies
-        run: python -m pip install pytest ruff numpy pandas pyyaml
+        run: python -m pip install pytest ruff numpy pandas pyyaml jsonschema
       - name: Lint
         run: ruff check .
       - name: Test

@@ -1,0 +1,5 @@
+"system_id","tier","method","basis","nadph_embedding","interaction_energy_hartree","converged","source_file","system","energy_millihartree"
+"L28R_4DTMP","compact_primary","HF","sto-3g","True",-0.0628689503721489,"True","results/classical/L28R_4DTMP_compact_primary_HF_sto-3g.json","L28R_4DTMP",-62.8689503721489
+"L28R_TMP","compact_primary","HF","sto-3g","True",-0.00476236804183827,"True","results/classical/L28R_TMP_compact_primary_HF_sto-3g.json","L28R_TMP",-4.76236804183827
+"WT_4DTMP","compact_primary","HF","sto-3g","True",-0.152551005715395,"True","results/classical/WT_4DTMP_compact_primary_HF_sto-3g.json","WT_4DTMP",-152.551005715395
+"WT_TMP","compact_primary","HF","sto-3g","True",-0.156107909965158,"True","results/classical/WT_TMP_compact_primary_HF_sto-3g.json","WT_TMP",-156.107909965158

@@ -1,0 +1,5 @@
+date,tool,purpose,affected_area,activity,student_verification,public_github_eligible,sts_report_eligible
+2026-07-22,OpenAI Codex,Code audit and recovery,Python scripts and tests,"generated; edited; tested",pending,yes,no
+2026-07-22,OpenAI Codex,WT_TMP measurement recovery,Estimator artifacts and validation,"generated; analyzed; documented",pending,yes,no
+2026-07-22,OpenAI Codex,Nexus execution support,Job manifests and failure records,"executed; retrieved; documented",pending,yes,no
+2026-07-22,OpenAI Codex,Public release preparation,"R figures; 3D viewer; site; documentation","generated; edited; tested",pending,yes,no

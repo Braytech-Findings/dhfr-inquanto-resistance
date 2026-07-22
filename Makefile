@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help setup test test-public validate figures figures-python figures-r molecular interactive manuscript docs publication access-diagnostics nexus-bell-dry-run all-public
+.PHONY: help setup test test-public validate figures figures-python figures-r molecular molecular-public interactive manuscript docs publication access-diagnostics nexus-bell-dry-run all-public
 help:
 	@echo "Safe public targets: setup, test, validate, figures, molecular, docs, publication, access-diagnostics, nexus-bell-dry-run"
 setup:
@@ -16,6 +16,8 @@ figures-r:
 	Rscript analysis/R/make_publication_figures.R
 molecular:
 	python scripts/render_molecular_3d.py
+molecular-public:
+	python scripts/export_public_3d_models.py
 interactive:
 	@echo "Static files are under visualization/interactive and docs/site."
 manuscript:
@@ -27,4 +29,4 @@ access-diagnostics:
 	python scripts/diagnose_quantinuum_access.py
 nexus-bell-dry-run:
 	python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-Emulator --dry-run
-all-public: publication test-public
+all-public: publication figures-r molecular-public test-public

@@ -69,11 +69,29 @@ The finite-shot value differs from the ideal reference by `-0.005117295034 Ha`; 
 
 ## Publication assets
 
+### Final visual release
+
+- [Plain-language results](docs/PLAIN_LANGUAGE_RESULTS.md)
+- [Interactive four-structure viewer](docs/site/molecule.html)
+- [R shot-convergence figure](results/publication/figures/r/wt_tmp_shot_convergence_r.png)
+- [R four-system classical pilot](results/publication/figures/r/four_system_classical_pilot_r.png)
+- [R evidence-completion map](results/publication/figures/r/evidence_completion_map_r.png)
+- [AI assistance record](AI_ASSISTANCE_LOG.md)
+- [Regeneron STS 2027 compliance checklist](docs/REGENERON_STS_2027_COMPLIANCE_CHECKLIST.md)
+
+The compact classical pilot produces `D ≈ -0.055 Hartree`, suggesting that L28R
+changes the relative TMP/4-DTMP interaction in this simplified model. It does
+not establish binding free energy, biological resistance, drug efficacy, or a
+four-system quantum result. See the plain-language page for the evidence
+boundary.
+
 Regenerate verified tables and figures with:
 
 ```bash
 conda activate dhfr-qc
 python scripts/build_publication_assets.py
+Rscript analysis/R/make_publication_figures.R
+python scripts/export_public_3d_models.py
 ```
 
 Outputs are under `results/publication/`; each figure has a PNG, PDF, source CSV, and accessibility manifest. See [docs/GLOSSARY.md](docs/GLOSSARY.md) for definitions and [docs/FUTURE_WORK.md](docs/FUTURE_WORK.md) for the research roadmap.

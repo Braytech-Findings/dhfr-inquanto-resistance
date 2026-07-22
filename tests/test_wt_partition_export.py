@@ -3,6 +3,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
+pytest.importorskip("pytket", reason="requires the optional local quantum stack")
+
 from scripts.export_wt_partition_streaming import parse_circuit
 
 ROOT = Path(__file__).resolve().parents[1]
