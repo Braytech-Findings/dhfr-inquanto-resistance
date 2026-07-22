@@ -1,0 +1,19 @@
+{
+  "label": "OBJECTIVE COMPUTATIONAL OUTPUT - RESEARCHER INTERPRETATION REQUIRED",
+  "system": "WT_TMP",
+  "hamiltonian_sha256": "a0c2815931264befd25ec8ed801b2b5f355f9b9a64ec570a375384e4af5befc4",
+  "measurement_table_sha256": "e18c676a1f1207632f27f69c1bc8cfc23fc6555dd3439736358d6a988318f4a6",
+  "identity_constant_hartree": -2585.31709236164,
+  "hamiltonian_terms": 1819,
+  "measured_non_identity_terms": 1818,
+  "reconstructed_energy_hartree": -2587.917118821447,
+  "protected_energy_hartree": -2587.917118821447,
+  "absolute_difference_hartree": 0.0,
+  "reconstructed_standard_error_hartree": 0.007647045140626158,
+  "protected_standard_error_hartree": 0.007647045140626157,
+  "uncertainty_difference_hartree": 8.673617379884035e-19,
+  "validation_status": "pass",
+  "uncertainty_assumption": "quadrature of per-Pauli standard errors as reproduced by the saved InQuanto output",
+  "remote_submission_ready": false,
+  "remote_blocker": "portable circuit-to-group and basis-rotation manifest is not yet extracted from the protocol checkpoint"
+}

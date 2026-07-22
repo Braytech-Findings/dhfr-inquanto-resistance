@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "system": "WT_TMP",
+  "human_name": "Wild-type DHFR with trimethoprim",
+  "geometry": {
+    "file": "data/processed/qm_clusters/WT_TMP_compact_primary.xyz",
+    "sha256": "1c33b72d813561f5368fb10685fb0f62b98b1d0b09d1fcc9dc4dc01ca06d13a3",
+    "charge": 0,
+    "multiplicity": 1,
+    "electron_count": 422,
+    "basis": "sto-3g"
+  },
+  "active_space": {
+    "electrons": 6,
+    "orbitals": 6,
+    "label": "EXPLORATORY_MATCHED_SIZE_MODEL",
+    "status": "historical WT indices 208-213; cross-system correspondence unresolved"
+  },
+  "hamiltonian": {
+    "file": "data/processed/WT_TMP_qubit_hamiltonian.json",
+    "sha256": "a0c2815931264befd25ec8ed801b2b5f355f9b9a64ec570a375384e4af5befc4",
+    "constant_hartree": -2585.31709236164,
+    "mapping": "Jordan-Wigner",
+    "qubits": 12,
+    "pauli_terms": 1819
+  },
+  "ansatz": {
+    "description": "Saved 12-qubit UCCSD state circuit",
+    "qasm_file": "data/processed/WT_TMP_circuit.qasm",
+    "qasm_sha256": "915d132f44ec4a49163bbcad49516a5c7b9ffd9580554b1eff1d5c646ce65e50",
+    "parameter_file": "data/params/WT_TMP_params.json",
+    "parameter_sha256": "35ba27e04073cf24e6d88a0aa657fd6ddf964b911b24fa0ad2dbaf60f2ca56df",
+    "parameter_count": 117
+  },
+  "measurement": {
+    "groups": 576,
+    "circuits": 576,
+    "shots_per_circuit": 100,
+    "expectation_table": "results/quantum/WT_TMP_H2-1LE_100shots_pauli_measurements.csv",
+    "expectation_table_sha256": "e18c676a1f1207632f27f69c1bc8cfc23fc6555dd3439736358d6a988318f4a6",
+    "portable_circuit_map_complete": false
+  },
+  "backend": {
+    "requested": "H2-1LE",
+    "resolved": "H2-1LE",
+    "project": null,
+    "group": null,
+    "location": "local"
+  },
+  "result": {
+    "state": "complete_local_historical",
+    "energy_hartree": -2587.917118821447,
+    "uncertainty_hartree": 0.007647045140626157,
+    "uncertainty_definition": "quadrature of exported per-Pauli standard errors",
+    "validation": "independently reconstructed"
+  },
+  "provenance": {
+    "git_commit": "139503307c782bddf09d0d7a7f2907d29984c039",
+    "environment": "historical Python 3.11 / InQuanto 6.1.0 / pytket 2.18.1",
+    "notes": "OBJECTIVE COMPUTATIONAL OUTPUT - RESEARCHER INTERPRETATION REQUIRED; remote submission blocked until portable grouped-circuit mapping is extracted"
+  }
+}

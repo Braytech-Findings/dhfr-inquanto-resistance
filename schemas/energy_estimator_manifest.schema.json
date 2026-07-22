@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "system", "active_space", "hamiltonian", "measurement", "backend", "result", "provenance"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "system": {"enum": ["WT_TMP", "WT_4DTMP", "L28R_TMP", "L28R_4DTMP"]},
+    "human_name": {"type": "string"},
+    "geometry": {"type": "object"},
+    "active_space": {
+      "type": "object",
+      "required": ["electrons", "orbitals", "label", "status"],
+      "properties": {
+        "electrons": {"type": "integer", "minimum": 1},
+        "orbitals": {"type": "integer", "minimum": 1},
+        "label": {"enum": ["PRODUCTION_MATCHED_MODEL", "EXPLORATORY_MATCHED_SIZE_MODEL", "BACKEND_ADAPTED_MODEL"]},
+        "status": {"type": "string"}
+      }
+    },
+    "hamiltonian": {"type": "object", "required": ["file", "sha256", "constant_hartree", "mapping", "qubits", "pauli_terms"]},
+    "measurement": {"type": "object", "required": ["groups", "circuits", "shots_per_circuit"]},
+    "backend": {"type": "object", "required": ["requested", "resolved", "project", "group"]},
+    "result": {"type": "object", "required": ["state", "energy_hartree", "uncertainty_hartree"]},
+    "provenance": {"type": "object", "required": ["git_commit", "environment", "notes"]}
+  },
+  "additionalProperties": true
+}
