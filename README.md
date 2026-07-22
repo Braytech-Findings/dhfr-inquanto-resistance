@@ -142,7 +142,7 @@ If you use this repository or its generated results, cite the metadata in [CITAT
 |---|---|
 | Completed locally | WT_TMP ideal expectation and finite-shot local H2-1LE estimate. |
 | Circuit generated | Active-space/UCCSD workflow and local measurement plan. |
-| Not yet completed | Matched mutant comparison, noisy hosted emulation, physical-hardware energy, wet-lab validation. |
+| Not yet completed | Verified quantum results for `WT_4DTMP`, `L28R_TMP`, and `L28R_4DTMP`; optimized-circuit production validation; hosted emulation; physical-hardware energy; wet-lab validation. |
 
 ```text
 configs/                Prespecified systems, models, and protocol settings
@@ -216,14 +216,22 @@ Run commands from the repository root.
    ```csv
    system_id,replicate,interaction_energy_hartree
    WT_TMP,1,-0.010
+   WT_TMP,2,-0.011
    WT_4DTMP,1,-0.009
+   WT_4DTMP,2,-0.010
    L28R_TMP,1,-0.008
+   L28R_TMP,2,-0.0085
    L28R_4DTMP,1,-0.011
+   L28R_4DTMP,2,-0.012
    ```
 
    ```bash
    python scripts/analyze_endpoint.py results/tables/interaction_energies.csv
    ```
+
+   These numbers only show the required file shape; they are **EXAMPLE** values,
+   not project evidence. Each replicate must be an independent calculation or
+   experiment. Repeated shots inside one quantum job are not replicates.
 
 ## Four-week decision gates
 
