@@ -68,7 +68,7 @@ def test_hosted_bell_dry_run_never_imports_or_submits():
             "scripts/test_quantinuum_access.py",
             "--nexus-emulator",
             "--backend",
-            "H2-1SC",
+            "H2-Emulator",
             "--dry-run",
         ],
         cwd=ROOT,
@@ -92,7 +92,7 @@ def test_hosted_bell_reads_explicit_group_from_environment():
             "scripts/test_quantinuum_access.py",
             "--nexus-emulator",
             "--backend",
-            "H2-1SC",
+            "H2-Emulator",
             "--require-user-group",
             "--dry-run",
         ],
@@ -115,7 +115,7 @@ def test_hosted_bell_cli_group_overrides_environment():
             "scripts/test_quantinuum_access.py",
             "--nexus-emulator",
             "--backend",
-            "H2-1SC",
+            "H2-Emulator",
             "--user-group",
             "different-cli-group",
             "--dry-run",
@@ -279,8 +279,8 @@ def _fake_nexus(cost: float = 1.0):
     return FakeQnx(), lambda **kwargs: SimpleNamespace(**kwargs), calls
 
 
-@pytest.mark.parametrize("backend", ["H2-1SC", "H2-Emulator"])
-def test_nonhardware_nexus_paths_do_not_estimate_hqc(monkeypatch, backend):
+@pytest.mark.parametrize("backend", ["H1-Emulator", "H2-Emulator"])
+def test_nexus_hosted_emulators_do_not_estimate_hqc(monkeypatch, backend):
     qnx, config, calls = _fake_nexus()
     monkeypatch.setattr(nexus, "load_nexus", lambda: (qnx, config))
     monkeypatch.setattr(nexus, "bell", _FakeCircuit)
@@ -289,19 +289,15 @@ def test_nonhardware_nexus_paths_do_not_estimate_hqc(monkeypatch, backend):
     assert "max_cost" not in calls["execute"][0]
 
 
-def test_hardware_cap_is_passed_at_execution_not_backend_config(monkeypatch):
+@pytest.mark.parametrize("backend", ["H2-1E", "H2-1SC"])
+def test_unsupported_hardware_tier_endpoints_are_rejected(monkeypatch, backend):
     qnx, config, calls = _fake_nexus(cost=1.0)
     monkeypatch.setattr(nexus, "load_nexus", lambda: (qnx, config))
     monkeypatch.setattr(nexus, "bell", _FakeCircuit)
-    nexus.hosted_bell(_nexus_args("H2-1E", max_hqc=90_000.0))
-    assert calls["cost"] == 1
-    assert calls["execute"][0]["max_cost"] == 20_000.0
-    assert not hasattr(calls["execute"][0]["backend_config"], "max_cost")
-
-
-def test_hardware_requires_positive_limit():
-    with pytest.raises(SystemExit, match="positive --max-hqc"):
-        nexus.hosted_bell(_nexus_args("H2-1E"))
+    with pytest.raises(SystemExit, match="Unsupported endpoint"):
+        nexus.hosted_bell(_nexus_args(backend, max_hqc=90_000.0))
+    assert calls["cost"] == 0
+    assert calls["execute"] == []
 
 
 def test_project_selection_is_unambiguous(monkeypatch):
