@@ -1,0 +1,5 @@
+system,input_file,exists,readable,atom_count,elements,charge,multiplicity,coordinate_units,coordinates_finite,minimum_distance_angstrom,duplicate_atoms_lt_0_1A,ligand_identity,mutation_identity,preparation_protocol,validation_status
+WT_TMP,data/processed/qm_clusters/WT_TMP_compact_primary.xyz,True,True,116,C;H;N;O,,1,angstrom,True,1.0095315745433628,False,TMP,WT,compact_primary/N1-protonated/fixed NADPH embedding,pass_basic_geometry
+WT_4DTMP,data/processed/qm_clusters/WT_4DTMP_compact_primary.xyz,True,True,113,C;H;N;O,,1,angstrom,True,0.9719022584601804,False,4-DTMP,WT,compact_primary/N1-protonated/fixed NADPH embedding,pass_basic_geometry
+L28R_TMP,data/processed/qm_clusters/L28R_TMP_compact_primary.xyz,True,True,121,C;H;N;O,,1,angstrom,True,1.0091189226250812,False,TMP,L28R,compact_primary/N1-protonated/fixed NADPH embedding,pass_basic_geometry
+L28R_4DTMP,data/processed/qm_clusters/L28R_4DTMP_compact_primary.xyz,True,True,118,C;H;N;O,,1,angstrom,True,0.9714252415909311,False,4-DTMP,L28R,compact_primary/N1-protonated/fixed NADPH embedding,pass_basic_geometry

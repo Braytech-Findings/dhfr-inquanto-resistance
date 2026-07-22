@@ -1,0 +1,19 @@
+FINAL VALIDATION TEST REPORT
+command: python -m pytest -q
+result: 48 passed, 1 skipped
+duration: 3.98 seconds
+warnings: none reported by pytest
+failures: none
+
+Additional checks:
+- ruff check scripts tests: passed
+- ruff format --check scripts tests: passed after 11 mechanical formatting updates
+- python -m compileall -q scripts tests: passed
+- python scripts/validate_repository.py: passed; it reran 48 passed, 1 skipped
+- JSON/YAML/notebook parsing: passed
+- shell syntax: passed
+- both notebooks executed top to bottom in temporary copies
+- unconfigured whole-tree mypy: failed with 163 errors in 48 files, chiefly missing scientific-library stubs/private modules plus existing annotation issues; see failure log
+
+The skipped chemistry test requires the optional licensed/local chemistry stack
+combination declared by its pytest import guards.

@@ -1,0 +1,11 @@
+FINAL PASS BASELINE
+branch source: codex/full-code-audit at 9b957e1
+command: python -m pytest -q
+result: 40 passed, 1 skipped
+duration: 2.64 seconds
+python: 3.13.5
+os: macOS Darwin 25.6.0
+architecture: arm64
+warnings: none reported by pytest
+failures: none
+skip reason: optional licensed/local chemistry stack, as declared by test marker

@@ -1,0 +1,5 @@
+system,ansatz,qubits,hamiltonian_terms,measurement_circuits,shots_per_circuit,replicates,total_shots,qasm_file,qasm_version,backend_target,optimization_level,ansatz_depth,two_qubit_gates,total_gates,observable_coverage,status
+WT_TMP,UCCSD,12,1819,576,100,1,57600,data/processed/WT_TMP_circuit.qasm,2.0,H2-1LE local noiseless emulator,0,,,,saved partitioning; full independent recheck blocked by 2.3 GB local artifact,verified_saved_plan
+WT_4DTMP,,,,,,,,,,,,,,,,missing
+L28R_TMP,,,,,,,,,,,,,,,,missing
+L28R_4DTMP,,,,,,,,,,,,,,,,missing

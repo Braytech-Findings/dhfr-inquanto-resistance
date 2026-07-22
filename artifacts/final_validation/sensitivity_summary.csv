@@ -1,0 +1,5 @@
+analysis,method,basis,embedding,effect_hartree,uncertainty_hartree,status,interpretation
+classical_model_sensitivity,HF,3-21g,True,-0.05552562762841262,,sensitivity,model-dependent pilot/sensitivity; not independent replicates
+classical_model_sensitivity,HF,def2-svp,True,-0.04688981911976953,,sensitivity,model-dependent pilot/sensitivity; not independent replicates
+classical_model_sensitivity,HF,sto-3g,False,-0.056114836774440846,,sensitivity,model-dependent pilot/sensitivity; not independent replicates
+classical_model_sensitivity,HF,sto-3g,True,-0.06166348658007337,,pilot_only,model-dependent pilot/sensitivity; not independent replicates

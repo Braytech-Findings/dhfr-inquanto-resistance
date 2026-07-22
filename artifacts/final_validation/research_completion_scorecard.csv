@@ -1,0 +1,26 @@
+area,score_0_to_4,evidence_path
+research question,3,README.md; docs/WHAT_THE_PROJECT_PROVES.md
+matched systems,2,configs/core_systems.yaml; data/project_status.json
+molecular inputs,3,artifacts/final_validation/molecular_input_validation.csv
+classical references,2,artifacts/final_validation/classical_reference_summary.csv
+active space,2,docs/ACTIVE_SPACE_DECISION.md
+Hamiltonians,1,artifacts/final_validation/hamiltonian_summary.csv
+VQE parameters,1,artifacts/final_validation/vqe_parameter_summary.csv
+ideal simulation,1,results/quantum/WT_TMP_saved_params_exact.json
+finite-shot simulation,1,results/quantum/WT_TMP_H2-1LE_100shots_energy.json
+uncertainty,1,artifacts/final_validation/statistical_validation.csv
+reproducibility,2,artifacts/final_validation/reproducibility_report.md
+sensitivity,1,artifacts/final_validation/sensitivity_summary.csv
+controls,3,docs/CONTROL_STRATEGY.md; tests/
+Quantinuum access,2,docs/QUANTINUUM_RECOVERY.md
+remote emulator evidence,0,data/project_status.json
+hardware evidence,0,data/project_status.json
+figures,3,results/publication/figures; artifacts/final_validation/figure_manifest.csv
+tables,3,artifacts/final_validation/tables
+provenance,3,artifacts/final_validation/result_manifest.json
+tests,4,artifacts/final_validation/final_test_report.txt
+documentation,4,docs/
+biological interpretation,1,docs/RED_TEAM_REVIEW.md
+independent validation,0,docs/WHAT_THE_PROJECT_PROVES.md
+claim discipline,4,docs/CLAIM_AUDIT.md
+interview readiness,3,docs/TECHNICAL_DEFENSE_GUIDE.md

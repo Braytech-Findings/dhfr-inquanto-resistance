@@ -1,0 +1,5 @@
+system,evidence_level,evidence_label,local_ideal,local_finite_shot,nexus_emulator,hardware,independent_biological_validation,notes
+WT_TMP,2,LEVEL 2,present,present,missing,missing,missing,Locally reproducible saved ideal and finite-shot result with validated metadata; one system only
+WT_4DTMP,1,LEVEL 1,missing,missing,missing,missing,missing,"Prepared/classical files exist, but matched Hamiltonian, parameters, and quantum result are missing"
+L28R_TMP,1,LEVEL 1,missing,missing,missing,missing,missing,"Prepared/classical files exist, but matched Hamiltonian, parameters, and quantum result are missing"
+L28R_4DTMP,1,LEVEL 1,missing,missing,missing,missing,missing,"Prepared/classical files exist, but matched Hamiltonian, parameters, and quantum result are missing"

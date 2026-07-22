@@ -1,0 +1,28 @@
+SAFE COMMANDS RUN IN FINAL PASS
+pwd
+git status --short --branch
+git branch --show-current
+git log -10 --oneline
+git diff main...codex/full-code-audit --stat
+python --version
+python -m pip --version
+python -m pytest -q
+python -m compileall -q scripts tests
+ruff check scripts tests
+ruff format --check scripts tests
+python scripts/validate_repository.py
+python scripts/four_system_workflow.py --prepare
+python scripts/four_system_workflow.py --local-all --shots 100  # stopped at all-system preflight; no execution
+python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-Emulator --shots 10 --dry-run
+python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-Emulator --shots 10 --compile-only
+jupyter nbconvert --to notebook --execute notebooks/01_exploratory_analysis.ipynb --output 01_executed.ipynb --output-dir /tmp
+jupyter nbconvert --to notebook --execute notebooks/publication_figure_validation.ipynb --output publication_executed.ipynb --output-dir /tmp
+
+NOT RUN: backend discovery (requires authenticated network access).
+NOT RUN: smoke submission, four-system remote submission, or retrieval.
+NOT RUN: expensive production quantum calculations.
+
+ATTEMPTED WITH RECORDED BLOCKERS
+python -m pip check  # Qiskit conflict in mixed current shell
+mypy scripts         # no configured target; missing stubs/private modules and annotation errors
+python -m compileall -q .  # completed; one SyntaxWarning in preserved vendored upstream code

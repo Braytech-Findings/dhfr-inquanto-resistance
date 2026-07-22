@@ -1,0 +1,3 @@
+# Notebook Execution Report
+
+Both notebook files parse as valid JSON and were executed top to bottom into temporary `/tmp` copies with `jupyter nbconvert`; both completed successfully. Repository notebooks were not replaced with executed copies, so historical output was not overwritten. The exploratory notebook was corrected to label its saved pilot endpoint and historical interval as unvalidated rather than presenting a biological conclusion. The publication notebook received stable cell IDs and describes its local WT_TMP scope. No remote service was contacted. No embedded token pattern or absolute `/Users/` path was found by maintained privacy tests. Reusable production logic remains in `scripts/`.

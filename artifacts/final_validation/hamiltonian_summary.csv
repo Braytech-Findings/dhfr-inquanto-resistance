@@ -1,0 +1,5 @@
+system,exists,basis,active_electrons,active_orbitals,qubits,mapped_pauli_terms,mapping,hermitian,coefficient_types_valid,constant_terms,one_body_terms,two_body_terms,symmetry_reduction,sha256,status
+WT_TMP,True,sto-3g,6,6,12,1819,InQuanto default qubit encoding (exact mapping not recorded),True,True,1,,,not recorded,a0c2815931264befd25ec8ed801b2b5f355f9b9a64ec570a375384e4af5befc4,validated_saved_artifact
+WT_4DTMP,False,,,,,,,,,,,,,,missing
+L28R_TMP,False,,,,,,,,,,,,,,missing
+L28R_4DTMP,False,,,,,,,,,,,,,,missing

@@ -1,0 +1,15 @@
+{
+  "catalog_source": "central static resolver; live discovery not authorized in final pass",
+  "credits_may_be_consumed": true,
+  "entitlement_verified": false,
+  "execution_type": "emulator",
+  "h1_emulator_visible": null,
+  "hosting_type": "nexus_hosted",
+  "job_created": false,
+  "live_discovery_performed": false,
+  "notes": "Run the documented authenticated discovery command to obtain the live catalog.",
+  "requested_backend": "H2-Emulator",
+  "resolved_backend": "H2-Emulator",
+  "selected_backend": "H2-Emulator",
+  "timestamp_utc": "2026-07-22T03:36:17.338969+00:00"
+}

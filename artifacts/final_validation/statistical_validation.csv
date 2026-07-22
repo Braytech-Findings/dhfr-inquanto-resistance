@@ -1,0 +1,5 @@
+system,independent_replicates,measurement_shots,estimator,uncertainty_value_hartree,uncertainty_method,confidence_level,seed,confidence_interval_status,limitations
+WT_TMP,1,57600,PauliAveraging energy,0.007647045140626157,finite-shot standard error,,,INSUFFICIENT_INDEPENDENT_REPLICATES,One finite-shot job; no independent replicate CI
+WT_4DTMP,0,,,,INSUFFICIENT_INDEPENDENT_REPLICATES,,,INSUFFICIENT_INDEPENDENT_REPLICATES,No finite-shot molecular result
+L28R_TMP,0,,,,INSUFFICIENT_INDEPENDENT_REPLICATES,,,INSUFFICIENT_INDEPENDENT_REPLICATES,No finite-shot molecular result
+L28R_4DTMP,0,,,,INSUFFICIENT_INDEPENDENT_REPLICATES,,,INSUFFICIENT_INDEPENDENT_REPLICATES,No finite-shot molecular result

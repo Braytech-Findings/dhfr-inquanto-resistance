@@ -1,0 +1,56 @@
+{
+  "generated_at": "2026-07-22T03:36:04.060989+00:00",
+  "results": [
+    {
+      "active_space": "6 electrons in 6 spatial orbitals",
+      "ansatz": "UCCSD",
+      "backend": "Quantinuum H2-1LE local noiseless emulator",
+      "basis": "STO-3G",
+      "branch": "historical",
+      "circuits": 576,
+      "command": "historical command documented in repository; not rerun in final pass",
+      "completion_state": "complete",
+      "date": "2026-07-17",
+      "energy": -2587.917118821447,
+      "environment": "results/quantum/results_manifest.json",
+      "evidence_level": 2,
+      "execution_type": "noiseless_emulator",
+      "git_commit": "historical; exact commit not recorded in result",
+      "input_checksums": {
+        "data/params/WT_TMP_params.json": "35ba27e04073cf24e6d88a0aa657fd6ddf964b911b24fa0ad2dbaf60f2ca56df",
+        "data/processed/WT_TMP_qubit_hamiltonian.json": "a0c2815931264befd25ec8ed801b2b5f355f9b9a64ec570a375384e4af5befc4"
+      },
+      "input_files": [
+        "data/params/WT_TMP_params.json",
+        "data/processed/WT_TMP_qubit_hamiltonian.json"
+      ],
+      "location": "local",
+      "mapping": "not recorded in compact historical result",
+      "method": "UCCSD PauliAveraging",
+      "notes": "One WT_TMP model only; not hosted or hardware; comprehensive historical seed/commit absent",
+      "optimizer": "not fully recorded",
+      "output_checksums": {
+        "results/publication/data/verified_quantum_provenance.json": "5d4392c38a04bee396b5dbd206372162a4ba1a3eb8a791b23867b98ad1eadcde",
+        "results/quantum/WT_TMP_H2-1LE_100shots_energy.json": "2314ce91d75f79cc55ae2e890c6e89b23daf5d072e326cce10ef6ae44e4f5edf",
+        "results/quantum/WT_TMP_saved_params_exact.json": "95a7dcd000842740d2c076ac4688be167805add95e97db231ee4e6c83316647a"
+      },
+      "output_files": [
+        "results/quantum/WT_TMP_saved_params_exact.json",
+        "results/quantum/WT_TMP_H2-1LE_100shots_energy.json",
+        "results/publication/data/verified_quantum_provenance.json"
+      ],
+      "replicates": 1,
+      "result_id": "WT_TMP_local_H2-1LE_100shots",
+      "seed": null,
+      "shots": 57600,
+      "stage": "local_finite_shot",
+      "system": "WT_TMP",
+      "timestamp": null,
+      "uncertainty": 0.007647045141,
+      "uncertainty_definition": "finite-shot standard error",
+      "units": "Hartree",
+      "validation_state": "protected metadata and checksum validated"
+    }
+  ],
+  "schema_version": 1
+}

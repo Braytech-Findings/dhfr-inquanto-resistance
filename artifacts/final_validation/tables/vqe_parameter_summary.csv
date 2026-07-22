@@ -1,0 +1,5 @@
+system,exists,ansatz,parameter_count,optimizer,starting_point,convergence_status,final_objective_hartree,iteration_count,seed,source,loaded_or_optimized,current_hamiltonian_compatible,sha256,status
+WT_TMP,True,UCCSD,117,,,not recorded,-2587.912001526413,,,data/params/WT_TMP_params.json,loaded saved parameters; optimization evidence incomplete,True,35ba27e04073cf24e6d88a0aa657fd6ddf964b911b24fa0ad2dbaf60f2ca56df,level_1_saved_parameters
+WT_4DTMP,False,,,,,,,,,,,,,missing
+L28R_TMP,False,,,,,,,,,,,,,missing
+L28R_4DTMP,False,,,,,,,,,,,,,missing

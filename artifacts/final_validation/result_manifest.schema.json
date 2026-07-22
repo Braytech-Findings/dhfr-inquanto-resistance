@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "generated_at": {
+      "type": "string"
+    },
+    "results": {
+      "items": {
+        "required": [
+          "result_id",
+          "system",
+          "stage",
+          "input_checksums",
+          "output_checksums",
+          "backend",
+          "location",
+          "execution_type",
+          "completion_state",
+          "validation_state",
+          "evidence_level"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "generated_at",
+    "results"
+  ],
+  "type": "object"
+}
