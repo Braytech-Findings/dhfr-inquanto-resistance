@@ -120,12 +120,15 @@ def runtime_artifacts() -> None:
     ]
     write_text("environment_snapshot.txt", "\n".join(lines))
     freeze = subprocess.run(
-        [sys.executable, "-m", "pip", "freeze"],
+        [sys.executable, "-m", "pip", "list", "--format=freeze"],
         cwd=ROOT,
         check=True,
         capture_output=True,
         text=True,
     ).stdout
+    # `pip freeze` in Conda base environments can expose package-build absolute
+    # paths. `pip list --format=freeze` records equivalent names and versions
+    # without machine-specific builder locations.
     write_text("pip_freeze.txt", freeze)
     pip_check = subprocess.run(
         [sys.executable, "-m", "pip", "check"],
@@ -133,9 +136,13 @@ def runtime_artifacts() -> None:
         capture_output=True,
         text=True,
     )
+    pip_check_text = (
+        f"exit_code: {pip_check.returncode}\n{pip_check.stdout}{pip_check.stderr}"
+    )
+    pip_check_text = pip_check_text.replace(str(Path.home()), "<HOME>")
     write_text(
         "pip_check.txt",
-        f"exit_code: {pip_check.returncode}\n{pip_check.stdout}{pip_check.stderr}",
+        pip_check_text,
     )
 
 
@@ -724,7 +731,7 @@ Pass criterion for deterministic stages: exact JSON equality or matching SHA-256
         "notebook_execution_report.md",
         """# Notebook Execution Report
 
-Both notebook files parse as valid JSON. `01_exploratory_analysis.ipynb` was inspected for cell order and contains explanatory/local analysis content. `publication_figure_validation.ipynb` is a minimal one-cell support artifact. Neither was executed in this pass because their stored environment/kernel is not the declared Python 3.11 chemistry environment and execution could rewrite historical displayed outputs. No embedded token pattern or absolute `/Users/` path was found by maintained privacy tests. Reusable production logic remains in `scripts/`.
+Both notebook files parse as valid JSON. `01_exploratory_analysis.ipynb` was inspected for cell order and contains explanatory/local analysis content. `publication_figure_validation.ipynb` is a minimal one-cell support artifact. Neither was executed in this pass because their stored environment/kernel is not the declared Python 3.11 chemistry environment and execution could rewrite historical displayed outputs. No embedded token pattern or absolute home-directory path was found by maintained privacy tests. Reusable production logic remains in `scripts/`.
 """,
     )
     write_text(
