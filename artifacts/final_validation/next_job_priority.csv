@@ -1,0 +1,5 @@
+purpose,backend,system,settings,expected_scientific_value,expected_credits,expected_runtime,current_evidence_gap,priority_score,status
+billing_and_context_verification,H2-Emulator,not_applicable,read_only,required_gate,0,short,project_group_balance_unknown,100,blocked_researcher_decision
+bell_smoke_test,H2-Emulator,not_applicable,10_shots,access_plumbing,unknown,short,entitlement_unverified,90,blocked_billing
+wt_pilot,H2-Emulator,WT_TMP,conservative_shots,molecular_remote_validation,unknown,unknown,active_space_and_billing,80,blocked_scientific_and_billing
+

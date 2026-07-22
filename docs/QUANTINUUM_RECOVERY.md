@@ -58,6 +58,15 @@ Backend trace for the smoke test:
 
 ## Safe commands
 
+### Live result from 2026-07-22
+
+Read-only discovery authenticated successfully and returned `H1-Emulator` and
+`H2-Emulator` as visible maintained targets. It created no submission and used
+no credits. No project was supplied and Nexus used its default group, so
+entitlement was not verified. The quota API reported `No quota set for user`;
+because that does not prove a numeric non-cash allocation or disabled overage,
+remote submission stopped with `NEEDS_RESEARCHER_BILLING_DECISION`.
+
 Set the authorized project and group privately through command flags or the
 documented environment variables. Do not commit their values.
 

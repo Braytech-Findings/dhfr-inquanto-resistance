@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "jobs", "stopping_reason"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "jobs": {"type": "array", "items": {"type": "object", "required": ["job_identifier", "backend", "final_state"]}},
+    "stopping_reason": {"type": "string"},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": false
+}

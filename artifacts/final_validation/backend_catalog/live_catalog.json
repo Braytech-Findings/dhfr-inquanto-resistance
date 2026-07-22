@@ -1,0 +1,16 @@
+{
+  "authenticated": true,
+  "credits_consumed": false,
+  "entitlement_verified": false,
+  "operation": "backend_discovery",
+  "project_id_selected": false,
+  "project_name_selected": false,
+  "project_source": "missing",
+  "submission_created": false,
+  "user_group_selected": false,
+  "user_group_source": "Nexus default group",
+  "visible_backends": [
+    "H1-Emulator",
+    "H2-Emulator"
+  ]
+}

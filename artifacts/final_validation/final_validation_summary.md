@@ -88,9 +88,11 @@ execute use one immutable configuration. No fallback exists. Access code 14 is
 
 ## Live backend-discovery status
 
-Not performed: authenticated network access was outside this prompt's safe
-local authorization. H1-Emulator visibility and current entitlement are unknown.
-An exact command is documented.
+Read-only live discovery completed on 2026-07-22. The sanitized catalog lists
+`H1-Emulator` and `H2-Emulator`. Authentication succeeded, but no project or
+explicit user group was selected and entitlement remains unverified. The quota
+API reported `No quota set for user`, which is not a verified non-cash balance.
+No job was created and no credits were consumed.
 
 ## Dry-run status
 
@@ -100,6 +102,10 @@ created no job.
 ## Remote submission status
 
 No remote submission, upload, live compile job, retrieval, or paid call occurred.
+Execution stopped before the smoke test because the project, explicit user
+group, numeric allocated balance, and disabled cash overage were not
+established. Classification: `STOPPED_TO_AVOID_CASH_OVERAGE` and
+`NEEDS_RESEARCHER_BILLING_DECISION`.
 
 ## Reproducibility status
 

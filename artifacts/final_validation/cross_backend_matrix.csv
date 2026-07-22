@@ -1,0 +1,4 @@
+system,backend,support_status,model,circuit_count,shots,replicates,energy_hartree,uncertainty_hartree,depth,two_qubit_gates,runtime_seconds,queue_seconds,credits,result_path,evidence_level
+not_applicable,H2-Emulator,visible_not_entitled,smoke_test_only,,,,,,,,,,,backend_catalog/live_catalog.json,0
+not_applicable,H1-Emulator,visible_not_entitled,smoke_test_only,,,,,,,,,,,backend_catalog/live_catalog.json,0
+

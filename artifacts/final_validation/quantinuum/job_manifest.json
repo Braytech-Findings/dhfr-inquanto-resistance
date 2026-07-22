@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "jobs": [],
+  "stopping_reason": "STOPPED_TO_AVOID_CASH_OVERAGE",
+  "notes": "No remote jobs were submitted. Project, group, entitlement, and non-cash balance remain unverified."
+}

@@ -91,3 +91,20 @@ def test_evidence_tables_never_replace_missing_with_zero() -> None:
     pending = [row for row in rows if row["system"] != "WT_TMP"]
     assert all(row["local_finite_shot"] == "missing" for row in pending)
     assert all(row["nexus_emulator"] == "missing" for row in rows)
+
+
+def test_live_backend_catalog_is_visibility_only() -> None:
+    catalog = json.loads(
+        (ARTIFACTS / "backend_catalog" / "live_catalog.json").read_text()
+    )
+    assert catalog["visible_backends"] == ["H1-Emulator", "H2-Emulator"]
+    assert catalog["authenticated"] is True
+    assert catalog["entitlement_verified"] is False
+    assert catalog["submission_created"] is False
+    assert catalog["credits_consumed"] is False
+
+
+def test_remote_job_manifest_records_no_submission() -> None:
+    manifest = json.loads((ARTIFACTS / "quantinuum" / "job_manifest.json").read_text())
+    assert manifest["jobs"] == []
+    assert manifest["stopping_reason"] == "STOPPED_TO_AVOID_CASH_OVERAGE"

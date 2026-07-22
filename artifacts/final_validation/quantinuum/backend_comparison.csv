@@ -1,0 +1,3 @@
+backend,visible,submitted,completed,molecular_work,evidence_level,notes
+H2-Emulator,true,false,false,false,0,visibility_only
+H1-Emulator,true,false,false,false,0,visibility_only_no_fallback
