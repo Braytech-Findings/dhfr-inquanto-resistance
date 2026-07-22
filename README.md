@@ -10,9 +10,10 @@
   <img src="https://img.shields.io/badge/Domain-quantum%20chemistry-5C4B8A" alt="Quantum chemistry">
   <img src="https://img.shields.io/badge/Focus-DHFR%20and%20TMP-167C80" alt="DHFR and TMP">
   <img src="https://img.shields.io/badge/License-MIT-2EA44F" alt="MIT license">
+  <a href="https://github.com/Braytech-Findings/dhfr-inquanto-resistance/actions/workflows/tests.yml?query=branch%3Acodex%2Ffinal-public-research-release"><img src="https://github.com/Braytech-Findings/dhfr-inquanto-resistance/actions/workflows/tests.yml/badge.svg?branch=codex%2Ffinal-public-research-release" alt="Tests status"></a>
 </p>
 
-> **In one sentence:** this project evaluates one small, reproducible DHFR–trimethoprim electronic model with classical and local quantum-emulator methods; it does not claim a drug-resistance prediction or a hardware result.
+> **In one sentence:** this project compares four simplified DHFR–ligand models in a compact classical pilot and deeply validates one `WT_TMP` quantum estimator; it does not claim a drug-resistance prediction, binding-free-energy result, or quantum-hardware result.
 
 **Explore:** [Start here](#start-here-what-is-this-project) · [Research question](#research-question) · [Verified result](#what-is-verified-now) · [Figures](docs/FIGURE_GALLERY.md) · [Install](docs/INSTALLATION.md) · [Run](docs/RUNNING_THE_PROJECT.md) · [Beginner walkthrough](docs/BEGINNER_WALKTHROUGH.md) · [Reproduction](docs/REPRODUCIBILITY.md) · [Backend status](docs/backend-status.md) · [Limitations](docs/LIMITATIONS.md) · [Manuscript](manuscript/README.md)
 
@@ -30,7 +31,7 @@ The completed calculation uses a `WT_TMP` compact QM-cluster model, STO-3G basis
 
 ## Research question
 
-Can reproducible, mutation-specific electronic interaction descriptors help frame future studies of why TMP and 4-DTMP can follow different DHFR resistance trajectories? The present repository establishes workflow components and one WT_TMP local-emulator benchmark; it does **not** answer that biological question yet. Drug resistance matters because it can limit treatment options and raises the cost and difficulty of drug development, but molecular energy alone does not demonstrate clinical resistance.
+Can reproducible, mutation-specific electronic interaction descriptors help frame future studies of why TMP and 4-DTMP can follow different DHFR resistance trajectories? The four-system compact classical pilot suggests that the L28R change affects the two ligand models differently (`D ≈ -0.055 Ha`). That is a computational clue, not a biological answer: the quantum study is complete only for `WT_TMP`, and molecular energy alone does not demonstrate binding, efficacy, or clinical resistance.
 
 ## Project pipeline
 
@@ -72,7 +73,7 @@ The finite-shot value differs from the ideal reference by `-0.005117295034 Ha`; 
 ### Final visual release
 
 - [Plain-language results](docs/PLAIN_LANGUAGE_RESULTS.md)
-- [Interactive four-structure viewer](docs/site/molecule.html)
+- [Interactive four-structure viewer source](docs/site/molecule.html) and [GitHub-viewable PDB files](visualization/public_structures/)
 - [R shot-convergence figure](results/publication/figures/r/wt_tmp_shot_convergence_r.png)
 - [R four-system classical pilot](results/publication/figures/r/four_system_classical_pilot_r.png)
 - [R evidence-completion map](results/publication/figures/r/evidence_completion_map_r.png)
@@ -94,7 +95,7 @@ Rscript analysis/R/make_publication_figures.R
 python scripts/export_public_3d_models.py
 ```
 
-Outputs are under `results/publication/`; each figure has a PNG, PDF, source CSV, and accessibility manifest. See [docs/GLOSSARY.md](docs/GLOSSARY.md) for definitions and [docs/FUTURE_WORK.md](docs/FUTURE_WORK.md) for the research roadmap.
+The R figures include GitHub-viewable PNG, scalable SVG, and source CSV files. The established publication figures include PNG, PDF, source CSV, and accessibility metadata where listed in the [figure gallery](docs/FIGURE_GALLERY.md). To run the interactive 3D viewer rather than read its HTML source, start `python -m http.server 8000` from the repository root and open `http://localhost:8000/docs/site/molecule.html`. See the [glossary](docs/GLOSSARY.md) for definitions and [future work](docs/FUTURE_WORK.md) for the research roadmap.
 
 ## Claims this project does not make
 
@@ -129,7 +130,7 @@ Do not interpret raw total energies from systems containing different atom count
 ```bash
 conda env create -f environment.yml
 conda activate dhfr-qc
-python -m pytest
+python -m pytest -q
 ```
 
 `qnexus==0.46.0` is installed from PyPI through `environment.yml`; it is public client software but needs an authenticated account for remote operations. Use `dhfr-qc` for public tests and preparation utilities. In this workspace, the separately licensed InQuanto stack is installed in `dhfr-inquanto`; use that environment for local InQuanto/H2-1LE scripts. Public CI does not install either licensed stack or perform Nexus access. Never commit tokens.
