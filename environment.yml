@@ -28,7 +28,8 @@ dependencies:
   - pip
   - pip:
       - pyscf
-      - qiskit>=1.0
+      - qiskit>=2.0,<3
+      - qiskit-ionq==1.1.1
       - qnexus==0.46.0
       # InQuanto packages use the private index shown in Nexus Documentation
       - notebook
