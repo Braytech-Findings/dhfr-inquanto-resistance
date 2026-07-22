@@ -59,9 +59,10 @@ def test_missing_and_extra_observables_are_rejected() -> None:
 
 
 def test_protected_wt_tmp_reconstruction() -> None:
-    hamiltonian = json.loads(
-        (ROOT / "data/processed/WT_TMP_qubit_hamiltonian.json").read_text()
-    )
+    path = ROOT / "data/processed/WT_TMP_qubit_hamiltonian.json"
+    if not path.exists():
+        pytest.skip("protected generated Hamiltonian is not included in lightweight CI")
+    hamiltonian = json.loads(path.read_text())
     result = reconstruct_from_measurement_table(
         hamiltonian,
         ROOT / "results/quantum/WT_TMP_H2-1LE_100shots_pauli_measurements.csv",

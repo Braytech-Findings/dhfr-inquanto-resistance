@@ -58,6 +58,8 @@ def test_result_manifest_matches_schema_and_protected_result() -> None:
 
 def test_saved_hamiltonian_is_hermitian_and_well_formed() -> None:
     path = ROOT / "data/processed/WT_TMP_qubit_hamiltonian.json"
+    if not path.exists():
+        pytest.skip("protected generated Hamiltonian is not included in lightweight CI")
     payload = json.loads(path.read_text())
     assert payload["system"] == "WT_TMP"
     assert payload["n_terms"] == len(payload["terms"]) > 0
@@ -67,10 +69,11 @@ def test_saved_hamiltonian_is_hermitian_and_well_formed() -> None:
 
 
 def test_only_wt_tmp_has_compatible_saved_parameters() -> None:
+    exact_path = ROOT / "results/quantum/WT_TMP_saved_params_exact.json"
+    if not exact_path.exists():
+        pytest.skip("protected generated exact result is not included in lightweight CI")
     params = json.loads((ROOT / "data/params/WT_TMP_params.json").read_text())["params"]
-    exact = json.loads(
-        (ROOT / "results/quantum/WT_TMP_saved_params_exact.json").read_text()
-    )
+    exact = json.loads(exact_path.read_text())
     assert len(params) == exact["n_parameters"] == 117
     for system in SYSTEMS[1:]:
         assert not (ROOT / "data/params" / f"{system}_params.json").exists()
