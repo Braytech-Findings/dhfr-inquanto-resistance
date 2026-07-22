@@ -1,0 +1,2 @@
+circuit_count,shots_per_circuit,backend,job_id,status,returned_results,notes
+4,10,H2-Emulator,4961b3c8-b875-4709-bc61-c45202b97b0e,COMPLETED,4,previously validated batch pilot

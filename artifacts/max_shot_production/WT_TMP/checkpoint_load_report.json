@@ -1,0 +1,16 @@
+{
+  "label": "OBJECTIVE COMPUTATIONAL OUTPUT - RESEARCHER INTERPRETATION REQUIRED",
+  "system": "WT_TMP",
+  "environment": "/opt/anaconda3/envs/dhfr-inquanto",
+  "inquanto_installed_version": "6.1.0",
+  "loader": "inquanto.protocols.PauliAveraging.load",
+  "checkpoint": "results/quantum/protocol_checkpoints/WT_TMP_H2-1LE_100shots_built.pkl",
+  "checkpoint_sha256": "ff3e3aad2312b2230eace53116238e8fca33a5812f2e542cf5abf90764806601",
+  "load_status": "blocked_before_loader",
+  "failure_category": "license_initialization",
+  "sanitized_error": "InQuanto import could not complete normal license/authentication initialization in this noninteractive session.",
+  "circuits_exported": 0,
+  "remote_jobs_created": 0,
+  "credentials_inspected": false,
+  "bypass_attempted": false
+}
