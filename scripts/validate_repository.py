@@ -59,9 +59,7 @@ def main() -> int:
         {
             **VERIFIED_WT_TMP,
             "ideal_vqe_energy_hartree": provenance.get("ideal_vqe_energy_hartree"),
-            "finite_shot_energy_hartree": provenance.get(
-                "finite_shot_energy_hartree"
-            ),
+            "finite_shot_energy_hartree": provenance.get("finite_shot_energy_hartree"),
             "standard_error_hartree": provenance.get("standard_error_hartree"),
             "measurement_circuits": provenance.get("measurement_circuits"),
             "shots_per_circuit": provenance.get("shots_per_circuit"),

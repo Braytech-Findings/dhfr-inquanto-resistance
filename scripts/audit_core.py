@@ -111,7 +111,9 @@ def classify_access_error(error: BaseException | str) -> str:
     """Classify access code 14 separately from scientific-code failures."""
     text = str(error).lower()
     access_markers = ("code 14", "error 14", "access", "entitlement", "quota")
-    return "access_or_entitlement" if any(x in text for x in access_markers) else "unknown"
+    return (
+        "access_or_entitlement" if any(x in text for x in access_markers) else "unknown"
+    )
 
 
 def sha256_file(path: Path) -> str:
@@ -130,7 +132,9 @@ def load_json_object(path: Path) -> dict[str, Any]:
     except FileNotFoundError:
         raise FileNotFoundError(f"Required JSON file does not exist: {path}") from None
     except json.JSONDecodeError as exc:
-        raise ValueError(f"Invalid JSON in {path}: {exc.msg} at line {exc.lineno}") from exc
+        raise ValueError(
+            f"Invalid JSON in {path}: {exc.msg} at line {exc.lineno}"
+        ) from exc
     if not isinstance(value, dict):
         raise ValueError(f"Expected a JSON object in {path}")
     return value
@@ -147,7 +151,9 @@ def validate_verified_wt_tmp(record: Mapping[str, Any]) -> None:
     if record.get("placeholder") or record.get("example"):
         raise ValueError("Placeholder or example data cannot be verified evidence")
     if record.get("physical_hardware") is True or record.get("local") is False:
-        raise ValueError("The verified WT_TMP benchmark is local emulation, not hardware")
+        raise ValueError(
+            "The verified WT_TMP benchmark is local emulation, not hardware"
+        )
     expected_shots = total_shots(
         int(record["measurement_circuits"]), int(record["shots_per_circuit"])
     )

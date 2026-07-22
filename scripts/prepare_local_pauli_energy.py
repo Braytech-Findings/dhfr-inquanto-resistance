@@ -80,7 +80,9 @@ def main():
     mean_field.kernel()
 
     if not mean_field.converged:
-        raise RuntimeError("RHF did not converge; refusing to build a measurement plan.")
+        raise RuntimeError(
+            "RHF did not converge; refusing to build a measurement plan."
+        )
 
     n_occ = int(np.sum(mean_field.mo_occ // 2))
     n_mo = len(mean_field.mo_energy)

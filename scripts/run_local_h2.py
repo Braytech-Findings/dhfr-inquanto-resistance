@@ -36,7 +36,9 @@ def outcome_to_string(outcome) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--system", required=True, help="Approved molecular system ID.")
-    parser.add_argument("--shots", type=int, default=100, help="Positive local samples.")
+    parser.add_argument(
+        "--shots", type=int, default=100, help="Positive local samples."
+    )
     parser.add_argument(
         "--recompile", action="store_true", help="Ignore the saved local compilation."
     )

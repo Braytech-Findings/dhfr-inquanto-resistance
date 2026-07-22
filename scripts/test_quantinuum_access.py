@@ -498,9 +498,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-hqc", type=float, default=0.0)
     parser.add_argument("--wait", action="store_true")
     parser.add_argument("--timeout", type=int, default=300)
-    parser.add_argument(
-        "--metadata-output", type=Path, default=DEFAULT_METADATA
-    )
+    parser.add_argument("--metadata-output", type=Path, default=DEFAULT_METADATA)
     return parser
 
 

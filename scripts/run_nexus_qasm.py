@@ -17,14 +17,20 @@ try:
     from .audit_core import canonical_system, classify_access_error
     from .nexus_backend import require_nexus_emulator, resolve_backend
     from .test_quantinuum_access import (
-        load_nexus, project_for, resolve_project_selection, resolve_user_group,
+        load_nexus,
+        project_for,
+        resolve_project_selection,
+        resolve_user_group,
         wait_and_print,
     )
 except ImportError:
     from audit_core import canonical_system, classify_access_error
     from nexus_backend import require_nexus_emulator, resolve_backend
     from test_quantinuum_access import (
-        load_nexus, project_for, resolve_project_selection, resolve_user_group,
+        load_nexus,
+        project_for,
+        resolve_project_selection,
+        resolve_user_group,
         wait_and_print,
     )
 
@@ -61,7 +67,9 @@ def run(args: argparse.Namespace) -> None:
         print("No login, upload, compile job, execution job, or credits were used.")
         return
     if not args.confirm_submit:
-        raise SystemExit("Remote execution requires --confirm-submit; use --dry-run first.")
+        raise SystemExit(
+            "Remote execution requires --confirm-submit; use --dry-run first."
+        )
     qnx, QuantinuumConfig = load_nexus()
     try:
         from pytket.qasm import circuit_from_qasm
@@ -70,19 +78,30 @@ def run(args: argparse.Namespace) -> None:
         project = project_for(qnx, args)
         circuit = circuit_from_qasm(args.qasm)
         config = QuantinuumConfig(device_name=resolution.resolved_backend)
-        uploaded = qnx.circuits.upload(circuit=circuit, project=project, name=f"{system}-qasm")
+        uploaded = qnx.circuits.upload(
+            circuit=circuit, project=project, name=f"{system}-qasm"
+        )
         compiled = qnx.compile(
-            programs=uploaded, backend_config=config, project=project,
+            programs=uploaded,
+            backend_config=config,
+            project=project,
             name=f"{system}-{resolution.resolved_backend}-compile",
-            optimisation_level=0, user_group=group, timeout=args.timeout,
+            optimisation_level=0,
+            user_group=group,
+            timeout=args.timeout,
         )
         # Reuse the identical config object so compile and execution cannot diverge.
         job = qnx.start_execute_job(
-            programs=compiled, n_shots=args.shots, backend_config=config,
-            project=project, name=f"{system}-{resolution.resolved_backend}-execute",
+            programs=compiled,
+            n_shots=args.shots,
+            backend_config=config,
+            project=project,
+            name=f"{system}-{resolution.resolved_backend}-execute",
             user_group=group,
         )
-        metadata.update({"operation": "submission", "job_created": True, "job_id": str(job.id)})
+        metadata.update(
+            {"operation": "submission", "job_created": True, "job_id": str(job.id)}
+        )
         save(args.metadata_output, metadata)
         if args.wait:
             wait_and_print(qnx, job, project, args.timeout)
@@ -116,7 +135,11 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--confirm-submit", action="store_true")
     result.add_argument("--wait", action="store_true")
     result.add_argument("--timeout", type=int, default=300)
-    result.add_argument("--metadata-output", type=Path, default=Path("results/quantinuum_access/qasm_operation.json"))
+    result.add_argument(
+        "--metadata-output",
+        type=Path,
+        default=Path("results/quantinuum_access/qasm_operation.json"),
+    )
     return result
 
 

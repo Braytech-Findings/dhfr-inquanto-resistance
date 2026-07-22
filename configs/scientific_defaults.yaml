@@ -1,0 +1,60 @@
+schema_version: 1
+systems:
+  WT_TMP:
+    display_name: Wild-type DHFR with trimethoprim
+    protein: WT
+    ligand: TMP
+  WT_4DTMP:
+    display_name: Wild-type DHFR with 4'-desmethyltrimethoprim
+    protein: WT
+    ligand: 4-DTMP
+  L28R_TMP:
+    display_name: L28R DHFR with trimethoprim
+    protein: L28R
+    ligand: TMP
+  L28R_4DTMP:
+    display_name: L28R DHFR with 4'-desmethyltrimethoprim
+    protein: L28R
+    ligand: 4-DTMP
+aliases:
+  WT_4-DTMP: WT_4DTMP
+  L28R_4-DTMP: L28R_4DTMP
+quantum_model:
+  basis: STO-3G
+  active_electrons: 6
+  active_spatial_orbitals: 6
+  qubits: 12
+  active_space_status: needs_researcher_decision
+sampling:
+  default_random_seed: 2026
+  default_shots_per_circuit: 100
+  default_job_replicates: 1
+  total_shots_formula: measurement_circuits * shots_per_circuit * job_replicates
+units:
+  energy: Hartree
+  coordinates: angstrom
+uncertainty:
+  finite_shot: standard_error
+  matched_bootstrap_requirement: at_least_two_genuine_independent_replicates_per_system
+backends:
+  local_verified: H2-1LE
+  nexus_smoke_default: H2-Emulator
+  remote_confirmation_flag: --confirm-submit
+paths:
+  molecular_inputs: data/processed/qm_clusters/{system}_compact_primary.xyz
+  classical_results: results/classical/
+  quantum_results: results/quantum/
+  final_validation: artifacts/final_validation/
+provenance_required:
+  - system
+  - git_commit
+  - command
+  - environment
+  - input_checksums
+  - output_checksums
+  - method
+  - basis
+  - active_space
+  - backend
+  - completion_state
+  - validation_state

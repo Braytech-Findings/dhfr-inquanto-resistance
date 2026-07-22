@@ -1,0 +1,297 @@
+{
+  "allowed_statuses": [
+    "not_started",
+    "pending",
+    "running",
+    "complete",
+    "failed",
+    "blocked_by_access",
+    "blocked_by_dependency",
+    "needs_researcher_decision",
+    "not_applicable"
+  ],
+  "remote_submission_performed": false,
+  "schema_version": 1,
+  "systems": {
+    "L28R_4DTMP": {
+      "active_space": {
+        "status": "needs_researcher_decision",
+        "value": null
+      },
+      "ansatz": {
+        "status": "not_started",
+        "value": null
+      },
+      "classical_reference": {
+        "status": "complete",
+        "value": null
+      },
+      "figures": {
+        "status": "complete",
+        "value": null
+      },
+      "final_evidence_status": {
+        "status": "pending",
+        "value": "LEVEL 1"
+      },
+      "hamiltonian": {
+        "status": "not_started",
+        "value": null
+      },
+      "local_compilation": {
+        "status": "not_started",
+        "value": null
+      },
+      "local_finite_shot_result": {
+        "status": "not_started",
+        "value": null
+      },
+      "local_ideal_result": {
+        "status": "not_started",
+        "value": null
+      },
+      "measurement_circuits": {
+        "status": "not_started",
+        "value": null
+      },
+      "molecular_input": {
+        "status": "complete",
+        "value": null
+      },
+      "nexus_compilation": {
+        "status": "not_started",
+        "value": null
+      },
+      "nexus_emulator_result": {
+        "status": "not_started",
+        "value": null
+      },
+      "qasm": {
+        "status": "not_started",
+        "value": null
+      },
+      "uncertainty": {
+        "status": "not_started",
+        "value": null
+      },
+      "validation": {
+        "status": "complete",
+        "value": null
+      },
+      "vqe_parameters": {
+        "status": "not_started",
+        "value": null
+      }
+    },
+    "L28R_TMP": {
+      "active_space": {
+        "status": "needs_researcher_decision",
+        "value": null
+      },
+      "ansatz": {
+        "status": "not_started",
+        "value": null
+      },
+      "classical_reference": {
+        "status": "complete",
+        "value": null
+      },
+      "figures": {
+        "status": "complete",
+        "value": null
+      },
+      "final_evidence_status": {
+        "status": "pending",
+        "value": "LEVEL 1"
+      },
+      "hamiltonian": {
+        "status": "not_started",
+        "value": null
+      },
+      "local_compilation": {
+        "status": "not_started",
+        "value": null
+      },
+      "local_finite_shot_result": {
+        "status": "not_started",
+        "value": null
+      },
+      "local_ideal_result": {
+        "status": "not_started",
+        "value": null
+      },
+      "measurement_circuits": {
+        "status": "not_started",
+        "value": null
+      },
+      "molecular_input": {
+        "status": "complete",
+        "value": null
+      },
+      "nexus_compilation": {
+        "status": "not_started",
+        "value": null
+      },
+      "nexus_emulator_result": {
+        "status": "not_started",
+        "value": null
+      },
+      "qasm": {
+        "status": "not_started",
+        "value": null
+      },
+      "uncertainty": {
+        "status": "not_started",
+        "value": null
+      },
+      "validation": {
+        "status": "complete",
+        "value": null
+      },
+      "vqe_parameters": {
+        "status": "not_started",
+        "value": null
+      }
+    },
+    "WT_4DTMP": {
+      "active_space": {
+        "status": "needs_researcher_decision",
+        "value": null
+      },
+      "ansatz": {
+        "status": "not_started",
+        "value": null
+      },
+      "classical_reference": {
+        "status": "complete",
+        "value": null
+      },
+      "figures": {
+        "status": "complete",
+        "value": null
+      },
+      "final_evidence_status": {
+        "status": "pending",
+        "value": "LEVEL 1"
+      },
+      "hamiltonian": {
+        "status": "not_started",
+        "value": null
+      },
+      "local_compilation": {
+        "status": "not_started",
+        "value": null
+      },
+      "local_finite_shot_result": {
+        "status": "not_started",
+        "value": null
+      },
+      "local_ideal_result": {
+        "status": "not_started",
+        "value": null
+      },
+      "measurement_circuits": {
+        "status": "not_started",
+        "value": null
+      },
+      "molecular_input": {
+        "status": "complete",
+        "value": null
+      },
+      "nexus_compilation": {
+        "status": "not_started",
+        "value": null
+      },
+      "nexus_emulator_result": {
+        "status": "not_started",
+        "value": null
+      },
+      "qasm": {
+        "status": "not_started",
+        "value": null
+      },
+      "uncertainty": {
+        "status": "not_started",
+        "value": null
+      },
+      "validation": {
+        "status": "complete",
+        "value": null
+      },
+      "vqe_parameters": {
+        "status": "not_started",
+        "value": null
+      }
+    },
+    "WT_TMP": {
+      "active_space": {
+        "status": "needs_researcher_decision",
+        "value": null
+      },
+      "ansatz": {
+        "status": "complete",
+        "value": null
+      },
+      "classical_reference": {
+        "status": "complete",
+        "value": null
+      },
+      "figures": {
+        "status": "complete",
+        "value": null
+      },
+      "final_evidence_status": {
+        "status": "complete",
+        "value": "LEVEL 2"
+      },
+      "hamiltonian": {
+        "status": "complete",
+        "value": null
+      },
+      "local_compilation": {
+        "status": "complete",
+        "value": null
+      },
+      "local_finite_shot_result": {
+        "status": "complete",
+        "value": null
+      },
+      "local_ideal_result": {
+        "status": "complete",
+        "value": null
+      },
+      "measurement_circuits": {
+        "status": "complete",
+        "value": null
+      },
+      "molecular_input": {
+        "status": "complete",
+        "value": null
+      },
+      "nexus_compilation": {
+        "status": "not_started",
+        "value": null
+      },
+      "nexus_emulator_result": {
+        "status": "not_started",
+        "value": null
+      },
+      "qasm": {
+        "status": "complete",
+        "value": null
+      },
+      "uncertainty": {
+        "status": "complete",
+        "value": null
+      },
+      "validation": {
+        "status": "complete",
+        "value": null
+      },
+      "vqe_parameters": {
+        "status": "complete",
+        "value": null
+      }
+    }
+  }
+}

@@ -52,7 +52,11 @@ def resolve_backend(
     requested = requested.strip()
     if requested not in BACKEND_CATALOG:
         case_match = next(
-            (name for name in BACKEND_CATALOG if name.casefold() == requested.casefold()),
+            (
+                name
+                for name in BACKEND_CATALOG
+                if name.casefold() == requested.casefold()
+            ),
             None,
         )
         hint = f" Use exact spelling {case_match!r}." if case_match else ""
@@ -74,7 +78,10 @@ def resolve_backend(
 
 def require_nexus_emulator(resolution: BackendResolution) -> None:
     """Reject syntax checkers, hardware, local emulators, and silent fallback."""
-    if resolution.hosting_type != "nexus_hosted" or resolution.backend_type != "emulator":
+    if (
+        resolution.hosting_type != "nexus_hosted"
+        or resolution.backend_type != "emulator"
+    ):
         raise ValueError(
             "--nexus-emulator requires exactly a Nexus-hosted emulator such as "
             "H2-Emulator or H1-Emulator; syntax checkers and hardware are incompatible."
