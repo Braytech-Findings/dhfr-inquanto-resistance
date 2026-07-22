@@ -1,0 +1,235 @@
+{
+  "missing_values_are_zero": false,
+  "remote_submission_performed": false,
+  "schema_version": 1,
+  "systems": {
+    "L28R_4DTMP": {
+      "classical_reference": {
+        "path": "results/classical/L28R_4DTMP_compact_primary_HF_sto-3g.json",
+        "status": "present",
+        "value": null
+      },
+      "compilation": {
+        "path": "data/processed/L28R_4DTMP_H2-1LE_compiled.json",
+        "status": "missing",
+        "value": null
+      },
+      "figures": {
+        "path": "results/figures/L28R_4DTMP_orbital_character.png",
+        "status": "present",
+        "value": null
+      },
+      "hamiltonian": {
+        "path": "data/processed/L28R_4DTMP_qubit_hamiltonian.json",
+        "status": "missing",
+        "value": null
+      },
+      "local_result": {
+        "path": "results/quantum/L28R_4DTMP_H2-1LE_100shots_energy.json",
+        "status": "missing",
+        "value": null
+      },
+      "molecular_input": {
+        "path": "data/processed/qm_clusters/L28R_4DTMP_compact_primary.xyz",
+        "status": "present",
+        "value": null
+      },
+      "nexus_emulator_result": {
+        "path": "results/quantum/nexus/L28R_4DTMP_H2-Emulator.json",
+        "status": "missing",
+        "value": null
+      },
+      "qasm": {
+        "path": "data/processed/L28R_4DTMP_circuit.qasm",
+        "status": "missing",
+        "value": null
+      },
+      "uncertainty": {
+        "path": "results/quantum/L28R_4DTMP_H2-1LE_100shots_energy.json",
+        "status": "missing",
+        "value": null
+      },
+      "validation": {
+        "path": "results/tables/L28R_4DTMP_casci_active_space.json",
+        "status": "present",
+        "value": null
+      },
+      "vqe_parameters": {
+        "path": "data/params/L28R_4DTMP_params.json",
+        "status": "missing",
+        "value": null
+      }
+    },
+    "L28R_TMP": {
+      "classical_reference": {
+        "path": "results/classical/L28R_TMP_compact_primary_HF_sto-3g.json",
+        "status": "present",
+        "value": null
+      },
+      "compilation": {
+        "path": "data/processed/L28R_TMP_H2-1LE_compiled.json",
+        "status": "missing",
+        "value": null
+      },
+      "figures": {
+        "path": "results/figures/L28R_TMP_orbital_character.png",
+        "status": "present",
+        "value": null
+      },
+      "hamiltonian": {
+        "path": "data/processed/L28R_TMP_qubit_hamiltonian.json",
+        "status": "missing",
+        "value": null
+      },
+      "local_result": {
+        "path": "results/quantum/L28R_TMP_H2-1LE_100shots_energy.json",
+        "status": "missing",
+        "value": null
+      },
+      "molecular_input": {
+        "path": "data/processed/qm_clusters/L28R_TMP_compact_primary.xyz",
+        "status": "present",
+        "value": null
+      },
+      "nexus_emulator_result": {
+        "path": "results/quantum/nexus/L28R_TMP_H2-Emulator.json",
+        "status": "missing",
+        "value": null
+      },
+      "qasm": {
+        "path": "data/processed/L28R_TMP_circuit.qasm",
+        "status": "missing",
+        "value": null
+      },
+      "uncertainty": {
+        "path": "results/quantum/L28R_TMP_H2-1LE_100shots_energy.json",
+        "status": "missing",
+        "value": null
+      },
+      "validation": {
+        "path": "results/tables/L28R_TMP_casci_active_space.json",
+        "status": "present",
+        "value": null
+      },
+      "vqe_parameters": {
+        "path": "data/params/L28R_TMP_params.json",
+        "status": "missing",
+        "value": null
+      }
+    },
+    "WT_4DTMP": {
+      "classical_reference": {
+        "path": "results/classical/WT_4DTMP_compact_primary_HF_sto-3g.json",
+        "status": "present",
+        "value": null
+      },
+      "compilation": {
+        "path": "data/processed/WT_4DTMP_H2-1LE_compiled.json",
+        "status": "missing",
+        "value": null
+      },
+      "figures": {
+        "path": "results/figures/WT_4DTMP_orbital_character.png",
+        "status": "present",
+        "value": null
+      },
+      "hamiltonian": {
+        "path": "data/processed/WT_4DTMP_qubit_hamiltonian.json",
+        "status": "missing",
+        "value": null
+      },
+      "local_result": {
+        "path": "results/quantum/WT_4DTMP_H2-1LE_100shots_energy.json",
+        "status": "missing",
+        "value": null
+      },
+      "molecular_input": {
+        "path": "data/processed/qm_clusters/WT_4DTMP_compact_primary.xyz",
+        "status": "present",
+        "value": null
+      },
+      "nexus_emulator_result": {
+        "path": "results/quantum/nexus/WT_4DTMP_H2-Emulator.json",
+        "status": "missing",
+        "value": null
+      },
+      "qasm": {
+        "path": "data/processed/WT_4DTMP_circuit.qasm",
+        "status": "missing",
+        "value": null
+      },
+      "uncertainty": {
+        "path": "results/quantum/WT_4DTMP_H2-1LE_100shots_energy.json",
+        "status": "missing",
+        "value": null
+      },
+      "validation": {
+        "path": "results/tables/WT_4DTMP_casci_active_space.json",
+        "status": "present",
+        "value": null
+      },
+      "vqe_parameters": {
+        "path": "data/params/WT_4DTMP_params.json",
+        "status": "missing",
+        "value": null
+      }
+    },
+    "WT_TMP": {
+      "classical_reference": {
+        "path": "results/classical/WT_TMP_compact_primary_HF_sto-3g.json",
+        "status": "present",
+        "value": null
+      },
+      "compilation": {
+        "path": "data/processed/WT_TMP_H2-1LE_compiled.json",
+        "status": "present",
+        "value": null
+      },
+      "figures": {
+        "path": "results/figures/WT_TMP_orbital_character.png",
+        "status": "present",
+        "value": null
+      },
+      "hamiltonian": {
+        "path": "data/processed/WT_TMP_qubit_hamiltonian.json",
+        "status": "present",
+        "value": null
+      },
+      "local_result": {
+        "path": "results/quantum/WT_TMP_H2-1LE_100shots_energy.json",
+        "status": "present",
+        "value": null
+      },
+      "molecular_input": {
+        "path": "data/processed/qm_clusters/WT_TMP_compact_primary.xyz",
+        "status": "present",
+        "value": null
+      },
+      "nexus_emulator_result": {
+        "path": "results/quantum/nexus/WT_TMP_H2-Emulator.json",
+        "status": "missing",
+        "value": null
+      },
+      "qasm": {
+        "path": "data/processed/WT_TMP_circuit.qasm",
+        "status": "present",
+        "value": null
+      },
+      "uncertainty": {
+        "path": "results/quantum/WT_TMP_H2-1LE_100shots_energy.json",
+        "status": "present",
+        "value": null
+      },
+      "validation": {
+        "path": "results/tables/WT_TMP_casci_active_space.json",
+        "status": "present",
+        "value": null
+      },
+      "vqe_parameters": {
+        "path": "data/params/WT_TMP_params.json",
+        "status": "present",
+        "value": null
+      }
+    }
+  }
+}

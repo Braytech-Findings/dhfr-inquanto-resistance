@@ -26,5 +26,5 @@ publication: figures molecular
 access-diagnostics:
 	python scripts/diagnose_quantinuum_access.py
 nexus-bell-dry-run:
-	python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-1SC --dry-run
+	python scripts/test_quantinuum_access.py --nexus-emulator --backend H2-Emulator --dry-run
 all-public: publication test-public

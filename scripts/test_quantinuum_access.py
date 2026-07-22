@@ -14,14 +14,21 @@ do not prove execution entitlement.
 from __future__ import annotations
 
 import argparse
+import json
 import os
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 try:
     from .audit_core import classify_access_error
 except ImportError:  # Support `python scripts/test_quantinuum_access.py`.
     from audit_core import classify_access_error
+
+try:
+    from .nexus_backend import require_nexus_emulator, resolve_backend
+except ImportError:
+    from nexus_backend import require_nexus_emulator, resolve_backend
 
 HARDWARE_NAMES = {"H2-1E", "H2-2E", "H2-1", "H2-2", "H1-1"}
 SYNTAX_CHECKERS = {"H2-1SC", "H2-2SC"}
@@ -30,6 +37,13 @@ SUPPORTED_TARGETS = HARDWARE_NAMES | SYNTAX_CHECKERS | NEXUS_EMULATORS
 GROUP_ENV = "QNEXUS_USER_GROUP"
 PROJECT_ID_ENV = "QNEXUS_PROJECT_ID"
 PROJECT_NAME_ENV = "QNEXUS_PROJECT_NAME"
+DEFAULT_METADATA = Path("results/quantinuum_access/latest_operation.json")
+
+
+def write_metadata(path: Path, payload: dict[str, Any]) -> None:
+    """Write sanitized operation metadata; callers must not include credentials."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
 
 
 def load_nexus() -> tuple[Any, Any]:
@@ -184,6 +198,32 @@ def access_report(args: argparse.Namespace) -> None:
                 devices["device_name"].astype(str).str.upper().isin(SUPPORTED_TARGETS)
             ]
         display_frame("Relevant visible devices", devices)
+        project_id, project_name, project_source = resolve_project_selection(args)
+        print(
+            "Selected project: "
+            f"{'ID supplied' if project_id else 'name supplied' if project_name else '<missing>'} "
+            f"(source: {project_source})"
+        )
+        write_metadata(
+            args.metadata_output,
+            {
+                "operation": "backend_discovery",
+                "authenticated": True,
+                "entitlement_verified": False,
+                "project_id_selected": bool(project_id),
+                "project_name_selected": bool(project_name),
+                "project_source": project_source,
+                "user_group_selected": bool(group),
+                "user_group_source": source,
+                "visible_backends": (
+                    sorted(devices["device_name"].astype(str).tolist())
+                    if "device_name" in devices.columns
+                    else []
+                ),
+                "submission_created": False,
+                "credits_consumed": False,
+            },
+        )
         print(
             "\nGroup discovery note: qnexus exposes user quotas but no documented public "
             "group-list API. The exact authorized group is shown in Nexus Settings > Organization."
@@ -239,9 +279,21 @@ def estimate_hqc(
 
 
 def hosted_bell(args: argparse.Namespace) -> None:
-    backend = args.backend.upper()
-    if backend not in SUPPORTED_TARGETS:
-        raise SystemExit(f"Unsupported guarded target {args.backend!r}.")
+    metadata_output = getattr(args, "metadata_output", DEFAULT_METADATA)
+    compile_only = getattr(args, "compile_only", False)
+    project_id, project_name, _ = resolve_project_selection(args)
+    group, source = resolve_user_group(args)
+    try:
+        resolution = resolve_backend(
+            args.backend,
+            project_id=project_id,
+            project_name=project_name,
+            user_group=group,
+        )
+        require_nexus_emulator(resolution)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
+    backend = resolution.resolved_backend
     if backend in HARDWARE_NAMES and not args.confirm_hardware:
         raise SystemExit(
             "H2-1E/H2-2E or physical hardware requires --confirm-hardware and --confirm-submit."
@@ -255,12 +307,28 @@ def hosted_bell(args: argparse.Namespace) -> None:
             "Hardware/high-performance emulators require a positive --max-hqc."
         )
 
-    group, source = resolve_user_group(args)
     print(f"Submission group: {group or '<default>'} (source: {source})")
+    print(
+        f"Requested backend: {resolution.requested_backend}; resolved backend: "
+        f"{resolution.resolved_backend}; hosting: {resolution.hosting_type}"
+    )
 
-    if args.dry_run:
+    if args.dry_run or compile_only:
+        operation = "compile_only" if compile_only else "dry_run"
+        write_metadata(
+            metadata_output,
+            {
+                "operation": operation,
+                "backend_resolution": resolution.to_dict(),
+                "circuit": {"purpose": "smoke_test", "qubits": 2, "shots": args.shots},
+                "authenticated": False,
+                "entitlement_verified": False,
+                "job_created": False,
+                "credits_consumed": False,
+            },
+        )
         print(
-            "DRY RUN: Bell circuit width=2, gates=4, depth=3. "
+            f"{operation.upper()}: Bell circuit width=2, gates=4, depth=3. "
             "No qnexus import, login, upload, compile, cost request, or execution occurred."
         )
         return
@@ -286,7 +354,8 @@ def hosted_bell(args: argparse.Namespace) -> None:
         )
 
         hardware_hqc_ceiling = min(args.max_hqc, 20_000.0)
-        config = QuantinuumConfig(device_name=args.backend)
+        # The same immutable resolved name is used for compilation and execution.
+        config = QuantinuumConfig(device_name=resolution.resolved_backend)
 
         compiled = qnx.compile(
             programs=uploaded,
@@ -311,7 +380,7 @@ def hosted_bell(args: argparse.Namespace) -> None:
                 "Estimated HQC cost exceeds --max-hqc; refusing execution."
             )
 
-        if backend in NEXUS_EMULATORS:
+        if resolution.backend_type == "emulator":
             print(
                 "H2-Emulator uses simulation-time quota, not HQCs; submitting directly after compilation."
             )
@@ -328,6 +397,21 @@ def hosted_bell(args: argparse.Namespace) -> None:
             # qnexus 0.46.0 documents max_cost on the execution submission.
             execute_kwargs["max_cost"] = hardware_hqc_ceiling
         job = qnx.start_execute_job(**execute_kwargs)
+        write_metadata(
+            metadata_output,
+            {
+                "operation": "smoke_test_submission",
+                "scientific_role": "connectivity_smoke_test_not_dhfr_evidence",
+                "backend_resolution": resolution.to_dict(),
+                "authenticated": True,
+                "entitlement_verified": False,
+                "project_selected": True,
+                "user_group_selected": bool(group),
+                "job_id": str(job.id),
+                "job_created": True,
+                "shots": args.shots,
+            },
+        )
         print(f"Submitted Nexus job {job.id}")
         print(
             f"Nexus job URL: https://nexus.quantinuum.com/projects/{project.id}/jobs/{job.id}"
@@ -342,6 +426,46 @@ def hosted_bell(args: argparse.Namespace) -> None:
     except SystemExit:
         raise
     except Exception as exc:
+        write_metadata(
+            metadata_output,
+            {
+                "operation": "smoke_test_failure",
+                "backend_resolution": resolution.to_dict(),
+                "project_selected": bool(project_id or project_name),
+                "user_group_selected": bool(group),
+                "classification": classify_access_error(exc),
+                "job_created": False,
+                "retry_attempted": False,
+                "fallback_attempted": False,
+            },
+        )
+        raise SystemExit(explain_error(exc, group)) from exc
+
+
+def retrieve_existing_job(args: argparse.Namespace) -> None:
+    """Retrieve one existing job by ID without uploading or creating a job."""
+    group, source = resolve_user_group(args)
+    project = None
+    qnx, _ = load_nexus()
+    try:
+        qnx.login()
+        project = project_for(qnx, args)
+        job = qnx.jobs.get(id=args.retrieve_job, project=project)
+        wait_and_print(qnx, job, project, args.timeout)
+        write_metadata(
+            args.metadata_output,
+            {
+                "operation": "result_retrieval",
+                "job_id": args.retrieve_job,
+                "project_selected": True,
+                "user_group_selected": bool(group),
+                "user_group_source": source,
+                "job_created": False,
+                "replacement_job_created": False,
+                "result_retrieved": True,
+            },
+        )
+    except Exception as exc:
         raise SystemExit(explain_error(exc, group)) from exc
 
 
@@ -352,7 +476,8 @@ def build_parser() -> argparse.ArgumentParser:
     modes.add_argument("--access-report", action="store_true")
     modes.add_argument("--nexus-emulator", action="store_true")
     modes.add_argument("--local-emulator", action="store_true")
-    parser.add_argument("--backend", default="H2-1SC")
+    modes.add_argument("--retrieve-job")
+    parser.add_argument("--backend", default="H2-Emulator")
     parser.add_argument("--shots", type=int, default=10)
     parser.add_argument("--project-id")
     parser.add_argument("--project-name")
@@ -363,11 +488,19 @@ def build_parser() -> argparse.ArgumentParser:
         help=f"Refuse default-group submission; require --user-group or {GROUP_ENV}.",
     )
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--compile-only",
+        action="store_true",
+        help="Validate and record the exact backend/circuit locally; create no Nexus job.",
+    )
     parser.add_argument("--confirm-submit", action="store_true")
     parser.add_argument("--confirm-hardware", action="store_true")
     parser.add_argument("--max-hqc", type=float, default=0.0)
     parser.add_argument("--wait", action="store_true")
     parser.add_argument("--timeout", type=int, default=300)
+    parser.add_argument(
+        "--metadata-output", type=Path, default=DEFAULT_METADATA
+    )
     return parser
 
 
@@ -376,26 +509,26 @@ def main() -> None:
     if args.access_report:
         access_report(args)
         return
+    if args.discover:
+        access_report(args)
+        return
     if args.nexus_emulator:
         hosted_bell(args)
+        return
+    if args.retrieve_job:
+        retrieve_existing_job(args)
         return
     if args.local_emulator:
         raise SystemExit(
             "Use scripts/run_h2_smoke.py for the existing local test; "
             "this script guards Nexus-hosted execution."
         )
-    if not args.discover:
-        build_parser().print_help()
-        print(
-            "\nNo mode was selected. No login, network request, upload, compilation, "
-            "or submission occurred. Use --discover explicitly for a read-only "
-            "Nexus query."
-        )
-        return
-    qnx, _ = load_nexus()
-    qnx.login()
-    devices = qnx.devices.get_all().df()
-    print(devices.to_string(index=False))
+    build_parser().print_help()
+    print(
+        "\nNo mode was selected. No login, network request, upload, compilation, "
+        "or submission occurred. Use --discover explicitly for a read-only "
+        "Nexus query."
+    )
 
 
 if __name__ == "__main__":
