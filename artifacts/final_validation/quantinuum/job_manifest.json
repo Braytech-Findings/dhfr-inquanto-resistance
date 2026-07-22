@@ -24,6 +24,19 @@
       "retrieved": true,
       "result_path": "quantinuum/raw/H1-Emulator_250413ef_counts.json",
       "reported_cost": null
+    },
+    {
+      "job_identifier": "4961b3c8-b875-4709-bc61-c45202b97b0e",
+      "backend": "H2-Emulator",
+      "project": "dhfr-h2-hardware",
+      "user_group": "Nexus default group",
+      "purpose": "MULTICIRCUIT_SMOKE_TEST_ONLY",
+      "shots": 40,
+      "circuits": 4,
+      "final_state": "COMPLETED",
+      "retrieved": true,
+      "result_path": "quantinuum/multicircuit_pilot.json",
+      "reported_cost": null
     }
   ],
   "stopping_reason": "STOPPED_BY_SCIENTIFIC_BLOCKER",

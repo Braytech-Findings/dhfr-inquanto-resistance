@@ -1,0 +1,57 @@
+{
+  "label": "SMOKE_TEST_ONLY",
+  "requested_backend": "H2-Emulator",
+  "resolved_backend": "H2-Emulator",
+  "project": "dhfr-h2-hardware",
+  "user_group": "Nexus default group",
+  "circuit_names": [
+    "bell_z",
+    "bell_x",
+    "bell_y",
+    "product_01"
+  ],
+  "shots_per_circuit": 10,
+  "job_id": "4961b3c8-b875-4709-bc61-c45202b97b0e",
+  "submitted_utc": "2026-07-22T04:47:38.293048+00:00",
+  "state": "COMPLETED",
+  "results": [
+    {
+      "position": 0,
+      "circuit_name": "bell_z",
+      "counts": {
+        "(0, 0)": 5,
+        "(1, 1)": 5
+      },
+      "returned_shots": 10
+    },
+    {
+      "position": 1,
+      "circuit_name": "bell_x",
+      "counts": {
+        "(0, 0)": 6,
+        "(1, 1)": 4
+      },
+      "returned_shots": 10
+    },
+    {
+      "position": 2,
+      "circuit_name": "bell_y",
+      "counts": {
+        "(0, 1)": 4,
+        "(1, 0)": 6
+      },
+      "returned_shots": 10
+    },
+    {
+      "position": 3,
+      "circuit_name": "product_01",
+      "counts": {
+        "(1, 0)": 10
+      },
+      "returned_shots": 10
+    }
+  ],
+  "reported_cost": null,
+  "retrieved_utc": "2026-07-22T04:48:40.004500+00:00",
+  "retrieval_complete": true
+}

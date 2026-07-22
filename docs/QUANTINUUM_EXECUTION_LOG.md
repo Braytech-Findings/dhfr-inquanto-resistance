@@ -23,5 +23,10 @@
 - Reported job cost: unavailable (`None`); numeric allocation use remains
   unknown and no cash confirmation was presented or accepted.
 - Molecular jobs: none.
+- H2 multi-circuit pilot job `4961b3c8-b875-4709-bc61-c45202b97b0e`:
+  `COMPLETED`, four circuits and 40 total shots retrieved in submission order.
+- Largest verified Nexus batch: four circuits in one execute job.
 - Stopping reason: `STOPPED_BY_SCIENTIFIC_BLOCKER`; three systems lack their
-  Hamiltonian/VQE/QASM chains and matched orbital correspondence is unresolved.
+  Hamiltonian/VQE/QASM chains, matched orbital correspondence is unresolved,
+  and the active environment lacks InQuanto and PySCF. The portable 576-circuit
+  WT measurement map cannot be safely extracted without the original stack.
