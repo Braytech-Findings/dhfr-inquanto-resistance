@@ -8,6 +8,11 @@ import subprocess
 import sys
 from pathlib import Path
 
+try:
+    from .audit_core import VERIFIED_WT_TMP, validate_verified_wt_tmp
+except ImportError:  # Support `python scripts/validate_repository.py`.
+    from audit_core import VERIFIED_WT_TMP, validate_verified_wt_tmp
+
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = (
@@ -49,6 +54,22 @@ def main() -> int:
 
     provenance = json.loads(
         (ROOT / "results/publication/data/verified_quantum_provenance.json").read_text()
+    )
+    validate_verified_wt_tmp(
+        {
+            **VERIFIED_WT_TMP,
+            "ideal_vqe_energy_hartree": provenance.get("ideal_vqe_energy_hartree"),
+            "finite_shot_energy_hartree": provenance.get(
+                "finite_shot_energy_hartree"
+            ),
+            "standard_error_hartree": provenance.get("standard_error_hartree"),
+            "measurement_circuits": provenance.get("measurement_circuits"),
+            "shots_per_circuit": provenance.get("shots_per_circuit"),
+            "total_shots": provenance.get("total_shots"),
+            "backend": provenance.get("backend_classification"),
+            "local": provenance.get("emulator_local"),
+            "physical_hardware": False,
+        }
     )
     if provenance.get("total_shots") != (
         provenance.get("measurement_circuits", 0)

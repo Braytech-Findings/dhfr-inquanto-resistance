@@ -18,6 +18,11 @@ import os
 from datetime import datetime, timezone
 from typing import Any
 
+try:
+    from .audit_core import classify_access_error
+except ImportError:  # Support `python scripts/test_quantinuum_access.py`.
+    from audit_core import classify_access_error
+
 HARDWARE_NAMES = {"H2-1E", "H2-2E", "H2-1", "H2-2", "H1-1"}
 SYNTAX_CHECKERS = {"H2-1SC", "H2-2SC"}
 NEXUS_EMULATORS = {"H2-EMULATOR", "H1-EMULATOR"}
@@ -101,6 +106,14 @@ def resolve_project_selection(
 
 def explain_error(exc: Exception, user_group: str | None) -> str:
     text = str(exc).lower()
+    if classify_access_error(exc) == "access_or_entitlement" and (
+        "code 14" in text or "error 14" in text
+    ):
+        return (
+            "Nexus access code 14 is classified as access_or_entitlement. "
+            "It concerns authorization, organization, quota, or entitlement; "
+            "it is not evidence that the molecular scientific code failed."
+        )
     if "code 14" in text or "access code 14" in text or "entitlement" in text:
         if user_group:
             return (
@@ -371,6 +384,14 @@ def main() -> None:
             "Use scripts/run_h2_smoke.py for the existing local test; "
             "this script guards Nexus-hosted execution."
         )
+    if not args.discover:
+        build_parser().print_help()
+        print(
+            "\nNo mode was selected. No login, network request, upload, compilation, "
+            "or submission occurred. Use --discover explicitly for a read-only "
+            "Nexus query."
+        )
+        return
     qnx, _ = load_nexus()
     qnx.login()
     devices = qnx.devices.get_all().df()

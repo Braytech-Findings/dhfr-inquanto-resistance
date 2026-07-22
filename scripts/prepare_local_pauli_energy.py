@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+"""Build WT_TMP measurement circuits for local H2-1LE emulation.
+
+This command reads a saved geometry and VQE parameters, then writes local
+measurement-plan files. It does not contact Nexus or submit paid work. The
+current saved parameters exist only for WT_TMP, so other systems are rejected
+unless equivalent evidence is added and reviewed.
+"""
 
 import argparse
 import json
@@ -21,13 +28,22 @@ from pytket.extensions.quantinuum import (
 
 ROOT = Path(__file__).resolve().parents[1]
 
+try:
+    from .audit_core import backend_metadata, canonical_system, total_shots
+except ImportError:
+    from audit_core import backend_metadata, canonical_system, total_shots
+
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--system", default="WT_TMP")
     parser.add_argument("--basis", default="sto-3g")
     parser.add_argument("--shots-per-circuit", type=int, default=100)
     args = parser.parse_args()
+    args.system = canonical_system(args.system)
+    if args.system != "WT_TMP":
+        parser.error("Only WT_TMP has reviewed saved VQE parameters.")
+    total_shots(0, args.shots_per_circuit)
 
     xyz_path = (
         ROOT
@@ -64,7 +80,7 @@ def main():
     mean_field.kernel()
 
     if not mean_field.converged:
-        print("⚠️ RHF did not converge.", flush=True)
+        raise RuntimeError("RHF did not converge; refusing to build a measurement plan.")
 
     n_occ = int(np.sum(mean_field.mo_occ // 2))
     n_mo = len(mean_field.mo_energy)
@@ -138,7 +154,7 @@ def main():
 
     circuits = protocol.get_circuits()
     number_of_circuits = len(circuits)
-    total_shots = number_of_circuits * args.shots_per_circuit
+    shot_total = total_shots(number_of_circuits, args.shots_per_circuit)
 
     resource_table = protocol.dataframe_circuit_shot()
     partition_table = protocol.dataframe_partitioning()
@@ -159,12 +175,13 @@ def main():
     summary = {
         "system": args.system,
         "basis": args.basis,
-        "backend": "H2-1LE",
+        "backend": backend_metadata("H2-1LE")["label"],
+        "backend_metadata": backend_metadata("H2-1LE"),
         "n_qubits": ansatz.state_circuit.n_qubits,
         "n_hamiltonian_terms": len(qubit_hamiltonian),
         "n_measurement_circuits": number_of_circuits,
         "shots_per_circuit": args.shots_per_circuit,
-        "total_shots": total_shots,
+        "total_shots": shot_total,
         "active_orbitals": active_indices,
         "preparation_seconds": time.time() - start,
         "resource_table": str(resource_path),
@@ -178,7 +195,7 @@ def main():
     print(f"   Hamiltonian terms: {len(qubit_hamiltonian)}")
     print(f"   Grouped circuits: {number_of_circuits}")
     print(f"   Shots per circuit: {args.shots_per_circuit}")
-    print(f"   Total local shots: {total_shots}")
+    print(f"   Total local shots: {shot_total}")
     print(f"   Preparation time: {time.time() - start:.1f} seconds")
     print(f"💾 Summary: {summary_path}")
     print(f"💾 Resources: {resource_path}")
