@@ -132,21 +132,21 @@ evidence <- data.frame(
       "WT_TMP local shots", "WT_TMP remote pilot", "Four-system quantum"
     ))
   ),
-  status = c("Complete", "Pilot", "Complete", "Complete", "Provider timeout", "Missing")
+  status = c("Complete", "Pilot", "Complete", "Complete", "Retry pending", "Missing")
 )
 p_evidence <- ggplot(evidence, aes(x = status, y = stage, fill = status)) +
   geom_tile(width = 0.88, height = 0.72, color = "white", linewidth = 1.2) +
   geom_text(aes(label = status), color = "white", fontface = "bold", size = 4.6) +
   scale_fill_manual(values = c(
     "Complete" = "#2A9D8F", "Pilot" = "#457B9D",
-    "Provider timeout" = "#E9C46A", "Missing" = "#8D99AE"
+    "Retry pending" = "#E9C46A", "Missing" = "#8D99AE"
   )) +
   guides(fill = "none") +
   labs(
     title = "Evidence map: what is complete and what is still missing",
     subtitle = "A missing result stays missing—it is never changed to zero",
     x = NULL, y = NULL,
-    caption = "OBJECTIVE COMPUTATIONAL OUTPUT • Researcher interpretation required"
+    caption = "COMPUTER MODEL EVIDENCE • Researcher interpretation required"
   ) +
   theme_competition() +
   theme(panel.grid = element_blank(), axis.text.x = element_blank())

@@ -71,7 +71,9 @@ def test_saved_hamiltonian_is_hermitian_and_well_formed() -> None:
 def test_only_wt_tmp_has_compatible_saved_parameters() -> None:
     exact_path = ROOT / "results/quantum/WT_TMP_saved_params_exact.json"
     if not exact_path.exists():
-        pytest.skip("protected generated exact result is not included in lightweight CI")
+        pytest.skip(
+            "protected generated exact result is not included in lightweight CI"
+        )
     params = json.loads((ROOT / "data/params/WT_TMP_params.json").read_text())["params"]
     exact = json.loads(exact_path.read_text())
     assert len(params) == exact["n_parameters"] == 117

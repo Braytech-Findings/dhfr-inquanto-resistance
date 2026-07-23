@@ -43,4 +43,7 @@
   compilation CPU usage increased by approximately 56.11 seconds and database
   storage by approximately 2.26 MB.
 - Classification: `remote_execution_timeout`, not a chemistry, Hamiltonian,
-  VQE, or estimator failure. No replacement job was submitted.
+  VQE, or estimator failure.
+- The researcher reported manually selecting **Retry Job** in Nexus on
+  2026-07-22. The replacement job ID and result have not yet been retrieved or
+  verified in this repository. No retry was submitted by repository tooling.

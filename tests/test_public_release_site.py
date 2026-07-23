@@ -46,3 +46,18 @@ def test_site_links_to_public_models_not_ignored_processed_data():
     assert "visualization/public_structures" in html
     assert "data/processed" not in html
     assert "not molecular dynamics" in html.lower()
+
+
+def test_simple_public_guide_and_site_pages_are_present():
+    guide = (ROOT / "docs/SIMPLE_GUIDE.md").read_text()
+    assert "four computer models" in guide
+    assert "not proof" in guide.lower()
+    assert "retry" in guide.lower()
+    for page in (
+        "index.html",
+        "results.html",
+        "figures.html",
+        "methods.html",
+        "limitations.html",
+    ):
+        assert (ROOT / "docs/site" / page).stat().st_size > 500

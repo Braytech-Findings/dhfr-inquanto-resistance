@@ -15,7 +15,7 @@
 
 > **In one sentence:** this project compares four simplified DHFR–ligand models in a compact classical pilot and deeply validates one `WT_TMP` quantum estimator; it does not claim a drug-resistance prediction, binding-free-energy result, or quantum-hardware result.
 
-**Explore:** [Start here](#start-here-what-is-this-project) · [Research question](#research-question) · [Verified result](#what-is-verified-now) · [Figures](docs/FIGURE_GALLERY.md) · [Install](docs/INSTALLATION.md) · [Run](docs/RUNNING_THE_PROJECT.md) · [Beginner walkthrough](docs/BEGINNER_WALKTHROUGH.md) · [Reproduction](docs/REPRODUCIBILITY.md) · [Backend status](docs/backend-status.md) · [Limitations](docs/LIMITATIONS.md) · [Manuscript](manuscript/README.md)
+**Explore:** [Simple guide](docs/SIMPLE_GUIDE.md) · [Research question](#research-question) · [Verified result](#what-is-verified-now) · [Figures](docs/FIGURE_GALLERY.md) · [3D structures](visualization/public_structures/) · [Install](docs/INSTALLATION.md) · [Run](docs/RUNNING_THE_PROJECT.md) · [Reproduction](docs/REPRODUCIBILITY.md) · [Backend status](docs/backend-status.md) · [Limitations](docs/LIMITATIONS.md) · [Manuscript](manuscript/README.md)
 
 ## Start Here: What Is This Project?
 
@@ -63,7 +63,7 @@ Stages `A–C` connect biology and molecular modeling; `D` is classical computat
 | Ideal reference | `-2587.912001526413 Ha` | Saved-parameter expectation value. |
 | Finite-shot result | `-2587.917118821447 ± 0.007647045141 Ha` | 57,600-shot local H2-1LE noiseless-emulator result. |
 | Regenerated local convergence | `-2587.912246317905 ± 0.000373756124 Ha` | Mean and combined standard error from three complete 10,000-shot-per-circuit Aer replicates. |
-| Remote molecular pilot | No result | H2-Emulator job `e89da51e-bde9-4214-adda-6a08198f6b0a` ended in provider `TimeoutError`; missing values were not replaced with zero. |
+| Remote molecular pilot | Retry pending | The first H2-Emulator job, `e89da51e-bde9-4214-adda-6a08198f6b0a`, ended in provider `TimeoutError`. The researcher manually started a Nexus retry; no new result is recorded yet. |
 | Execution environment | Local emulator | Not Nexus-hosted, noisy hardware, or physical quantum hardware. |
 
 The finite-shot value differs from the ideal reference by `-0.005117295034 Ha`; its standard error is larger than that difference. Read the [result details](docs/RESULTS.md), [machine-readable provenance](results/publication/data/verified_quantum_provenance.json), and [backend-status table](docs/backend-status.md).
@@ -145,7 +145,9 @@ The regenerated 576-circuit protocol also passed exact validation and seven
 local finite-shot convergence levels. An approved four-group H2-Emulator
 molecular pilot was submitted once, but Nexus ended job
 `e89da51e-bde9-4214-adda-6a08198f6b0a` with a provider timeout before returning
-results. No replacement job was submitted. See [RESULTS_STATUS.md](RESULTS_STATUS.md)
+results. The researcher later started a retry manually in Nexus; until that
+result is retrieved and verified, the remote molecular value remains missing.
+See [RESULTS_STATUS.md](RESULTS_STATUS.md)
 and [the numerical gate](docs/WT_TMP_REMOTE_SUBMISSION_GATE.md).
 
 ## Publication-ready files
@@ -170,7 +172,7 @@ If you use this repository or its generated results, cite the metadata in [CITAT
 |---|---|
 | Completed locally | WT_TMP ideal expectation and finite-shot local H2-1LE estimate. |
 | Completed regenerated validation | WT_TMP exact semantic validation and local 100–10,000-shot Aer convergence. |
-| Remote molecular pilot | Submitted once to H2-Emulator; provider timeout, no returned molecular results. |
+| Remote molecular pilot | First H2-Emulator attempt timed out; researcher-started retry is pending and has no recorded result yet. |
 | Circuit generated | Active-space/UCCSD workflow and local measurement plan. |
 | Not yet completed | Verified quantum results for `WT_4DTMP`, `L28R_TMP`, and `L28R_4DTMP`; complete hosted molecular emulation; physical-hardware energy; wet-lab validation. |
 
