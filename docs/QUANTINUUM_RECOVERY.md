@@ -213,6 +213,39 @@ python scripts/run_wt_remote_molecular_pilot.py \
 The old failed job is retained in `job_history`; the tool records that the
 retry was created manually in Nexus and then retrieves only the supplied job.
 
+### Provider-timeout root cause and detached shot chunks
+
+The first optimized one-group job also ended in provider `ERROR` with
+`TimeoutError`. Inspection of its completed level-2 compilation found 14,898
+gates at depth 8,345, including 5,773 `ZZPhase` gates. Because the hosted H2
+emulator uses noisy shot-by-shot state-vector simulation by default, 100 shots
+still formed one very long provider task. This was not a laptop timeout: Nexus
+had already accepted the job and ran it in the cloud.
+
+The detached runner preserves noisy `H2-Emulator` semantics but divides 100
+shots into ten independent 10-shot server jobs. It waits only for the one-time
+compilation, saves each execution ID as soon as Nexus accepts it, and exits.
+The computer can then be turned off. Retrieval later combines the counts; it
+does not submit jobs.
+
+```bash
+python scripts/run_wt_remote_molecular_pilot_chunked.py \
+  --project-name dhfr-h2-hardware --group WT_TMP_G0001 \
+  --submit-detached --confirm-submit --confirm-partnership-access
+```
+
+Later, from any authenticated computer with this manifest:
+
+```bash
+python scripts/run_wt_remote_molecular_pilot_chunked.py \
+  --project-name dhfr-h2-hardware --group WT_TMP_G0001 --retrieve
+```
+
+The official Quantinuum emulator documentation describes H2-Emulator as a
+Nexus-hosted, time-metered, noisy state-vector emulator without provider-side
+chunking. The qnexus job documentation confirms that waiting is optional: an
+accepted job continues remotely and can be queried later by its saved ID.
+
 ## Failure guide
 
 | Observation | Classification | Action |

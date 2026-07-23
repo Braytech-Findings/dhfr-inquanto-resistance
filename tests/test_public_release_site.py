@@ -52,7 +52,7 @@ def test_simple_public_guide_and_site_pages_are_present():
     guide = (ROOT / "docs/SIMPLE_GUIDE.md").read_text()
     assert "four computer models" in guide
     assert "not proof" in guide.lower()
-    assert "retry" in guide.lower()
+    assert "smaller cloud jobs" in guide.lower()
     for page in (
         "index.html",
         "results.html",

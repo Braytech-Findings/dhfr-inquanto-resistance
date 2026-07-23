@@ -132,14 +132,14 @@ evidence <- data.frame(
       "WT_TMP local shots", "WT_TMP remote pilot", "Four-system quantum"
     ))
   ),
-  status = c("Complete", "Pilot", "Complete", "Complete", "Retry pending", "Missing")
+  status = c("Complete", "Pilot", "Complete", "Complete", "Chunks active", "Missing")
 )
 p_evidence <- ggplot(evidence, aes(x = status, y = stage, fill = status)) +
   geom_tile(width = 0.88, height = 0.72, color = "white", linewidth = 1.2) +
   geom_text(aes(label = status), color = "white", fontface = "bold", size = 4.6) +
   scale_fill_manual(values = c(
     "Complete" = "#2A9D8F", "Pilot" = "#457B9D",
-    "Retry pending" = "#E9C46A", "Missing" = "#8D99AE"
+    "Chunks active" = "#E9C46A", "Missing" = "#8D99AE"
   )) +
   guides(fill = "none") +
   labs(

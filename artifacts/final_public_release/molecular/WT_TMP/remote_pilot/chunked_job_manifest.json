@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "strategy": "client_side_shot_chunking",
+  "backend": "H2-Emulator",
+  "noisy_simulation": true,
+  "automatic_retry": false,
+  "groups": {
+    "WT_TMP_G0001": {
+      "group_id": "WT_TMP_G0001",
+      "source": "artifacts/max_shot_production/WT_TMP/regenerated_circuits/WT_TMP_G0001.json",
+      "sha256": "433a53b9692d3ce4edbe998808c573fb11a05d254ab010bc6d7188445058e4b8",
+      "total_shots": 100,
+      "shots_per_job": 10,
+      "optimisation_level": 2,
+      "noisy_simulation": true,
+      "replaces_failed_job": "d1492720-d31b-4ae3-8ce9-4d07ebe6cee3",
+      "jobs": [
+        {
+          "chunk": 1,
+          "job_id": "60eb7ac1-153a-4f2a-945d-4bb38c62e3ac",
+          "shots": 10,
+          "state": "RUNNING",
+          "submitted_utc": "2026-07-23T02:38:14.476969+00:00"
+        },
+        {
+          "chunk": 2,
+          "job_id": "b48169c1-2d14-4913-8f13-abbbb81ece34",
+          "shots": 10,
+          "state": "RUNNING",
+          "submitted_utc": "2026-07-23T02:38:15.168864+00:00"
+        },
+        {
+          "chunk": 3,
+          "job_id": "05cb4538-07e9-4b2d-b2f1-f77db3b4bd14",
+          "shots": 10,
+          "state": "RUNNING",
+          "submitted_utc": "2026-07-23T02:38:15.535246+00:00"
+        },
+        {
+          "chunk": 4,
+          "job_id": "d8df5333-d992-4889-9b29-1a0d4836dc0f",
+          "shots": 10,
+          "state": "RUNNING",
+          "submitted_utc": "2026-07-23T02:38:16.024076+00:00"
+        },
+        {
+          "chunk": 5,
+          "job_id": "9733cb4f-2552-4cec-889e-3d9bd3a1e975",
+          "shots": 10,
+          "state": "RUNNING",
+          "submitted_utc": "2026-07-23T02:38:16.690491+00:00"
+        },
+        {
+          "chunk": 6,
+          "job_id": "d1c48414-0b30-4096-a72f-15eb05cb6046",
+          "shots": 10,
+          "state": "SUBMITTED",
+          "submitted_utc": "2026-07-23T02:38:16.967950+00:00"
+        },
+        {
+          "chunk": 7,
+          "job_id": "3a27b1b8-aa8a-4604-b3b9-577d6e9062e9",
+          "shots": 10,
+          "state": "SUBMITTED",
+          "submitted_utc": "2026-07-23T02:38:17.296757+00:00"
+        },
+        {
+          "chunk": 8,
+          "job_id": "5074ef32-2f22-4b49-9cea-7b6b628141db",
+          "shots": 10,
+          "state": "SUBMITTED",
+          "submitted_utc": "2026-07-23T02:38:18.326013+00:00"
+        },
+        {
+          "chunk": 9,
+          "job_id": "bb0c1e0f-aba7-47ff-8399-ff39ffc2cdad",
+          "shots": 10,
+          "state": "SUBMITTED",
+          "submitted_utc": "2026-07-23T02:38:18.783586+00:00"
+        },
+        {
+          "chunk": 10,
+          "job_id": "6f92f6f0-6a54-4384-a065-c2bc43d14299",
+          "shots": 10,
+          "state": "SUBMITTED",
+          "submitted_utc": "2026-07-23T02:38:19.973315+00:00"
+        }
+      ],
+      "retrieval_complete": false,
+      "completed_chunks": 0,
+      "combined_counts": {},
+      "total_returned_shots": 0,
+      "updated_utc": "2026-07-23T02:41:09.812524+00:00"
+    }
+  }
+}

@@ -34,8 +34,10 @@ pieces matched the exact calculation, and using more simulated measurements
 made its answer steadier. The other three systems do not yet have matching
 finished quantum-energy results.
 
-The first remote molecular attempt timed out. The researcher manually started
-a retry on Nexus; its result is pending and is not included in any conclusion.
+Two large remote molecular attempts timed out. The first WT_TMP measurement
+group is now divided into ten smaller cloud jobs. They do not need the
+researcher's computer to stay on, and they are not included in any conclusion
+until every saved result is retrieved and checked.
 
 ## See the evidence
 

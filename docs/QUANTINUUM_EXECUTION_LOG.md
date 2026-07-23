@@ -47,3 +47,12 @@
 - The researcher reported manually selecting **Retry Job** in Nexus on
   2026-07-22. The replacement job ID and result have not yet been retrieved or
   verified in this repository. No retry was submitted by repository tooling.
+- Timeout-resistant one-group job
+  `d1492720-d31b-4ae3-8ce9-4d07ebe6cee3` also ended in provider `ERROR` with
+  `TimeoutError` after level-2 compilation. Its compiled G0001 circuit had
+  14,898 gates, depth 8,345, and 5,773 `ZZPhase` gates.
+- On 2026-07-23, the researcher authorized detached client-side shot chunking.
+  G0001 was submitted as ten independent noisy H2-Emulator jobs of 10 shots
+  each. All ten IDs are saved in `chunked_job_manifest.json`; the first was
+  `RUNNING` and the next four were `QUEUED` at the first nonblocking status
+  check. No local polling process is required to keep them alive.

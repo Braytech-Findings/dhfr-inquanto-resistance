@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "strategy": "one_measurement_group_per_job",
+  "backend": "H2-Emulator",
+  "shots_per_circuit": 100,
+  "automatic_retry": false,
+  "groups": {
+    "WT_TMP_G0001": {
+      "group_id": "WT_TMP_G0001",
+      "source": "artifacts/max_shot_production/WT_TMP/regenerated_circuits/WT_TMP_G0001.json",
+      "sha256": "433a53b9692d3ce4edbe998808c573fb11a05d254ab010bc6d7188445058e4b8",
+      "qubits": 12,
+      "bits": 12,
+      "job_id": "d1492720-d31b-4ae3-8ce9-4d07ebe6cee3",
+      "state": "ERROR",
+      "submitted_utc": "2026-07-23T01:37:14.893773+00:00",
+      "optimisation_level": 2,
+      "shots": 100,
+      "replacement_for": null,
+      "result": null,
+      "failure": {
+        "classification": "remote_execution_failure",
+        "exception_type": "JobError",
+        "detail": "Job errored with detail: <class 'TimeoutError'>: ",
+        "automatic_retry": false
+      },
+      "updated_utc": "2026-07-23T02:27:55.544927+00:00"
+    }
+  }
+}

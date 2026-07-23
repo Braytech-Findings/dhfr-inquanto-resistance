@@ -20,11 +20,11 @@ The WT_TMP quantum workflow was checked very carefully. All 1,818 measured
 quantities matched the exact calculation, and repeated local measurements moved
 toward the exact answer as the shot count grew.
 
-The quantum data do **not** yet compare all four systems. The first remote
-molecular attempt timed out and returned no results. The researcher manually
-started a retry on Nexus, but no new result has been retrieved and verified for
-this repository. Therefore, the quantum portion cannot yet answer the full
-mutation-and-ligand question.
+The quantum data do **not** yet compare all four systems. Two large remote
+attempts timed out. The first WT_TMP group is now divided into ten smaller
+cloud jobs that keep running after the computer is turned off. Their saved
+counts will be combined only after every chunk is retrieved. Therefore, the
+quantum portion cannot yet answer the full mutation-and-ligand question.
 
 ## Why this is still important
 
