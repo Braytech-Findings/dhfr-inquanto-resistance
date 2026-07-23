@@ -23,3 +23,11 @@ def test_remote_pilot_persists_before_wait_and_prevents_duplicates():
     )
     assert "A saved pilot job already exists; retrieve it instead." in text
     assert "Requested job ID does not match the saved manifest." in text
+
+
+def test_remote_pilot_can_adopt_but_not_submit_a_manual_nexus_retry():
+    text = SCRIPT.read_text()
+    assert "--adopt-manual-retry-job" in text
+    assert "--replaces-job" in text
+    assert '"submitted_by_repository_tooling": False' in text
+    assert "--replaces-job must exactly match" in text

@@ -161,6 +161,58 @@ python scripts/four_system_workflow.py --local-all --shots 100
 It also uses an all-or-nothing QASM preflight and currently stops before local
 execution because three systems are incomplete.
 
+## Timeout-resistant WT_TMP pilot
+
+The original pilot placed four deep circuits into one provider execution job at
+compilation optimization level 0. A provider timeout therefore made all four
+results unavailable together. Retrying that same Nexus job repeats the same
+execution shape.
+
+The replacement runner uses one group per job, optimization level 2, and one
+saved job ID per group. A completed group remains usable if another group times
+out. Retrieval never submits, and a failed group is never replaced
+automatically.
+
+Preview one shard without a remote call:
+
+```bash
+python scripts/run_wt_remote_molecular_pilot_sharded.py \
+  --project-name dhfr-h2-hardware --group WT_TMP_G0001 --dry-run
+```
+
+Future researcher-authorized submission of that one shard:
+
+```bash
+python scripts/run_wt_remote_molecular_pilot_sharded.py \
+  --project-name dhfr-h2-hardware --group WT_TMP_G0001 \
+  --confirm-submit --confirm-partnership-access
+```
+
+Retrieve that exact saved shard without submitting another job:
+
+```bash
+python scripts/run_wt_remote_molecular_pilot_sharded.py \
+  --project-name dhfr-h2-hardware --group WT_TMP_G0001 \
+  --retrieve-job SAVED_JOB_ID
+```
+
+Do not use the sharded submission command while the researcher-started retry of
+the original batch remains active. First retrieve or record that retry's final
+state and job ID.
+
+When Nexus shows the manually retried job's full ID, adopt and retrieve that
+exact job without submitting anything new:
+
+```bash
+python scripts/run_wt_remote_molecular_pilot.py \
+  --project-name dhfr-h2-hardware \
+  --adopt-manual-retry-job NEW_RETRY_JOB_ID \
+  --replaces-job e89da51e-bde9-4214-adda-6a08198f6b0a
+```
+
+The old failed job is retained in `job_history`; the tool records that the
+retry was created manually in Nexus and then retrieves only the supplied job.
+
 ## Failure guide
 
 | Observation | Classification | Action |

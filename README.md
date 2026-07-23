@@ -150,6 +150,12 @@ result is retrieved and verified, the remote molecular value remains missing.
 See [RESULTS_STATUS.md](RESULTS_STATUS.md)
 and [the numerical gate](docs/WT_TMP_REMOTE_SUBMISSION_GATE.md).
 
+If the retried four-program job also reaches a provider timeout, use the
+[timeout-resistant sharded procedure](docs/QUANTINUUM_RECOVERY.md#timeout-resistant-wt_tmp-pilot)
+for any later researcher-authorized attempt. It runs one measurement group per
+saved job so one timeout cannot discard all four results. Do not start the
+sharded procedure while the current retry is active.
+
 ## Publication-ready files
 
 This repository now includes:

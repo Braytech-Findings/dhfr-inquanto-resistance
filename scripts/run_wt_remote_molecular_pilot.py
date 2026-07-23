@@ -46,12 +46,17 @@ def main() -> None:
     parser.add_argument("--confirm-submit", action="store_true")
     parser.add_argument("--cost-approved", action="store_true")
     parser.add_argument("--retrieve-job")
+    parser.add_argument("--adopt-manual-retry-job")
+    parser.add_argument("--replaces-job")
     args = parser.parse_args()
     if args.backend != "H2-Emulator":
         raise SystemExit("This approved pilot requires exact backend H2-Emulator.")
     if args.shots != 100:
         raise SystemExit("This approval covers exactly 100 shots per circuit.")
-    if not args.retrieve_job and not (args.confirm_submit and args.cost_approved):
+    if args.retrieve_job and args.adopt_manual_retry_job:
+        raise SystemExit("Choose saved-job retrieval or manual-retry adoption.")
+    retrieval_job = args.retrieve_job or args.adopt_manual_retry_job
+    if not retrieval_job and not (args.confirm_submit and args.cost_approved):
         raise SystemExit("Submission requires --confirm-submit and --cost-approved.")
 
     import qnexus as qnx
@@ -78,13 +83,35 @@ def main() -> None:
             }
         )
 
-    if args.retrieve_job:
+    if retrieval_job:
         if not MANIFEST.exists():
             raise SystemExit("Saved manifest is required for retrieval-only resume.")
         payload = json.loads(MANIFEST.read_text())
-        if payload.get("job_id") != args.retrieve_job:
+        if args.adopt_manual_retry_job:
+            if not args.replaces_job or payload.get("job_id") != args.replaces_job:
+                raise SystemExit(
+                    "--replaces-job must exactly match the previously saved job ID."
+                )
+            payload.setdefault("job_history", []).append(
+                {
+                    "job_id": payload["job_id"],
+                    "state": payload.get("state"),
+                    "failure": payload.get("failure"),
+                }
+            )
+            payload["job_id"] = args.adopt_manual_retry_job
+            payload["state"] = "MANUAL_RETRY_REPORTED"
+            payload["manual_retry"] = {
+                "replaces_job": args.replaces_job,
+                "recorded_utc": datetime.now(timezone.utc).isoformat(),
+                "submitted_by_repository_tooling": False,
+            }
+            payload["results"] = []
+            payload["retrieval_complete"] = False
+            write(MANIFEST, payload)
+        elif payload.get("job_id") != args.retrieve_job:
             raise SystemExit("Requested job ID does not match the saved manifest.")
-        job = qnx.jobs.get(id=args.retrieve_job, project=project)
+        job = qnx.jobs.get(id=retrieval_job, project=project)
     else:
         if MANIFEST.exists() and json.loads(MANIFEST.read_text()).get("job_id"):
             raise SystemExit("A saved pilot job already exists; retrieve it instead.")
